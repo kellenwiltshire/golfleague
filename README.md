@@ -1,6 +1,8 @@
-# Women On Par
+# Golf League Tracker
 
 Custom Web App for a Golf League. This site allows it's users to enter their score and set their availability for the following week. The Admin's are able to generate a schedule and post news for its members.
+
+This Example is based off the site created for Women On Par, a Golf group from Toronto, Ontario.
 
 ## Lessons Learned
 
