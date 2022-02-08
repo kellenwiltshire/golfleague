@@ -1,5 +1,9 @@
 import { useAllScoresContext, useScheduleContext } from '@/context/Store';
-import { completedSchedule, findPriorRoundResults, findPriorRoundWinner } from '@/utils/sortingFunctions';
+import {
+	completedSchedule,
+	findPriorRoundResults,
+	findPriorRoundWinner,
+} from '@/utils/sortingFunctions';
 import React from 'react';
 
 export default function ResultsTable(): JSX.Element {
@@ -49,8 +53,15 @@ export default function ResultsTable(): JSX.Element {
 							</thead>
 							<tbody>
 								{completedRounds.map((round, roundIdx) => {
-									const roundScores = findPriorRoundResults(allScores, round.date);
-									const winningGolfer = findPriorRoundWinner(roundScores, round);
+									const roundScores = findPriorRoundResults(
+										allScores,
+										round.date,
+									);
+
+									const winningGolfer = findPriorRoundWinner(
+										roundScores,
+										round,
+									);
 
 									let game = '';
 									if (round.game) {
@@ -58,16 +69,26 @@ export default function ResultsTable(): JSX.Element {
 									}
 
 									return (
-										<tr key={round.id} className={roundIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{round.date}</td>
+										<tr
+											key={round.id}
+											className={roundIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+										>
+											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+												{round.date}
+											</td>
 											<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
 												{round.course.name}
 											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{game}</td>
 											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-												{winningGolfer?.user?.first_name} {winningGolfer?.user?.last_name}
+												{game}
 											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{winningGolfer?.score}</td>
+											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+												{winningGolfer?.user?.first_name}{' '}
+												{winningGolfer?.user?.last_name}
+											</td>
+											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+												{winningGolfer?.score}
+											</td>
 										</tr>
 									);
 								})}
