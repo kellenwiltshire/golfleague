@@ -15,21 +15,17 @@ export default function NextRound(): JSX.Element {
 	const [failure, setFailure] = useState(false);
 
 	const nextRound = findNextRound(schedule);
-	if (nextRound) {
-		return (
-			<div className='rounded-tl-lg rounded-tr-lg sm:rounded-tr-none relative group bg-white p-6'>
-				{success ? <SaveSuccess show={success} setShow={setSuccess} /> : null}
-				{failure ? <SaveFail show={failure} setShow={setFailure} /> : null}
-				<div>
-					<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
-						<CalendarIcon className='h-6 w-6' aria-hidden='true' />
-					</span>
-				</div>
-				<NextRoundInfo nextRound={nextRound} />
-				<NextRoundForm user={user} setSuccess={setSuccess} setFailure={setFailure} />
+	return (
+		<div className='rounded-tl-lg rounded-tr-lg sm:rounded-tr-none relative group bg-white p-6'>
+			{success ? <SaveSuccess show={success} setShow={setSuccess} /> : null}
+			{failure ? <SaveFail show={failure} setShow={setFailure} /> : null}
+			<div>
+				<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
+					<CalendarIcon className='h-6 w-6' aria-hidden='true' />
+				</span>
 			</div>
-		);
-	} else {
-		return <div></div>;
-	}
+			<NextRoundInfo nextRound={nextRound} />
+			<NextRoundForm user={user} setSuccess={setSuccess} setFailure={setFailure} />
+		</div>
+	);
 }
