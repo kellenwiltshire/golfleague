@@ -54,21 +54,12 @@ export default function LoginForm({ setSignedIn }): JSX.Element {
 			<div className='min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
 				<div className='max-w-md w-full space-y-8'>
 					<div className='flex justify-center flex-wrap flex-row'>
-						<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
-							Sign in to your account
-						</h2>
+						<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>Sign in to your account</h2>
 						{loginError ? (
-							<p className='mt-2 text-center text-sm text-red-600'>
-								Login Error: Your Email or Password is Incorrect
-							</p>
+							<p className='mt-2 text-center text-sm text-red-600'>Login Error: Your Email or Password is Incorrect</p>
 						) : null}
-						<div className='relative w-full h-64 sm:h-72 md:h-96 lg:w-1/2 lg:h-full'>
-							<Image
-								src='/brand/logoNoText.jpg'
-								alt='logo'
-								height={868}
-								width={587}
-							/>
+						<div className='relative w-full h-64 sm:h-72 md:h-96 lg:w-1/2 lg:h-full '>
+							<Image src='/coverphoto.jpg' alt='logo' height={1486} width={1920} className='rounded-md' />
 						</div>
 					</div>
 
@@ -110,9 +101,7 @@ export default function LoginForm({ setSignedIn }): JSX.Element {
 						<div className='flex items-center justify-between'>
 							<div className='text-sm'>
 								<Link href='/start-reset-process'>
-									<a className='font-medium text-indigo-600 hover:text-indigo-500'>
-										Forgot your password?
-									</a>
+									<a className='font-medium text-indigo-600 hover:text-indigo-500'>Forgot your password?</a>
 								</Link>
 							</div>
 						</div>
@@ -123,10 +112,7 @@ export default function LoginForm({ setSignedIn }): JSX.Element {
 								className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
 							>
 								<span className='absolute left-0 inset-y-0 flex items-center pl-3'>
-									<LockClosedIcon
-										className='h-5 w-5 text-indigo-500 group-hover:text-indigo-400'
-										aria-hidden='true'
-									/>
+									<LockClosedIcon className='h-5 w-5 text-indigo-500 group-hover:text-indigo-400' aria-hidden='true' />
 								</span>
 								Sign in
 							</button>
