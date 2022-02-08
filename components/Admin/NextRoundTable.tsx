@@ -362,10 +362,7 @@ export default function NextRoundTable(): JSX.Element {
 											</td>
 											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{user.email}</td>
 											<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
-												<button
-													onClick={() => removeUserFromAvailability(user)}
-													className='group flex items-center px-3 py-2 text-sm font-medium w-full'
-												>
+												<button className='group flex items-center px-3 py-2 text-sm font-medium w-full'>
 													<XIcon
 														className='text-gray-400 group-hover:text-gray-500
 								flex-shrink-0 h-6 w-6'
