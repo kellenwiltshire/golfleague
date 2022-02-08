@@ -30,8 +30,8 @@ export default function Hero(): JSX.Element {
 					</div>
 				</div>
 			</div>
-			<div className='relative w-full h-64 sm:h-72 md:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 lg:h-full'>
-				<img className='w-full h-full object-cover' src='/coverphoto.jpg' alt='Logo' />
+			<div className='relative w-full h-64 sm:h-72 md:h-96 lg:absolute lg:inset-y-20 lg:right-0 lg:w-1/2 lg:h-5/6'>
+				<Image className='object-cover' src='/coverphoto.jpg' layout='fill' alt='Logo' />
 			</div>
 		</main>
 	);
