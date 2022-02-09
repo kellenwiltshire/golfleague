@@ -22,13 +22,13 @@ export default function HolesInput({
 }): JSX.Element {
 	return (
 		<>
-			<div className='col-span-1 flex shadow-sm rounded-md'>
-				<div className='flex-shrink-0 flex items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='m-1 flex h-24 w-52 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					Hole 1
 				</div>
-				<div className='flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-r-md'>
+				<div className='flex flex-1 items-center justify-between rounded-r-md border border-gray-200 bg-white'>
 					<div className='flex-1 px-4 py-2 text-sm'>
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Chip In: </span>
 							<input
 								id='hole1Chip'
@@ -43,11 +43,11 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeOne.chip}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Birdie </span>
 							<input
 								id='hole1Birdie'
@@ -62,20 +62,20 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeOne.birdie}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className='col-span-1 flex shadow-sm rounded-md'>
-				<div className='flex-shrink-0 flex items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='m-1 flex h-24 w-52 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					Hole 2
 				</div>
-				<div className='flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-r-md'>
+				<div className='flex flex-1 items-center justify-between rounded-r-md border border-gray-200 bg-white'>
 					<div className='flex-1 px-4 py-2 text-sm'>
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Chip In: </span>
 							<input
 								id='hole2Chip'
@@ -90,11 +90,11 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeTwo.chip}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Birdie </span>
 							<input
 								id='hole2Birdie'
@@ -109,20 +109,20 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeTwo.birdie}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className='col-span-1 flex shadow-sm rounded-md'>
-				<div className='flex-shrink-0 flex items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='m-1 flex h-24 w-52 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					Hole 3
 				</div>
-				<div className='flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-r-md'>
+				<div className='flex flex-1 items-center justify-between rounded-r-md border border-gray-200 bg-white'>
 					<div className='flex-1 px-4 py-2 text-sm'>
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Chip In: </span>
 							<input
 								id='hole3Chip'
@@ -137,11 +137,11 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeThree.chip}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Birdie </span>
 							<input
 								id='hole3Birdie'
@@ -156,20 +156,20 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeThree.birdie}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className='col-span-1 flex shadow-sm rounded-md'>
-				<div className='flex-shrink-0 flex items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='m-1 flex h-24 w-52 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					Hole 4
 				</div>
-				<div className='flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-r-md'>
+				<div className='flex flex-1 items-center justify-between rounded-r-md border border-gray-200 bg-white'>
 					<div className='flex-1 px-4 py-2 text-sm'>
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Chip In: </span>
 							<input
 								id='hole4Chip'
@@ -184,11 +184,11 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeFour.chip}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Birdie </span>
 							<input
 								id='hole4Birdie'
@@ -203,20 +203,20 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeFour.birdie}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className='col-span-1 flex shadow-sm rounded-md'>
-				<div className='flex-shrink-0 flex items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='m-1 flex h-24 w-52 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					Hole 5
 				</div>
-				<div className='flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-r-md'>
+				<div className='flex flex-1 items-center justify-between rounded-r-md border border-gray-200 bg-white'>
 					<div className='flex-1 px-4 py-2 text-sm'>
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Chip In: </span>
 							<input
 								id='hole5Chip'
@@ -231,11 +231,11 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeFive.chip}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Birdie </span>
 							<input
 								id='hole5Birdie'
@@ -250,20 +250,20 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeFive.birdie}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className='col-span-1 flex shadow-sm rounded-md'>
-				<div className='flex-shrink-0 flex items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='m-1 flex h-24 w-52 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					Hole 6
 				</div>
-				<div className='flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-r-md'>
+				<div className='flex flex-1 items-center justify-between rounded-r-md border border-gray-200 bg-white'>
 					<div className='flex-1 px-4 py-2 text-sm'>
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Chip In: </span>
 							<input
 								id='hole16hip'
@@ -278,11 +278,11 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeSix.chip}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Birdie </span>
 							<input
 								id='hole6Birdie'
@@ -297,20 +297,20 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeSix.birdie}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className='col-span-1 flex shadow-sm rounded-md'>
-				<div className='flex-shrink-0 flex items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='m-1 flex h-24 w-52 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					Hole 7
 				</div>
-				<div className='flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-r-md'>
+				<div className='flex flex-1 items-center justify-between rounded-r-md border border-gray-200 bg-white'>
 					<div className='flex-1 px-4 py-2 text-sm'>
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Chip In: </span>
 							<input
 								id='hole7Chip'
@@ -325,11 +325,11 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeSeven.chip}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Birdie </span>
 							<input
 								id='hole7Birdie'
@@ -344,20 +344,20 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeSeven.birdie}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className='col-span-1 flex shadow-sm rounded-md'>
-				<div className='flex-shrink-0 flex items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='m-1 flex h-24 w-52 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					Hole 8
 				</div>
-				<div className='flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-r-md'>
+				<div className='flex flex-1 items-center justify-between rounded-r-md border border-gray-200 bg-white'>
 					<div className='flex-1 px-4 py-2 text-sm'>
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Chip In: </span>
 							<input
 								id='hole8Chip'
@@ -372,11 +372,11 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeEight.chip}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Birdie </span>
 							<input
 								id='hole8Birdie'
@@ -391,20 +391,20 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeEight.birdie}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className='col-span-1 flex shadow-sm rounded-md'>
-				<div className='flex-shrink-0 flex items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='m-1 flex h-24 w-52 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					Hole 9
 				</div>
-				<div className='flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-r-md'>
+				<div className='flex flex-1 items-center justify-between rounded-r-md border border-gray-200 bg-white'>
 					<div className='flex-1 px-4 py-2 text-sm'>
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Chip In: </span>
 							<input
 								id='hole9Chip'
@@ -419,11 +419,11 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeNine.chip}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 
-						<div className='flex flex-row h-10 w-full justify-between align-middle'>
+						<div className='flex h-10 w-full flex-row justify-between align-middle'>
 							<span>Birdie </span>
 							<input
 								id='hole9Birdie'
@@ -438,7 +438,7 @@ export default function HolesInput({
 									});
 								}}
 								checked={holeNine.birdie}
-								className='focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded'
+								className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 							/>
 						</div>
 					</div>

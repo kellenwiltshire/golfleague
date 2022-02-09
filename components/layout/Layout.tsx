@@ -23,7 +23,7 @@ export default function Layout({ setSignedIn, signedIn, children }): JSX.Element
 								<NewsProvider>
 									<SpecialFunctionProvider>
 										<Navbar setSignedIn={setSignedIn} signedIn={signedIn} />
-										<div>{children}</div>
+										<main className='flex justify-center'>{children}</main>
 										<Footer />
 									</SpecialFunctionProvider>
 								</NewsProvider>

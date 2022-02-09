@@ -67,14 +67,13 @@ export default function AdminPage({
 		return <div>LOADING...</div>;
 	} else {
 		return (
-			<div className='py-10'>
+			<div className='flex w-full flex-row flex-wrap justify-center py-10'>
 				<UserHeader />
-
-				<div className='flex-grow w-full max-w-7xl mx-auto xl:px-8 lg:flex'>
+				<div className='w-full max-w-7xl flex-grow lg:flex xl:px-8'>
 					<div className='sm:pl-6 lg:pl-8 xl:pl-0'>
 						<div className='flex items-center justify-between'>
 							<div className='flex-1 space-y-8'>
-								<div className='space-y-8 sm:space-y-0 sm:flex sm:justify-between sm:items-center xl:block xl:space-y-8'>
+								<div className='space-y-8 sm:flex sm:items-center sm:justify-between sm:space-y-0 xl:block xl:space-y-8'>
 									<Siderbar openTab={openTab} setOpenTab={setOpenTab} navigation={adminNav} />
 								</div>
 							</div>
