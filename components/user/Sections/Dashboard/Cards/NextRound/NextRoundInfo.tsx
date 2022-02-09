@@ -1,9 +1,7 @@
 import React from 'react';
 
 export default function NextRoundInfo({ nextRound }): JSX.Element {
-	console.log(nextRound);
-
-	if (nextRound.course) {
+	if (nextRound && nextRound.course) {
 		let game = '';
 		if (nextRound.game) {
 			game = nextRound.game.replaceAll('_', ' ');

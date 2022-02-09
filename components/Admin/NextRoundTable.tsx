@@ -183,7 +183,7 @@ export default function NextRoundTable(): JSX.Element {
 
 	const nextRound = findNextRound(schedule);
 
-	if (nextRound.course) {
+	if (nextRound && nextRound.course) {
 		const findUsers = allUsers.filter((user) => {
 			for (let i = 0; i < user.availability.length; i++) {
 				if (user.availability[i].date === nextRound.date && user.availability[i].available) {
