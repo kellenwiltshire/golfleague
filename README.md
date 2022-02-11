@@ -4,6 +4,8 @@ Custom Web App for a Golf League. This site allows it's users to enter their sco
 
 This Example is based off the site created for Women On Par, a Golf group from Toronto, Ontario.
 
+See how to try it out on [my portfolio](https://kellenwiltshire.com/projects/golfleague)
+
 ## Lessons Learned
 
 This is the largest project I have worked on. It combines many different aspects from database and authentication to user input and file generation.
