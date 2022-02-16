@@ -9,16 +9,45 @@ export default function Hero(): JSX.Element {
 					<h1 className='text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl'>
 						<span className='block xl:inline'>Golf League Tracker</span>
 					</h1>
+					<div>
+						<p className='mx-auto mt-3 max-w-md text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl'>
+					Custom Web App for a Golf League. This site allows it&apos;s users to enter their score and set their availability for the following week. The Admin&apos;s are able to generate a schedule and post news for its members.</p>
+
 					<p className='mx-auto mt-3 max-w-md text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl'>
-						Look out a ball is coming straight for you! Cheating on the next hole Get a new Sand Iron Phil Mickelson
-						Pull out your 3-wood and.... Condor Waggle your hips and swing Swing quickly, Start your backswing, take it
-						slow. Arnold Palmer While drinking beer Completely missed the ball, oops! And your caddie gets cross. Splash
-						shot Pretend nothing just happened and smile. To distract your opponent Get your 5 wood &quot;Get in the
-						hole!&quot;.
+						This Site was created for Women On Par, a Golf group from Toronto, Ontario.
 					</p>
-					<p className='mx-auto mt-3 max-w-md text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl'>
-						Golf & Membership Group
-					</p>
+					</div>
+
+
+<div className='mx-auto mt-3 max-w-md text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl'>
+	<p>
+
+Admin Account Login
+	</p>
+<p>
+email: Admin@admin.com
+</p>
+<p>
+password: Admin1234
+</p>
+
+ </div>
+<div className='mx-auto mt-3 max-w-md text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl'>
+	<p>
+
+User Account Login
+	</p>
+	<p>
+	email: email1@email.com
+	</p>
+	<p>
+
+ password: Test1234
+	</p>
+
+					</div>
+
+					<p className='mx-auto mt-3 max-w-md text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl'>Try it out!</p>
 
 					<div className='mt-10 sm:flex sm:justify-center lg:justify-start'>
 						<div className='rounded-md shadow'>
