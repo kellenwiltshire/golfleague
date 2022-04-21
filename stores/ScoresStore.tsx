@@ -9,6 +9,10 @@ class ScoreStore {
 		makeAutoObservable(this);
 	}
 
+	get getScores() {
+		return this.scores;
+	}
+
 	updateScore(score: Array<Score>) {
 		this.scores = score;
 	}

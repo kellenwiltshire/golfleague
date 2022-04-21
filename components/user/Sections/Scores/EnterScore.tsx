@@ -7,7 +7,6 @@ export default function EnterScore({
 	userScores,
 	lastScheduledRound,
 	setSuccess,
-
 	setFailure,
 	setSubmitSuccess,
 }): JSX.Element {

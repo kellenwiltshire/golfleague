@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { toJS } from 'mobx';
 import { FlagIcon } from '@heroicons/react/outline';
-import {
-	useAllScoresContext,
-	useScheduleContext,
-	useScoreContext,
-} from '@/context/Store';
 import {
 	findLastScheduledRound,
 	findPriorRoundResults,
@@ -14,12 +10,13 @@ import {
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useScoreStore } from '@/stores/ScoresStore';
 import { useAllScoresStore } from '@/stores/AllScoresStore';
+import { observer } from 'mobx-react-lite';
 
-export default function PriorRound(): JSX.Element {
-	const scores = useScoreStore().scores;
-	const allScores = useAllScoresStore().allScores;
+const PriorRound: FC = observer(() => {
+	const scores = toJS(useScoreStore().scores);
+	const allScores = toJS(useAllScoresStore().allScores);
 	const priorRound = findPriorRound(scores);
-	const schedule = useScheduleStore().schedule;
+	const schedule = toJS(useScheduleStore().schedule);
 
 	interface User {
 		user: {
@@ -30,6 +27,7 @@ export default function PriorRound(): JSX.Element {
 	}
 
 	const [winner, setWinner] = useState<User>();
+	console.log('Winner: ', winner);
 
 	const priorRoundDate = findLastScheduledRound(schedule);
 
@@ -198,4 +196,6 @@ export default function PriorRound(): JSX.Element {
 			</div>
 		);
 	}
-}
+});
+
+export default PriorRound;

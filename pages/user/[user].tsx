@@ -22,7 +22,7 @@ import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useScoreStore } from '@/stores/ScoresStore';
 import { useNewsStore } from '@/stores/NewsStore';
 import { useSpecialFunctionsStore } from '@/stores/SpecialFunctionsStore';
-import { useAllScoresStore } from '@/stores/AllScoresStore';
+import { AllScoresStore, useAllScoresStore } from '@/stores/AllScoresStore';
 
 const navigation = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -51,8 +51,6 @@ export default function User({
 	const newsStore = useNewsStore();
 	const specialFunctionsStore = useSpecialFunctionsStore();
 	const allScoresStore = useAllScoresStore();
-
-	console.log(specFunctions);
 
 	const [loading, setLoading] = useState(true);
 

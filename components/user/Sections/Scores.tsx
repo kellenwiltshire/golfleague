@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
 import EnterScore from './Scores/EnterScore';
 import ScoresList from './Scores/ScoresList';
-import {
-	useScheduleContext,
-	useScoreContext,
-	useUpdateScoreContext,
-	useUserContext,
-} from '@/context/Store';
 import { findLastScheduledRound } from '@/utils/sortingFunctions';
 import SaveSuccess from '@/components/Notifications/SaveSuccess';
 import SaveFail from '@/components/Notifications/SaveFail';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useScoreStore } from '@/stores/ScoresStore';
+import { useUserStore } from '@/stores/UserStore';
+import { toJS } from 'mobx';
 
 export default function Scores(): JSX.Element {
-	const schedule = useScheduleStore().schedule;
-	const scores = useScoreStore().scores;
+	const schedule = toJS(useScheduleStore().schedule);
+	const scores = toJS(useScoreStore().scores);
 	// const updateScores = useUpdateScoreContext();
-	const user = useUserContext();
+	const user = toJS(useUserStore().user);
 
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
