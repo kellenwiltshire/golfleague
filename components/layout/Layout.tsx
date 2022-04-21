@@ -1,12 +1,4 @@
-import {
-	ScoreProvider,
-	ScheduleProvider,
-	AllScoresProvider,
-	AllUsersProvider,
-	CoursesProvider,
-	NewsProvider,
-	SpecialFunctionProvider,
-} from '@/context/Store';
+import { AllUsersProvider, CoursesProvider } from '@/context/Store';
 import React from 'react';
 import Footer from './Footer';
 import Navbar from './Navbar';

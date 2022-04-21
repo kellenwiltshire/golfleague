@@ -1,5 +1,4 @@
-import { useAllScoresContext, useScheduleContext } from '@/context/Store';
-import { AllScoresStore, useAllScoresStore } from '@/stores/AllScoresStore';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import {
 	completedSchedule,

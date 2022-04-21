@@ -4,11 +4,7 @@ import SearchInput from '@/components/Inputs/SearchInput';
 import { useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import { findLastScheduledRound } from '@/utils/sortingFunctions';
-import {
-	useAllScoresContext,
-	useCoursesContext,
-	useScheduleContext,
-} from '@/context/Store';
+import { useCoursesContext } from '@/context/Store';
 import SaveSuccess from '../Notifications/SaveSuccess';
 import SaveFail from '../Notifications/SaveFail';
 import Modal from '../Modals/Modal';
@@ -234,6 +230,8 @@ export default function UserScores(): JSX.Element {
 												interface Hole {
 													birdie: boolean;
 													chip: boolean;
+													hole: number;
+													id: number;
 												}
 												interface Birdies {
 													hole: Hole[];

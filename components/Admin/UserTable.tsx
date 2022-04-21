@@ -2,7 +2,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import EditUserForm from '../Forms/EditUserForm';
 import Modal from '../Modals/Modal';
 import { useEffect, useState } from 'react';
-import { useAllScoresContext, useAllUsersContext } from '@/context/Store';
+import { useAllUsersContext } from '@/context/Store';
 import RegisterUserForm from '../Forms/RegisterUser';
 import DeleteUser from '../Modals/DeleteUser';
 import SaveFail from '../Notifications/SaveFail';
