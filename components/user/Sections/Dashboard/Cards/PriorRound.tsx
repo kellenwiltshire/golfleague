@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { FlagIcon } from '@heroicons/react/outline';
-import { useAllScoresContext, useScheduleContext, useScoreContext } from '@/context/Store';
+import {
+	useAllScoresContext,
+	useScheduleContext,
+	useScoreContext,
+} from '@/context/Store';
 import {
 	findLastScheduledRound,
 	findPriorRoundResults,
 	findPriorRound,
 	findPriorRoundWinner,
 } from '@/utils/sortingFunctions';
+import { useScheduleStore } from '@/stores/ScheduleStore';
 
 export default function PriorRound(): JSX.Element {
 	const scores = useScoreContext();
 	const allScores = useAllScoresContext();
 	const priorRound = findPriorRound(scores);
-	const schedule = useScheduleContext();
+	const schedule = useScheduleStore().schedule;
 
 	interface User {
 		user: {
@@ -26,7 +31,10 @@ export default function PriorRound(): JSX.Element {
 
 	const priorRoundDate = findLastScheduledRound(schedule);
 
-	const priorRoundScores = findPriorRoundResults(allScores, priorRoundDate.date);
+	const priorRoundScores = findPriorRoundResults(
+		allScores,
+		priorRoundDate.date,
+	);
 
 	useEffect(() => {
 		setWinner(findPriorRoundWinner(priorRoundScores, priorRoundDate));
@@ -57,9 +65,9 @@ export default function PriorRound(): JSX.Element {
 		const numChipIns = getChipIns();
 
 		return (
-			<div className='sm:rounded-tr-lg relative group bg-white p-6'>
+			<div className='group relative bg-white p-6 sm:rounded-tr-lg'>
 				<div>
-					<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
+					<span className='inline-flex rounded-lg p-3 ring-4 ring-white'>
 						<FlagIcon className='h-6 w-6' aria-hidden='true' />
 					</span>
 				</div>
@@ -69,8 +77,9 @@ export default function PriorRound(): JSX.Element {
 						Prior Round
 					</h3>
 					<p className='mt-2 text-sm text-gray-500'>
-						Your last round was at {priorRound?.course?.name} with a score of {priorRound?.score}. You had {numBirdies}{' '}
-						Birdies and {numChipIns} Chip Ins.
+						Your last round was at {priorRound?.course?.name} with a score of{' '}
+						{priorRound?.score}. You had {numBirdies} Birdies and {numChipIns}{' '}
+						Chip Ins.
 					</p>
 				</div>
 				{winner ? (
@@ -80,7 +89,8 @@ export default function PriorRound(): JSX.Element {
 							Results
 						</h3>
 						<p className='mt-2 text-sm text-gray-500'>
-							The winning Golfer was {winner.user.first_name} {winner.user.last_name} with a score of {winner.score}
+							The winning Golfer was {winner.user.first_name}{' '}
+							{winner.user.last_name} with a score of {winner.score}
 						</p>
 						<p className='mt-2 text-sm text-gray-500'>
 							Players with Birdies:{' '}
@@ -124,9 +134,9 @@ export default function PriorRound(): JSX.Element {
 		);
 	} else {
 		return (
-			<div className='sm:rounded-tr-lg relative group bg-white p-6'>
+			<div className='group relative bg-white p-6 sm:rounded-tr-lg'>
 				<div>
-					<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
+					<span className='inline-flex rounded-lg p-3 ring-4 ring-white'>
 						<FlagIcon className='h-6 w-6' aria-hidden='true' />
 					</span>
 				</div>
@@ -144,7 +154,8 @@ export default function PriorRound(): JSX.Element {
 							Results
 						</h3>
 						<p className='mt-2 text-sm text-gray-500'>
-							The winning Golfer was {winner.user.first_name} {winner.user.last_name} with a score of {winner.score}
+							The winning Golfer was {winner.user.first_name}{' '}
+							{winner.user.last_name} with a score of {winner.score}
 						</p>
 						<p className='mt-2 text-sm text-gray-500'>
 							Players with Birdies:{' '}

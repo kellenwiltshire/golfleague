@@ -5,6 +5,7 @@ import { XIcon } from '@heroicons/react/outline';
 import { useEffect, useState } from 'react';
 import TeetimeSchedule from '../TeeTimeGenerater/TeetimeSchedule';
 import Modal from '../Modals/Modal';
+import { useScheduleStore } from '@/stores/ScheduleStore';
 
 //For testing purposes
 const golfers = [
@@ -160,7 +161,8 @@ const golfers = [
 
 export default function NextRoundTable(): JSX.Element {
 	const allUsers = useAllUsersContext();
-	const schedule = useScheduleContext();
+	// const schedule = useScheduleContext();
+	const schedule = useScheduleStore().schedule;
 	const [users, setUsers] = useState(allUsers);
 
 	const [scheduleOpen, setScheduleOpen] = useState(false);
@@ -186,7 +188,10 @@ export default function NextRoundTable(): JSX.Element {
 	if (nextRound && nextRound.course) {
 		const findUsers = allUsers.filter((user) => {
 			for (let i = 0; i < user.availability.length; i++) {
-				if (user.availability[i].date === nextRound.date && user.availability[i].available) {
+				if (
+					user.availability[i].date === nextRound.date &&
+					user.availability[i].available
+				) {
 					return user;
 				}
 			}
@@ -227,7 +232,9 @@ export default function NextRoundTable(): JSX.Element {
 		};
 
 		const generateScheduleClicked = () => {
-			setTeeTimeSchedule(generateSchedule(golfers, nextRound, nextRound.course));
+			setTeeTimeSchedule(
+				generateSchedule(golfers, nextRound, nextRound.course),
+			);
 
 			setScheduleOpen(!scheduleOpen);
 		};
@@ -236,39 +243,43 @@ export default function NextRoundTable(): JSX.Element {
 			<div className='flex flex-col'>
 				{scheduleOpen ? (
 					<Modal open={scheduleOpen} setOpen={setScheduleOpen}>
-						<TeetimeSchedule teeTimes={teeTimeSchedule} nextRound={nextRound} setScheduleOpen={setScheduleOpen} />
+						<TeetimeSchedule
+							teeTimes={teeTimeSchedule}
+							nextRound={nextRound}
+							setScheduleOpen={setScheduleOpen}
+						/>
 					</Modal>
 				) : null}
 				<div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-					<div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
+					<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
 						<div className='mb-3'>
 							Next Round is: {nextRound.date} at {nextRound.course.name}
 						</div>
 						<button
 							onClick={() => generateScheduleClicked()}
-							className='inline-flex items-center px-6 py-2 border border-transparent text-sm rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4 ml-auto'
+							className='mb-4 ml-auto inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
 						>
 							Generate Tee-Times
 						</button>
-						<div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+						<div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
 							<table className='min-w-full divide-y divide-gray-200'>
 								<thead className='bg-gray-50'>
 									<tr>
 										<th
 											scope='col'
-											className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+											className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 										>
 											Name
 										</th>
 										<th
 											scope='col'
-											className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+											className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 										>
 											Email
 										</th>
 										<th
 											scope='col'
-											className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+											className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 										>
 											Remove
 										</th>
@@ -276,19 +287,24 @@ export default function NextRoundTable(): JSX.Element {
 								</thead>
 								<tbody>
 									{users.map((user, userIdx) => (
-										<tr key={user.email} className={userIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-											<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+										<tr
+											key={user.email}
+											className={userIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+										>
+											<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
 												{user.first_name} {user.last_name}
 											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{user.email}</td>
-											<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
+												{user.email}
+											</td>
+											<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
 												<button
 													onClick={() => removeUserFromAvailability(user)}
-													className='group flex items-center px-3 py-2 text-sm font-medium w-full'
+													className='group flex w-full items-center px-3 py-2 text-sm font-medium'
 												>
 													<XIcon
-														className='text-gray-400 group-hover:text-gray-500
-										flex-shrink-0 h-6 w-6'
+														className='h-6 w-6
+										flex-shrink-0 text-gray-400 group-hover:text-gray-500'
 													/>
 												</button>
 											</td>
@@ -310,7 +326,9 @@ export default function NextRoundTable(): JSX.Element {
 			date: 'Tuesday',
 		};
 		const generateScheduleClicked = () => {
-			setTeeTimeSchedule(generateSchedule(golfers, sampleNextRound, sampleCourse));
+			setTeeTimeSchedule(
+				generateSchedule(golfers, sampleNextRound, sampleCourse),
+			);
 
 			setScheduleOpen(!scheduleOpen);
 		};
@@ -318,37 +336,41 @@ export default function NextRoundTable(): JSX.Element {
 			<div className='flex flex-col'>
 				{scheduleOpen ? (
 					<Modal open={scheduleOpen} setOpen={setScheduleOpen}>
-						<TeetimeSchedule teeTimes={teeTimeSchedule} nextRound={sampleNextRound} setScheduleOpen={setScheduleOpen} />
+						<TeetimeSchedule
+							teeTimes={teeTimeSchedule}
+							nextRound={sampleNextRound}
+							setScheduleOpen={setScheduleOpen}
+						/>
 					</Modal>
 				) : null}
 				<div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-					<div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
+					<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
 						<div className='mb-3'>Next Round is: Not Yet Scheduled</div>
 						<button
 							onClick={() => generateScheduleClicked()}
-							className='inline-flex items-center px-6 py-2 border border-transparent text-sm rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4 ml-auto'
+							className='mb-4 ml-auto inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
 						>
 							Generate Tee-Times
 						</button>
-						<div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+						<div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
 							<table className='min-w-full divide-y divide-gray-200'>
 								<thead className='bg-gray-50'>
 									<tr>
 										<th
 											scope='col'
-											className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+											className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 										>
 											Name
 										</th>
 										<th
 											scope='col'
-											className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+											className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 										>
 											Email
 										</th>
 										<th
 											scope='col'
-											className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+											className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 										>
 											Remove
 										</th>
@@ -356,16 +378,21 @@ export default function NextRoundTable(): JSX.Element {
 								</thead>
 								<tbody>
 									{users.map((user, userIdx) => (
-										<tr key={user.email} className={userIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-											<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+										<tr
+											key={user.email}
+											className={userIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+										>
+											<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
 												{user.first_name} {user.last_name}
 											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{user.email}</td>
-											<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
-												<button className='group flex items-center px-3 py-2 text-sm font-medium w-full'>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
+												{user.email}
+											</td>
+											<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
+												<button className='group flex w-full items-center px-3 py-2 text-sm font-medium'>
 													<XIcon
-														className='text-gray-400 group-hover:text-gray-500
-								flex-shrink-0 h-6 w-6'
+														className='h-6 w-6
+								flex-shrink-0 text-gray-400 group-hover:text-gray-500'
 													/>
 												</button>
 											</td>

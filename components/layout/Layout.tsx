@@ -18,21 +18,19 @@ export default function Layout({
 }): JSX.Element {
 	return (
 		<ScoreProvider>
-			<ScheduleProvider>
-				<AllUsersProvider>
-					<AllScoresProvider>
-						<CoursesProvider>
-							<NewsProvider>
-								<SpecialFunctionProvider>
-									<Navbar setSignedIn={setSignedIn} signedIn={signedIn} />
-									<main className='flex justify-center'>{children}</main>
-									<Footer />
-								</SpecialFunctionProvider>
-							</NewsProvider>
-						</CoursesProvider>
-					</AllScoresProvider>
-				</AllUsersProvider>
-			</ScheduleProvider>
+			<AllUsersProvider>
+				<AllScoresProvider>
+					<CoursesProvider>
+						<NewsProvider>
+							<SpecialFunctionProvider>
+								<Navbar setSignedIn={setSignedIn} signedIn={signedIn} />
+								<main className='flex justify-center'>{children}</main>
+								<Footer />
+							</SpecialFunctionProvider>
+						</NewsProvider>
+					</CoursesProvider>
+				</AllScoresProvider>
+			</AllUsersProvider>
 		</ScoreProvider>
 	);
 }

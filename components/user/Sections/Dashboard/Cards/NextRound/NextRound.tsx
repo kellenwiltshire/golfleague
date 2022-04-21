@@ -7,10 +7,12 @@ import { useScheduleContext } from '@/context/Store';
 import SaveSuccess from '@/components/Notifications/SaveSuccess';
 import SaveFail from '@/components/Notifications/SaveFail';
 import { useUserStore } from '@/stores/UserStore';
+import { useScheduleStore } from '@/stores/ScheduleStore';
 
 export default function NextRound(): JSX.Element {
-	const schedule = useScheduleContext();
+	// const schedule = useScheduleContext();
 	const user = useUserStore().user;
+	const schedule = useScheduleStore().schedule;
 
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
