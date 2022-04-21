@@ -3,13 +3,12 @@ import { CalendarIcon } from '@heroicons/react/outline';
 import { findNextRound } from '@/utils/sortingFunctions';
 import NextRoundInfo from './NextRoundInfo';
 import NextRoundForm from './NextRoundForm';
-import { useScheduleContext, useUserContext } from '@/context/Store';
+import { useScheduleContext } from '@/context/Store';
 import SaveSuccess from '@/components/Notifications/SaveSuccess';
 import SaveFail from '@/components/Notifications/SaveFail';
 import { useUserStore } from '@/stores/UserStore';
 
 export default function NextRound(): JSX.Element {
-	// const user = useUserContext();
 	const schedule = useScheduleContext();
 
 	const userStore = useUserStore();
