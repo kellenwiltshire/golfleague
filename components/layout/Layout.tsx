@@ -17,20 +17,16 @@ export default function Layout({
 	children,
 }): JSX.Element {
 	return (
-		<ScoreProvider>
-			<AllUsersProvider>
-				<AllScoresProvider>
-					<CoursesProvider>
-						<NewsProvider>
-							<SpecialFunctionProvider>
-								<Navbar setSignedIn={setSignedIn} signedIn={signedIn} />
-								<main className='flex justify-center'>{children}</main>
-								<Footer />
-							</SpecialFunctionProvider>
-						</NewsProvider>
-					</CoursesProvider>
-				</AllScoresProvider>
-			</AllUsersProvider>
-		</ScoreProvider>
+		<AllUsersProvider>
+			<AllScoresProvider>
+				<CoursesProvider>
+					<SpecialFunctionProvider>
+						<Navbar setSignedIn={setSignedIn} signedIn={signedIn} />
+						<main className='flex justify-center'>{children}</main>
+						<Footer />
+					</SpecialFunctionProvider>
+				</CoursesProvider>
+			</AllScoresProvider>
+		</AllUsersProvider>
 	);
 }

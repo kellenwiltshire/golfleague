@@ -20,6 +20,7 @@ import {
 import { useUserStore } from '@/stores/UserStore';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useScoreStore } from '@/stores/ScoresStore';
+import { useNewsStore } from '@/stores/NewsStore';
 
 const navigation = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -38,15 +39,16 @@ export default function User({
 	// const updateUser = useUpdateUserContext();
 	// const updateSchedule = useUpdateScheduleContext();
 	// const updateScore = useUpdateScoreContext();
-	const updateNews = useUpdateNewsContext();
+	// const updateNews = useUpdateNewsContext();
 	const updateSpecialFunctions = useUpdateSpecialContext();
 	const updateAllScores = useUpdateAllScoresContext();
 
 	const userStore = useUserStore();
 	const scheduleStore = useScheduleStore();
 	const scoreStore = useScoreStore();
+	const newsStore = useNewsStore();
 
-	console.log(allScores);
+	console.log(specFunctions);
 
 	const [loading, setLoading] = useState(true);
 
@@ -54,7 +56,7 @@ export default function User({
 		// updateScore(scores);
 		// updateUser(user);
 		// updateSchedule(schedules);
-		updateNews(news);
+		// updateNews(news);
 		updateSpecialFunctions(specFunctions);
 		updateAllScores(allScores);
 		setLoading(false);
@@ -62,6 +64,7 @@ export default function User({
 		userStore.updateUser(user);
 		scheduleStore.updateSchedule(schedules);
 		scoreStore.updateScore(scores);
+		newsStore.updateNews(news);
 	}, []);
 
 	const [openTab, setOpenTab] = useState(1);

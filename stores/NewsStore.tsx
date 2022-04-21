@@ -16,7 +16,7 @@ class NewsStore {
 
 const NewsStoreContext = createContext<NewsStore>(new NewsStore());
 
-const NewsScoreProvider: FC<{ store: NewsStore }> = ({ store, children }) => {
+const NewsStoreProvider: FC<{ store: NewsStore }> = ({ store, children }) => {
 	return (
 		<NewsStoreContext.Provider value={store}>
 			{children}
@@ -28,4 +28,4 @@ const useNewsStore = () => {
 	return useContext(NewsStoreContext);
 };
 
-export { NewsStore, NewsScoreProvider, useNewsStore };
+export { NewsStore, NewsStoreProvider, useNewsStore };
