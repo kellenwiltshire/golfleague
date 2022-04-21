@@ -1,8 +1,11 @@
-import { useUserContext } from '@/context/Store';
+// import { useUserContext } from '@/context/Store';
+import { useUserStore } from '@/stores/UserStore';
 import React from 'react';
 
 export default function UserHeader(): JSX.Element {
-	const user = useUserContext();
+	const userStore = useUserStore();
+
+	const user = userStore.user;
 
 	return (
 		<header className='mx-2 w-full max-w-7xl flex-grow lg:flex xl:mx-0 xl:px-8'>
@@ -10,7 +13,9 @@ export default function UserHeader(): JSX.Element {
 				<div className='flex items-start space-x-5'>
 					<div className='pt-1.5'>
 						<h1 className='text-2xl font-bold text-gray-900'>{`${user.first_name} ${user.last_name}`}</h1>
-						<p className='hidden text-sm font-medium text-gray-500 md:block'>{user.email}</p>
+						<p className='hidden text-sm font-medium text-gray-500 md:block'>
+							{user.email}
+						</p>
 					</div>
 				</div>
 			</div>

@@ -40,7 +40,7 @@ export default function User({
 	const updateSpecialFunctions = useUpdateSpecialContext();
 	const updateAllScores = useUpdateAllScoresContext();
 
-	const useStore = useUserStore();
+	const userStore = useUserStore();
 
 	console.log(user);
 
@@ -55,7 +55,7 @@ export default function User({
 		updateAllScores(allScores);
 		setLoading(false);
 
-		useStore.updateUser(user);
+		userStore.updateUser(user);
 	}, []);
 
 	const [openTab, setOpenTab] = useState(1);
