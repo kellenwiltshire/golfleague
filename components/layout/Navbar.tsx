@@ -2,9 +2,9 @@ import { Fragment, useEffect, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
-import { useUpdateUserContext, useUserContext } from '@/context/Store';
 import { destroyCookie, parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
+import { useUserStore } from '@/stores/UserStore';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -15,8 +15,9 @@ export default function Navbar({ signedIn, setSignedIn }): JSX.Element {
 	const jwt = cookie.jwt;
 	const router = useRouter();
 
-	const updateUser = useUpdateUserContext();
-	const user = useUserContext();
+	const userStore = useUserStore();
+
+	const user = userStore.user;
 
 	const [activeTab, setActiveTab] = useState(1);
 	const [userNavUrl, setUserNavUrl] = useState('');
@@ -52,7 +53,7 @@ export default function Navbar({ signedIn, setSignedIn }): JSX.Element {
 				});
 				const user = await req.json();
 
-				updateUser(user);
+				userStore.updateUser(user);
 				if (user.role.type === 'admin') {
 					setUserNavUrl(`/admin/${user.id}`);
 				} else {
@@ -94,11 +95,11 @@ export default function Navbar({ signedIn, setSignedIn }): JSX.Element {
 		<Disclosure as='nav' className='bg-white shadow'>
 			{({ open }) => (
 				<>
-					<div className='max-w-7xl mx-auto px-2 sm:px-6 lg:px-8'>
-						<div className='relative flex justify-between h-16'>
+					<div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
+						<div className='relative flex h-16 justify-between'>
 							<div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
 								{/* Mobile menu button */}
-								<Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'>
+								<Disclosure.Button className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'>
 									<span className='sr-only'>Open main menu</span>
 									{open ? (
 										<XIcon className='block h-6 w-6' aria-hidden='true' />
@@ -107,8 +108,8 @@ export default function Navbar({ signedIn, setSignedIn }): JSX.Element {
 									)}
 								</Disclosure.Button>
 							</div>
-							<div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
-								<div className='flex-shrink-0 flex items-center'>
+							<div className='flex flex-1 items-center justify-center sm:items-stretch sm:justify-start'>
+								<div className='flex flex-shrink-0 items-center'>
 									<Link href='/'>
 										<a>Golf League Tracker</a>
 									</Link>
@@ -122,8 +123,8 @@ export default function Navbar({ signedIn, setSignedIn }): JSX.Element {
 												<a
 													className={classNames(
 														activeTab === item.num
-															? 'border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium'
-															: 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
+															? 'inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900'
+															: 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700',
 													)}
 												>
 													{item.name}
@@ -133,11 +134,11 @@ export default function Navbar({ signedIn, setSignedIn }): JSX.Element {
 									})}
 								</div>
 							</div>
-							<div className='absolute z-10 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
+							<div className='absolute inset-y-0 right-0 z-10 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
 								{/* Profile dropdown */}
-								<Menu as='div' className='ml-3 relative'>
+								<Menu as='div' className='relative ml-3'>
 									<div>
-										<Menu.Button className='bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+										<Menu.Button className='flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
 											<span className='sr-only'>Open user menu</span>
 											<img
 												className='h-8 w-8 rounded-full'
@@ -155,13 +156,13 @@ export default function Navbar({ signedIn, setSignedIn }): JSX.Element {
 										leaveFrom='transform opacity-100 scale-100'
 										leaveTo='transform opacity-0 scale-95'
 									>
-										<Menu.Items className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
+										<Menu.Items className='absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
 											{signedIn ? (
 												<>
 													<Menu.Item>
 														{({ active }) => (
 															<Link href={userNavUrl}>
-																<a className='hover:bg-gray-100 block px-4 py-2 text-sm text-gray-700'>
+																<a className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'>
 																	Your Dashboard
 																</a>
 															</Link>
@@ -174,7 +175,7 @@ export default function Navbar({ signedIn, setSignedIn }): JSX.Element {
 																onClick={signOut}
 																className={classNames(
 																	active ? 'bg-gray-100' : '',
-																	'block px-4 py-2 text-sm text-gray-700 w-full text-left',
+																	'block w-full px-4 py-2 text-left text-sm text-gray-700',
 																)}
 															>
 																Sign Out
@@ -205,15 +206,15 @@ export default function Navbar({ signedIn, setSignedIn }): JSX.Element {
 					</div>
 
 					<Disclosure.Panel className='sm:hidden'>
-						<div className='pt-2 pb-4 space-y-1'>
+						<div className='space-y-1 pt-2 pb-4'>
 							{navigation.map((item) => {
 								return (
 									<Link href={item.href} key={item.num}>
 										<a
 											className={classNames(
 												activeTab === item.num
-													? 'bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium'
-													: 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium',
+													? 'block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700'
+													: 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700',
 											)}
 										>
 											{item.name}
