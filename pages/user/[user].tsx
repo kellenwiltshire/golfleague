@@ -17,6 +17,7 @@ import {
 	useUpdateSpecialContext,
 	useUpdateAllScoresContext,
 } from '@/context/Store';
+import { useUserStore } from '@/stores/UserStore';
 
 const navigation = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -32,12 +33,14 @@ export default function User({
 	specFunctions,
 	allScores,
 }) {
-	const updateUser = useUpdateUserContext();
+	// const updateUser = useUpdateUserContext();
 	const updateSchedule = useUpdateScheduleContext();
 	const updateScore = useUpdateScoreContext();
 	const updateNews = useUpdateNewsContext();
 	const updateSpecialFunctions = useUpdateSpecialContext();
 	const updateAllScores = useUpdateAllScoresContext();
+
+	const useStore = useUserStore();
 
 	console.log(user);
 
@@ -45,12 +48,14 @@ export default function User({
 
 	useEffect(() => {
 		updateScore(scores);
-		updateUser(user);
+		// updateUser(user);
 		updateSchedule(schedules);
 		updateNews(news);
 		updateSpecialFunctions(specFunctions);
 		updateAllScores(allScores);
 		setLoading(false);
+
+		useStore.updateUser(user);
 	}, []);
 
 	const [openTab, setOpenTab] = useState(1);

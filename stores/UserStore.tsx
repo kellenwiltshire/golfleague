@@ -1,4 +1,4 @@
-import { makeObservable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { createContext, useContext, FC } from 'react';
 
 interface User {
@@ -33,7 +33,7 @@ class UserStore {
 	user: User;
 
 	constructor() {
-		makeObservable(this);
+		makeAutoObservable(this);
 	}
 
 	get userInfo() {

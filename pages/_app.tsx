@@ -9,12 +9,22 @@ Router.events.on('routeChangeStart', nProgress.start);
 Router.events.on('routeChangeError', nProgress.done);
 Router.events.on('routeChangeComplete', nProgress.done);
 
+import { UserStore, UserStoreProvider } from '@/stores/UserStore';
+
+const userStore = new UserStore();
+
 function MyApp({ Component, pageProps }) {
 	const [signedIn, setSignedIn] = useState(false);
 	return (
-		<Layout signedIn={signedIn} setSignedIn={setSignedIn}>
-			<Component {...pageProps} signedIn={signedIn} setSignedIn={setSignedIn} />
-		</Layout>
+		<UserStoreProvider store={userStore}>
+			<Layout signedIn={signedIn} setSignedIn={setSignedIn}>
+				<Component
+					{...pageProps}
+					signedIn={signedIn}
+					setSignedIn={setSignedIn}
+				/>
+			</Layout>
+		</UserStoreProvider>
 	);
 }
 
