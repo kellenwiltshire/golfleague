@@ -11,11 +11,12 @@ import { findLastScheduledRound } from '@/utils/sortingFunctions';
 import SaveSuccess from '@/components/Notifications/SaveSuccess';
 import SaveFail from '@/components/Notifications/SaveFail';
 import { useScheduleStore } from '@/stores/ScheduleStore';
+import { useScoreStore } from '@/stores/ScoresStore';
 
 export default function Scores(): JSX.Element {
 	const schedule = useScheduleStore().schedule;
-	const scores = useScoreContext();
-	const updateScores = useUpdateScoreContext();
+	const scores = useScoreStore().scores;
+	// const updateScores = useUpdateScoreContext();
 	const user = useUserContext();
 
 	const [success, setSuccess] = useState(false);
@@ -44,7 +45,6 @@ export default function Scores(): JSX.Element {
 					user={user}
 					lastScheduledRound={lastScheduledRound}
 					userScores={scores}
-					updateScores={updateScores}
 					setSuccess={setSuccess}
 					setFailure={setFailure}
 					setSubmitSuccess={setSubmitSuccess}
