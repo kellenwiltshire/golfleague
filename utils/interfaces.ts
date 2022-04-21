@@ -51,3 +51,21 @@ export interface User {
 	weekendaway: boolean;
 	yearend: boolean;
 }
+
+export interface Hole {
+	birdie: boolean;
+	chip: boolean;
+	hole: number;
+	id: number;
+}
+export interface Score {
+	course: Course;
+	created_at: string;
+	date: string;
+	holes: Array<Hole>;
+	id: number;
+	published_at: string;
+	score: number;
+	updated_at: string;
+	user: User;
+}

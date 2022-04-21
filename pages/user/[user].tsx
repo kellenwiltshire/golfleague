@@ -44,7 +44,7 @@ export default function User({
 	const userStore = useUserStore();
 	const scheduleStore = useScheduleStore();
 
-	console.log(schedules);
+	console.log(allScores);
 
 	const [loading, setLoading] = useState(true);
 
