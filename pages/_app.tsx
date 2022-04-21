@@ -17,12 +17,17 @@ import {
 	SpecialFunctionsStore,
 	SpecialFunctionsStoreProvider,
 } from '@/stores/SpecialFunctionsStore';
+import {
+	AllScoresStore,
+	AllScoresStoreProvider,
+} from '@/stores/AllScoresStore';
 
 const userStore = new UserStore();
 const scheduleStore = new ScheduleStore();
 const scoreStore = new ScoreStore();
 const newsStore = new NewsStore();
 const specialFunctionsStore = new SpecialFunctionsStore();
+const allScoresStore = new AllScoresStore();
 
 function MyApp({ Component, pageProps }) {
 	const [signedIn, setSignedIn] = useState(false);
@@ -32,13 +37,15 @@ function MyApp({ Component, pageProps }) {
 				<ScoreStoreProvider store={scoreStore}>
 					<NewsStoreProvider store={newsStore}>
 						<SpecialFunctionsStoreProvider store={specialFunctionsStore}>
-							<Layout signedIn={signedIn} setSignedIn={setSignedIn}>
-								<Component
-									{...pageProps}
-									signedIn={signedIn}
-									setSignedIn={setSignedIn}
-								/>
-							</Layout>
+							<AllScoresStoreProvider store={allScoresStore}>
+								<Layout signedIn={signedIn} setSignedIn={setSignedIn}>
+									<Component
+										{...pageProps}
+										signedIn={signedIn}
+										setSignedIn={setSignedIn}
+									/>
+								</Layout>
+							</AllScoresStoreProvider>
 						</SpecialFunctionsStoreProvider>
 					</NewsStoreProvider>
 				</ScoreStoreProvider>

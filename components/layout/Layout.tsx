@@ -18,15 +18,11 @@ export default function Layout({
 }): JSX.Element {
 	return (
 		<AllUsersProvider>
-			<AllScoresProvider>
-				<CoursesProvider>
-					<SpecialFunctionProvider>
-						<Navbar setSignedIn={setSignedIn} signedIn={signedIn} />
-						<main className='flex justify-center'>{children}</main>
-						<Footer />
-					</SpecialFunctionProvider>
-				</CoursesProvider>
-			</AllScoresProvider>
+			<CoursesProvider>
+				<Navbar setSignedIn={setSignedIn} signedIn={signedIn} />
+				<main className='flex justify-center'>{children}</main>
+				<Footer />
+			</CoursesProvider>
 		</AllUsersProvider>
 	);
 }

@@ -21,6 +21,8 @@ import { useUserStore } from '@/stores/UserStore';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useScoreStore } from '@/stores/ScoresStore';
 import { useNewsStore } from '@/stores/NewsStore';
+import { useSpecialFunctionsStore } from '@/stores/SpecialFunctionsStore';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
 
 const navigation = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -40,13 +42,15 @@ export default function User({
 	// const updateSchedule = useUpdateScheduleContext();
 	// const updateScore = useUpdateScoreContext();
 	// const updateNews = useUpdateNewsContext();
-	const updateSpecialFunctions = useUpdateSpecialContext();
-	const updateAllScores = useUpdateAllScoresContext();
+	// const updateSpecialFunctions = useUpdateSpecialContext();
+	// const updateAllScores = useUpdateAllScoresContext();
 
 	const userStore = useUserStore();
 	const scheduleStore = useScheduleStore();
 	const scoreStore = useScoreStore();
 	const newsStore = useNewsStore();
+	const specialFunctionsStore = useSpecialFunctionsStore();
+	const allScoresStore = useAllScoresStore();
 
 	console.log(specFunctions);
 
@@ -57,14 +61,16 @@ export default function User({
 		// updateUser(user);
 		// updateSchedule(schedules);
 		// updateNews(news);
-		updateSpecialFunctions(specFunctions);
-		updateAllScores(allScores);
+		// updateSpecialFunctions(specFunctions);
+		// updateAllScores(allScores);
 		setLoading(false);
 
 		userStore.updateUser(user);
 		scheduleStore.updateSchedule(schedules);
 		scoreStore.updateScore(scores);
 		newsStore.updateNews(news);
+		specialFunctionsStore.updateSpecialFunctions(specFunctions);
+		allScoresStore.updateScore(allScores);
 	}, []);
 
 	const [openTab, setOpenTab] = useState(1);

@@ -15,9 +15,10 @@ import Modal from '../Modals/Modal';
 import EditScoreForm from '../Forms/EditScoreForm';
 import DeleteScore from '../Modals/DeleteScore';
 import { useScheduleStore } from '@/stores/ScheduleStore';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
 
 export default function UserScores(): JSX.Element {
-	const allScores = useAllScoresContext();
+	const allScores = useAllScoresStore().allScores;
 	const schedules = useScheduleStore().schedule;
 	const courses = useCoursesContext();
 	const [scores, setScores] = useState(allScores);

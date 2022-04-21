@@ -13,10 +13,11 @@ import {
 } from '@/utils/sortingFunctions';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useScoreStore } from '@/stores/ScoresStore';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
 
 export default function PriorRound(): JSX.Element {
 	const scores = useScoreStore().scores;
-	const allScores = useAllScoresContext();
+	const allScores = useAllScoresStore().allScores;
 	const priorRound = findPriorRound(scores);
 	const schedule = useScheduleStore().schedule;
 
