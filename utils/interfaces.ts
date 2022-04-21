@@ -121,3 +121,38 @@ export interface News {
 	title: string;
 	updated_at: string;
 }
+
+export interface SpecialFunction {
+	created_at: string;
+	date: string;
+	details: string;
+	image: {
+		alternativeText: string;
+		caption: string;
+		created_at: string;
+		ext: string;
+		formats: {
+			large: MediaFormat;
+			medium: MediaFormat;
+			small: MediaFormat;
+			thumbnail: MediaFormat;
+		};
+		hash: string;
+		height: number;
+		id: number;
+		mime: string;
+		name: string;
+		previewUrl: string;
+		provider: string;
+		provider_metadata: {
+			public_id: string;
+			resource_type: string;
+		};
+		size: number;
+		updated_at: string;
+		url: string;
+		width: number;
+	};
+	name: string;
+	updated_at: string;
+}
