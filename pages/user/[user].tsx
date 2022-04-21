@@ -24,13 +24,22 @@ const navigation = [
 	{ num: 3, name: 'Settings', icon: CogIcon },
 ];
 
-export default function User({ scores, user, schedules, news, specFunctions, allScores }) {
+export default function User({
+	scores,
+	user,
+	schedules,
+	news,
+	specFunctions,
+	allScores,
+}) {
 	const updateUser = useUpdateUserContext();
 	const updateSchedule = useUpdateScheduleContext();
 	const updateScore = useUpdateScoreContext();
 	const updateNews = useUpdateNewsContext();
 	const updateSpecialFunctions = useUpdateSpecialContext();
 	const updateAllScores = useUpdateAllScoresContext();
+
+	console.log(user);
 
 	const [loading, setLoading] = useState(true);
 
@@ -53,13 +62,17 @@ export default function User({ scores, user, schedules, news, specFunctions, all
 			<div className='py-10'>
 				<UserHeader />
 				{/* 3 column wrapper */}
-				<div className='flex-grow w-full max-w-7xl mx-auto xl:px-8 lg:flex'>
+				<div className='mx-auto w-full max-w-7xl flex-grow lg:flex xl:px-8'>
 					{/* 3 column wrapper */}
-					<div className='pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0'>
+					<div className='py-6 pl-4 pr-6 sm:pl-6 lg:pl-8 xl:pl-0'>
 						<div className='flex items-center justify-between'>
 							<div className='flex-1 space-y-8'>
-								<div className='space-y-8 sm:space-y-0 sm:flex sm:justify-between sm:items-center xl:block xl:space-y-8'>
-									<Siderbar openTab={openTab} setOpenTab={setOpenTab} navigation={navigation} />
+								<div className='space-y-8 sm:flex sm:items-center sm:justify-between sm:space-y-0 xl:block xl:space-y-8'>
+									<Siderbar
+										openTab={openTab}
+										setOpenTab={setOpenTab}
+										navigation={navigation}
+									/>
 								</div>
 							</div>
 						</div>
