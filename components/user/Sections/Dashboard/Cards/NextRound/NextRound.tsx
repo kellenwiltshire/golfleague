@@ -10,10 +10,7 @@ import { useUserStore } from '@/stores/UserStore';
 
 export default function NextRound(): JSX.Element {
 	const schedule = useScheduleContext();
-
-	const userStore = useUserStore();
-
-	const user = userStore.user;
+	const user = useUserStore().user;
 
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
