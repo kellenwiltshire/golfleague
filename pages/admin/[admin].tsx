@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Siderbar from '@/components/user/Sidebar';
 import UserHeader from '@/components/user/UserHeader';
-import { CogIcon, HomeIcon, PencilIcon, UserIcon } from '@heroicons/react/outline';
+import {
+	CogIcon,
+	HomeIcon,
+	PencilIcon,
+	UserIcon,
+} from '@heroicons/react/outline';
 import Dashboard from '@/components/user/Sections/Dashboard';
 import Scores from '@/components/user/Sections/Scores';
 import Settings from '@/components/user/Sections/Settings';
@@ -19,7 +24,15 @@ import {
 	useUpdateSpecialContext,
 	useUpdateUserContext,
 } from '@/context/Store';
+import { useUserStore } from '@/stores/UserStore';
+import { useScheduleStore } from '@/stores/ScheduleStore';
+import { useScoreStore } from '@/stores/ScoresStore';
+import { useNewsStore } from '@/stores/NewsStore';
+import { useSpecialFunctionsStore } from '@/stores/SpecialFunctionsStore';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
+
 import { GetServerSideProps } from 'next';
+import { AllUsersStore, useAllUsersStore } from '@/stores/AllUsersStore';
 
 const adminNav = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -38,27 +51,31 @@ export default function AdminPage({
 	news,
 	specFunctions,
 }): JSX.Element {
-	const updateUser = useUpdateUserContext();
-	const updateSchedule = useUpdateScheduleContext();
-	const updateScore = useUpdateScoreContext();
-	const updateAllUsers = useUpdateAllUsersContext();
-	const updateAllScores = useUpdateAllScoresContext();
+	// const updateAllUsers = useUpdateAllUsersContext();
 	const updateCourses = useUpdateCoursesContext();
-	const updateNews = useUpdateNewsContext();
-	const updateSpecialFunctions = useUpdateSpecialContext();
+
+	const userStore = useUserStore();
+	const scheduleStore = useScheduleStore();
+	const scoreStore = useScoreStore();
+	const newsStore = useNewsStore();
+	const specialFunctionsStore = useSpecialFunctionsStore();
+	const allScoresStore = useAllScoresStore();
+	const allUsersStore = useAllUsersStore();
 
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		updateAllUsers(allUsers);
-		updateScore(scores);
-		updateUser(user);
-		updateSchedule(schedules);
-		updateAllScores(allScores);
 		updateCourses(courses);
-		updateNews(news);
-		updateSpecialFunctions(specFunctions);
+
 		setLoading(false);
+
+		userStore.updateUser(user);
+		scheduleStore.updateSchedule(schedules);
+		scoreStore.updateScore(scores);
+		newsStore.updateNews(news);
+		specialFunctionsStore.updateSpecialFunctions(specFunctions);
+		allScoresStore.updateScore(allScores);
+		allUsersStore.updateUsers(allUsers);
 	}, []);
 
 	const [openTab, setOpenTab] = useState(1);
@@ -74,7 +91,11 @@ export default function AdminPage({
 						<div className='flex items-center justify-between'>
 							<div className='flex-1 space-y-8'>
 								<div className='space-y-8 sm:flex sm:items-center sm:justify-between sm:space-y-0 xl:block xl:space-y-8'>
-									<Siderbar openTab={openTab} setOpenTab={setOpenTab} navigation={adminNav} />
+									<Siderbar
+										openTab={openTab}
+										setOpenTab={setOpenTab}
+										navigation={adminNav}
+									/>
 								</div>
 							</div>
 						</div>

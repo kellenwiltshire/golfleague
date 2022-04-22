@@ -7,22 +7,13 @@ import Scores from '@/components/user/Sections/Scores';
 import Settings from '@/components/user/Sections/Settings';
 import { getUserData } from '@/utils/userFetch';
 import { GetServerSideProps } from 'next';
-
 import { parseCookies } from 'nookies';
-import {
-	useUpdateScoreContext,
-	useUpdateUserContext,
-	useUpdateScheduleContext,
-	useUpdateNewsContext,
-	useUpdateSpecialContext,
-	useUpdateAllScoresContext,
-} from '@/context/Store';
 import { useUserStore } from '@/stores/UserStore';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useScoreStore } from '@/stores/ScoresStore';
 import { useNewsStore } from '@/stores/NewsStore';
 import { useSpecialFunctionsStore } from '@/stores/SpecialFunctionsStore';
-import { AllScoresStore, useAllScoresStore } from '@/stores/AllScoresStore';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
 
 const navigation = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -38,13 +29,6 @@ export default function User({
 	specFunctions,
 	allScores,
 }) {
-	// const updateUser = useUpdateUserContext();
-	// const updateSchedule = useUpdateScheduleContext();
-	// const updateScore = useUpdateScoreContext();
-	// const updateNews = useUpdateNewsContext();
-	// const updateSpecialFunctions = useUpdateSpecialContext();
-	// const updateAllScores = useUpdateAllScoresContext();
-
 	const userStore = useUserStore();
 	const scheduleStore = useScheduleStore();
 	const scoreStore = useScoreStore();
@@ -55,12 +39,6 @@ export default function User({
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		// updateScore(scores);
-		// updateUser(user);
-		// updateSchedule(schedules);
-		// updateNews(news);
-		// updateSpecialFunctions(specFunctions);
-		// updateAllScores(allScores);
 		setLoading(false);
 
 		userStore.updateUser(user);

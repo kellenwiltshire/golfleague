@@ -21,6 +21,7 @@ import {
 	AllScoresStore,
 	AllScoresStoreProvider,
 } from '@/stores/AllScoresStore';
+import { AllUsersStore, AllUsersStoreProvider } from '@/stores/AllUsersStore';
 
 const userStore = new UserStore();
 const scheduleStore = new ScheduleStore();
@@ -28,6 +29,7 @@ const scoreStore = new ScoreStore();
 const newsStore = new NewsStore();
 const specialFunctionsStore = new SpecialFunctionsStore();
 const allScoresStore = new AllScoresStore();
+const allUsersStore = new AllUsersStore();
 
 function MyApp({ Component, pageProps }) {
 	const [signedIn, setSignedIn] = useState(false);
@@ -38,13 +40,15 @@ function MyApp({ Component, pageProps }) {
 					<NewsStoreProvider store={newsStore}>
 						<SpecialFunctionsStoreProvider store={specialFunctionsStore}>
 							<AllScoresStoreProvider store={allScoresStore}>
-								<Layout signedIn={signedIn} setSignedIn={setSignedIn}>
-									<Component
-										{...pageProps}
-										signedIn={signedIn}
-										setSignedIn={setSignedIn}
-									/>
-								</Layout>
+								<AllUsersStoreProvider store={allUsersStore}>
+									<Layout signedIn={signedIn} setSignedIn={setSignedIn}>
+										<Component
+											{...pageProps}
+											signedIn={signedIn}
+											setSignedIn={setSignedIn}
+										/>
+									</Layout>
+								</AllUsersStoreProvider>
 							</AllScoresStoreProvider>
 						</SpecialFunctionsStoreProvider>
 					</NewsStoreProvider>
