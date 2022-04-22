@@ -8,6 +8,7 @@ import AddCourseForm from '../Forms/AddCourseForm';
 import EditCourseForm from '../Forms/EditCourseForm';
 import { useCoursesStore } from '@/stores/CoursesStore';
 import { toJS } from 'mobx';
+import { Course } from '@/utils/interfaces';
 
 export default function CoursesTable(): JSX.Element {
 	const [editCourseOpen, setEditCourseOpen] = useState(false);
@@ -15,8 +16,10 @@ export default function CoursesTable(): JSX.Element {
 	const [deleteCourseOpen, setDeleteCourseOpen] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
-	const [courseSelected, setCourseSelected] = useState();
-	const [courses, setCourses] = useState(toJS(useCoursesStore().courses));
+	const [courseSelected, setCourseSelected] = useState<Course>();
+	const [courses, setCourses] = useState<Course[]>(
+		toJS(useCoursesStore().courses),
+	);
 
 	useEffect(() => {
 		const sortedCourses = courses.sort((a, b) => {

@@ -2,11 +2,12 @@ import generateSchedule from '@/utils/schedule';
 import { findNextRound } from '@/utils/sortingFunctions';
 import { XIcon } from '@heroicons/react/outline';
 import { useEffect, useState } from 'react';
-import TeetimeSchedule from '../TeeTimeGenerater/TeetimeSchedule';
+import TeetimeSchedule from '../TeeTimeGenerator/TeetimeSchedule';
 import Modal from '../Modals/Modal';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { toJS } from 'mobx';
 import { useAllUsersStore } from '@/stores/AllUsersStore';
+import { User } from '@/utils/interfaces';
 
 //For testing purposes
 const golfers = [
@@ -163,7 +164,7 @@ const golfers = [
 export default function NextRoundTable(): JSX.Element {
 	const allUsers = toJS(useAllUsersStore().allUsers);
 	const schedule = toJS(useScheduleStore().schedule);
-	const [users, setUsers] = useState(allUsers);
+	const [users, setUsers] = useState<User[]>(allUsers);
 
 	const [scheduleOpen, setScheduleOpen] = useState(false);
 	interface Group {
@@ -186,7 +187,7 @@ export default function NextRoundTable(): JSX.Element {
 	const nextRound = findNextRound(schedule);
 
 	if (nextRound && nextRound.course) {
-		const findUsers = allUsers.filter((user) => {
+		const findUsers = allUsers.filter((user: User) => {
 			for (let i = 0; i < user.availability.length; i++) {
 				if (
 					user.availability[i].date === nextRound.date &&

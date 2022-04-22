@@ -4,7 +4,6 @@ import SearchInput from '@/components/Inputs/SearchInput';
 import { useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import { findLastScheduledRound } from '@/utils/sortingFunctions';
-import { useCoursesContext } from '@/context/Store';
 import SaveSuccess from '../Notifications/SaveSuccess';
 import SaveFail from '../Notifications/SaveFail';
 import Modal from '../Modals/Modal';
@@ -230,16 +229,8 @@ export default function UserScores(): JSX.Element {
 										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
 											{score.holes.map((hole) => {
 												console.log(hole);
-												interface Hole {
-													birdie: boolean;
-													chip: boolean;
-													hole: number;
-													id: number;
-												}
-												interface Birdies {
-													hole: Hole[];
-												}
-												let birdies: Birdies[] = [];
+
+												let birdies: Array<number> = [];
 												if (hole.birdie) {
 													birdies.push(hole.hole);
 												}
@@ -251,14 +242,7 @@ export default function UserScores(): JSX.Element {
 										</td>
 										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
 											{score.holes.map((hole) => {
-												interface Hole {
-													birdie: boolean;
-													chip: boolean;
-												}
-												interface ChipIn {
-													hole: Hole[];
-												}
-												let chips: ChipIn[] = [];
+												let chips: Array<number> = [];
 												if (hole.chip) {
 													chips.push(hole.hole);
 												}

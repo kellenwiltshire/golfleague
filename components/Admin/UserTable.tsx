@@ -10,15 +10,16 @@ import { getUserScores } from '@/utils/sortingFunctions';
 import { useAllScoresStore } from '@/stores/AllScoresStore';
 import { toJS } from 'mobx';
 import { useAllUsersStore } from '@/stores/AllUsersStore';
+import { User } from '@/utils/interfaces';
 
 export default function UserTable(): JSX.Element {
 	const [editUserOpen, setEditUserOpen] = useState(false);
 	const [addUserOpen, setAddUserOpen] = useState(false);
 	const [deleteUserOpen, setDeleteUserOpen] = useState(false);
-	const [userSelected, setUserSelected] = useState();
+	const [userSelected, setUserSelected] = useState<User>();
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
-	const [users, setUsers] = useState(toJS(useAllUsersStore().allUsers));
+	const [users, setUsers] = useState<User[]>(toJS(useAllUsersStore().allUsers));
 	const [userEmailOpen, setUserEmailOpen] = useState(false);
 	const allScores = toJS(useAllScoresStore().allScores);
 

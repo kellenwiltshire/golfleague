@@ -24,9 +24,13 @@ export interface Schedule {
 	updated_at: string;
 }
 
+export interface Availability {
+	date: string;
+	available: boolean;
+}
 export interface User {
 	additionalInfo: string;
-	availability: [];
+	availability: Array<Availability>;
 	blocked: boolean;
 	carpool: string;
 	confirmed: boolean;
