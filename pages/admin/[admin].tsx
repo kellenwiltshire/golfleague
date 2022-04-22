@@ -14,25 +14,17 @@ import { getAdminData } from '@/utils/userFetch';
 
 import Admin from '@/components/user/Sections/Admin';
 import { parseCookies } from 'nookies';
-import {
-	useUpdateAllScoresContext,
-	useUpdateAllUsersContext,
-	useUpdateCoursesContext,
-	useUpdateNewsContext,
-	useUpdateScheduleContext,
-	useUpdateScoreContext,
-	useUpdateSpecialContext,
-	useUpdateUserContext,
-} from '@/context/Store';
+
 import { useUserStore } from '@/stores/UserStore';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useScoreStore } from '@/stores/ScoresStore';
 import { useNewsStore } from '@/stores/NewsStore';
 import { useSpecialFunctionsStore } from '@/stores/SpecialFunctionsStore';
 import { useAllScoresStore } from '@/stores/AllScoresStore';
+import { useAllUsersStore } from '@/stores/AllUsersStore';
+import { useCoursesStore } from '@/stores/CoursesStore';
 
 import { GetServerSideProps } from 'next';
-import { AllUsersStore, useAllUsersStore } from '@/stores/AllUsersStore';
 
 const adminNav = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -51,9 +43,6 @@ export default function AdminPage({
 	news,
 	specFunctions,
 }): JSX.Element {
-	// const updateAllUsers = useUpdateAllUsersContext();
-	const updateCourses = useUpdateCoursesContext();
-
 	const userStore = useUserStore();
 	const scheduleStore = useScheduleStore();
 	const scoreStore = useScoreStore();
@@ -61,14 +50,11 @@ export default function AdminPage({
 	const specialFunctionsStore = useSpecialFunctionsStore();
 	const allScoresStore = useAllScoresStore();
 	const allUsersStore = useAllUsersStore();
+	const coursesStore = useCoursesStore();
 
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		updateCourses(courses);
-
-		setLoading(false);
-
 		userStore.updateUser(user);
 		scheduleStore.updateSchedule(schedules);
 		scoreStore.updateScore(scores);
@@ -76,6 +62,9 @@ export default function AdminPage({
 		specialFunctionsStore.updateSpecialFunctions(specFunctions);
 		allScoresStore.updateScore(allScores);
 		allUsersStore.updateUsers(allUsers);
+		coursesStore.updateCourses(courses);
+
+		setLoading(false);
 	}, []);
 
 	const [openTab, setOpenTab] = useState(1);

@@ -13,11 +13,12 @@ import DeleteScore from '../Modals/DeleteScore';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useAllScoresStore } from '@/stores/AllScoresStore';
 import { toJS } from 'mobx';
+import { useCoursesStore } from '@/stores/CoursesStore';
 
 export default function UserScores(): JSX.Element {
 	const allScores = toJS(useAllScoresStore().allScores);
 	const schedules = toJS(useScheduleStore().schedule);
-	const courses = useCoursesContext();
+	const courses = toJS(useCoursesStore().courses);
 	const [scores, setScores] = useState(allScores);
 	const [editUserScore, setEditUserScore] = useState(false);
 	const [deleteUserScore, setDeleteUserScore] = useState(false);
