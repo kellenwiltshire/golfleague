@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import ToggleSwitch from '../Buttons/Toggle';
 
-export default function EditUserForm({
-	user,
-	setSuccess,
-	setFailure,
-	setOpen,
-}): JSX.Element {
+export default function EditUserForm({ user, setSuccess, setFailure, setOpen }): JSX.Element {
 	const [firstName, setFirstName] = useState(user.first_name);
 	const [lastName, setLastName] = useState(user.last_name);
 	const [email, setEmail] = useState(user.email);
@@ -14,7 +9,7 @@ export default function EditUserForm({
 	const [carpool, setCarpool] = useState(user.carpool);
 	const [teeTimeCondition, setTeeTimeCondition] = useState(user.teeTime);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
 		const data = {
@@ -48,16 +43,14 @@ export default function EditUserForm({
 	};
 	return (
 		<>
-			<div className='min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-				<div className='max-w-md w-full space-y-8'>
+			<div className='flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
+				<div className='w-full max-w-md space-y-8'>
 					<div>
-						<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
-							Edit User
-						</h2>
+						<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>Edit User</h2>
 					</div>
 					<form className='mt-8 space-y-6' onSubmit={handleSubmit}>
 						<input type='hidden' name='remember' defaultValue='true' />
-						<div className='rounded-md shadow-sm -space-y-px'>
+						<div className='-space-y-px rounded-md shadow-sm'>
 							<div>
 								<label htmlFor='last-name' className='sr-only'>
 									First Name
@@ -68,7 +61,7 @@ export default function EditUserForm({
 									type='first-name'
 									value={firstName}
 									required
-									className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+									className='relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
 									placeholder={firstName}
 									onChange={(e) => setFirstName(e.target.value)}
 								/>
@@ -83,7 +76,7 @@ export default function EditUserForm({
 									type='last-name'
 									value={lastName}
 									required
-									className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+									className='relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500  focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
 									placeholder={lastName}
 									onChange={(e) => setLastName(e.target.value)}
 								/>
@@ -98,7 +91,7 @@ export default function EditUserForm({
 									type='text'
 									value={phone}
 									onChange={(e) => setPhone(e.target.value)}
-									className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+									className='relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500  focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
 									placeholder={phone || 'Phone Number'}
 								/>
 							</div>
@@ -113,7 +106,7 @@ export default function EditUserForm({
 									autoComplete='email'
 									value={email}
 									required
-									className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+									className='relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500  focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
 									placeholder={email}
 									onChange={(e) => setEmail(e.target.value)}
 								/>
@@ -127,26 +120,20 @@ export default function EditUserForm({
 									id='carpool'
 									name='carpool'
 									value={carpool}
-									className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+									className='relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
 									placeholder={carpool || 'Car Pool Information'}
 									onChange={(e) => setCarpool(e.target.value)}
 								/>
 							</div>
 
-							<div className='flex flex-row py-3 justify-between px-3'>
-								<label
-									htmlFor='teeTime'
-									className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-								>
+							<div className='flex flex-row justify-between py-3 px-3'>
+								<label htmlFor='teeTime' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 									Only Tee Times After 4:30?
 								</label>
-								<div className='mt-1 sm:mt-0 sm:col-span-2 flex flex-row space-x-2'>
+								<div className='mt-1 flex flex-row space-x-2 sm:col-span-2 sm:mt-0'>
 									<span> No </span>
-									<div className='max-w-lg flex'>
-										<ToggleSwitch
-											enabled={teeTimeCondition}
-											setEnabled={setTeeTimeCondition}
-										/>
+									<div className='flex max-w-lg'>
+										<ToggleSwitch enabled={teeTimeCondition} setEnabled={setTeeTimeCondition} />
 									</div>
 									<span> Yes </span>
 								</div>
@@ -157,9 +144,9 @@ export default function EditUserForm({
 							<button
 								type='submit'
 								disabled
-								className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+								className='group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
 							>
-								<span className='absolute left-0 inset-y-0 flex items-center pl-3'></span>
+								<span className='absolute inset-y-0 left-0 flex items-center pl-3'></span>
 								Update
 							</button>
 						</div>
