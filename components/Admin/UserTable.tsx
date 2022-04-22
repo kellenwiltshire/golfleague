@@ -2,7 +2,6 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import EditUserForm from '../Forms/EditUserForm';
 import Modal from '../Modals/Modal';
 import { useEffect, useState } from 'react';
-import { useAllUsersContext } from '@/context/Store';
 import RegisterUserForm from '../Forms/RegisterUser';
 import DeleteUser from '../Modals/DeleteUser';
 import SaveFail from '../Notifications/SaveFail';
@@ -10,6 +9,7 @@ import SaveSuccess from '../Notifications/SaveSuccess';
 import { getUserScores } from '@/utils/sortingFunctions';
 import { useAllScoresStore } from '@/stores/AllScoresStore';
 import { toJS } from 'mobx';
+import { useAllUsersStore } from '@/stores/AllUsersStore';
 
 export default function UserTable(): JSX.Element {
 	const [editUserOpen, setEditUserOpen] = useState(false);
@@ -18,7 +18,7 @@ export default function UserTable(): JSX.Element {
 	const [userSelected, setUserSelected] = useState();
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
-	const [users, setUsers] = useState(useAllUsersContext());
+	const [users, setUsers] = useState(toJS(useAllUsersStore().allUsers));
 	const [userEmailOpen, setUserEmailOpen] = useState(false);
 	const allScores = toJS(useAllScoresStore().allScores);
 

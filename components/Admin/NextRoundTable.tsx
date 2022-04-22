@@ -1,4 +1,3 @@
-import { useAllUsersContext, useScheduleContext } from '@/context/Store';
 import generateSchedule from '@/utils/schedule';
 import { findNextRound } from '@/utils/sortingFunctions';
 import { XIcon } from '@heroicons/react/outline';
@@ -6,6 +5,8 @@ import { useEffect, useState } from 'react';
 import TeetimeSchedule from '../TeeTimeGenerater/TeetimeSchedule';
 import Modal from '../Modals/Modal';
 import { useScheduleStore } from '@/stores/ScheduleStore';
+import { toJS } from 'mobx';
+import { useAllUsersStore } from '@/stores/AllUsersStore';
 
 //For testing purposes
 const golfers = [
@@ -160,8 +161,8 @@ const golfers = [
 ];
 
 export default function NextRoundTable(): JSX.Element {
-	const allUsers = useAllUsersContext();
-	const schedule = useScheduleStore().schedule;
+	const allUsers = toJS(useAllUsersStore().allUsers);
+	const schedule = toJS(useScheduleStore().schedule);
 	const [users, setUsers] = useState(allUsers);
 
 	const [scheduleOpen, setScheduleOpen] = useState(false);
