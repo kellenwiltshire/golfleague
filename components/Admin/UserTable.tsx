@@ -9,6 +9,7 @@ import SaveFail from '../Notifications/SaveFail';
 import SaveSuccess from '../Notifications/SaveSuccess';
 import { getUserScores } from '@/utils/sortingFunctions';
 import { useAllScoresStore } from '@/stores/AllScoresStore';
+import { toJS } from 'mobx';
 
 export default function UserTable(): JSX.Element {
 	const [editUserOpen, setEditUserOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function UserTable(): JSX.Element {
 	const [failure, setFailure] = useState(false);
 	const [users, setUsers] = useState(useAllUsersContext());
 	const [userEmailOpen, setUserEmailOpen] = useState(false);
-	const allScores = useAllScoresStore().allScores;
+	const allScores = toJS(useAllScoresStore().allScores);
 
 	useEffect(() => {
 		const sortedUsers = users.sort((a, b) => {

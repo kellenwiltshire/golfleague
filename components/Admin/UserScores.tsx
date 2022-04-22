@@ -12,10 +12,11 @@ import EditScoreForm from '../Forms/EditScoreForm';
 import DeleteScore from '../Modals/DeleteScore';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useAllScoresStore } from '@/stores/AllScoresStore';
+import { toJS } from 'mobx';
 
 export default function UserScores(): JSX.Element {
-	const allScores = useAllScoresStore().allScores;
-	const schedules = useScheduleStore().schedule;
+	const allScores = toJS(useAllScoresStore().allScores);
+	const schedules = toJS(useScheduleStore().schedule);
 	const courses = useCoursesContext();
 	const [scores, setScores] = useState(allScores);
 	const [editUserScore, setEditUserScore] = useState(false);

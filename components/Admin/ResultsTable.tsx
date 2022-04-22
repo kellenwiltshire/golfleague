@@ -5,11 +5,12 @@ import {
 	findPriorRoundResults,
 	findPriorRoundWinner,
 } from '@/utils/sortingFunctions';
+import { toJS } from 'mobx';
 import React from 'react';
 
 export default function ResultsTable(): JSX.Element {
-	const allScores = useAllScoresStore().allScores;
-	const schedule = useScheduleStore().schedule;
+	const allScores = toJS(useAllScoresStore().allScores);
+	const schedule = toJS(useScheduleStore().schedule);
 
 	const completedRounds = completedSchedule(schedule);
 	return (

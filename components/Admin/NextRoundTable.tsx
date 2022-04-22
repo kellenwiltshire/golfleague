@@ -161,7 +161,6 @@ const golfers = [
 
 export default function NextRoundTable(): JSX.Element {
 	const allUsers = useAllUsersContext();
-	// const schedule = useScheduleContext();
 	const schedule = useScheduleStore().schedule;
 	const [users, setUsers] = useState(allUsers);
 
