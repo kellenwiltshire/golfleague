@@ -160,3 +160,8 @@ export interface SpecialFunction {
 	name: string;
 	updated_at: string;
 }
+
+export interface TeeTime {
+	golfers: Array<User>;
+	teeTime: string;
+}

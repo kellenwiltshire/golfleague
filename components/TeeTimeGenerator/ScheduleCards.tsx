@@ -1,17 +1,19 @@
+import { TeeTime, User } from '@/utils/interfaces';
 import React from 'react';
 
 export default function ScheduleCards({ schedule, waitingList }): JSX.Element {
 	const newWaitingList = waitingList.reverse();
+	console.log(schedule);
 	return (
-		<div className='flex w-full justify-center flex-row flex-wrap'>
-			{schedule.map((teeTime) => {
+		<div className='flex w-full flex-row flex-wrap justify-center'>
+			{schedule.map((teeTime: TeeTime) => {
 				return (
-					<div key={teeTime.teeTime} className='flex shadow-sm rounded-md m-2 w-1/4'>
-						<div className='flex-shrink-0 flex flex-col items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+					<div key={teeTime.teeTime} className='m-2 flex w-1/4 rounded-md shadow-sm'>
+						<div className='flex w-16 flex-shrink-0 flex-col items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 							<p>{teeTime.teeTime}</p>
 						</div>
-						<div className='flex-1 flex flex-col justify-center border border-gray-200 bg-white rounded-r-md truncate'>
-							{teeTime.golfers.map((golfer) => {
+						<div className='flex flex-1 flex-col justify-center truncate rounded-r-md border border-gray-200 bg-white'>
+							{teeTime.golfers.map((golfer: User) => {
 								return (
 									<p key={golfer.first_name} className='mx-1'>
 										{golfer.first_name} {golfer.last_name}
@@ -22,12 +24,12 @@ export default function ScheduleCards({ schedule, waitingList }): JSX.Element {
 					</div>
 				);
 			})}
-			<div className='col-span-1 flex shadow-sm rounded-md m-2 w-1/4'>
-				<div className='flex-shrink-0 flex flex-col items-center justify-center w-16 text-black text-sm font-medium rounded-l-md border'>
+			<div className='col-span-1 m-2 flex w-1/4 rounded-md shadow-sm'>
+				<div className='flex w-16 flex-shrink-0 flex-col items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					<p>Waiting List</p>
 				</div>
-				<div className='flex-1 flex flex-col justify-center border border-gray-200 bg-white rounded-r-md truncate'>
-					{newWaitingList.map((golfer) => {
+				<div className='flex flex-1 flex-col justify-center truncate rounded-r-md border border-gray-200 bg-white'>
+					{newWaitingList.map((golfer: User) => {
 						return (
 							<p key={golfer.first_name} className='mx-1'>
 								{golfer.first_name} {golfer.last_name}
