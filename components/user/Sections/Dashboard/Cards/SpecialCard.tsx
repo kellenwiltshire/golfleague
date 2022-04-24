@@ -1,4 +1,3 @@
-import { useSpecialContext } from '@/context/Store';
 import { findNextSpecialEvent } from '@/utils/sortingFunctions';
 import { NewspaperIcon } from '@heroicons/react/outline';
 import React from 'react';
@@ -13,8 +12,7 @@ export default function SpecialCard(): JSX.Element {
 
 	if (recentSpecialFunction) {
 		const length = 100;
-		const shortBody =
-			recentSpecialFunction.details.substring(0, length) + '...';
+		const shortBody = recentSpecialFunction.details.substring(0, length) + '...';
 
 		return (
 			<Link href='/specialfunctions'>
@@ -30,12 +28,8 @@ export default function SpecialCard(): JSX.Element {
 								<span className='inset-0' aria-hidden='true' />
 								Special Functions
 							</h3>
-							<p className='mt-2 text-xl text-gray-500'>
-								{recentSpecialFunction.name}
-							</p>
-							<ReactMarkdown className='mt-2 text-sm text-gray-500'>
-								{shortBody}
-							</ReactMarkdown>
+							<p className='mt-2 text-xl text-gray-500'>{recentSpecialFunction.name}</p>
+							<ReactMarkdown className='mt-2 text-sm text-gray-500'>{shortBody}</ReactMarkdown>
 						</div>
 					</div>
 				</a>
@@ -54,9 +48,7 @@ export default function SpecialCard(): JSX.Element {
 						<span className='inset-0' aria-hidden='true' />
 						Special Functions
 					</h3>
-					<p className='mt-2 text-xl text-gray-500'>
-						No Upcoming Special Functions
-					</p>
+					<p className='mt-2 text-xl text-gray-500'>No Upcoming Special Functions</p>
 				</div>
 			</div>
 		);

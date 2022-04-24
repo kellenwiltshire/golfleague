@@ -1,4 +1,3 @@
-import { useNewsContext } from '@/context/Store';
 import { findMostRecentNews } from '@/utils/sortingFunctions';
 import { NewspaperIcon } from '@heroicons/react/outline';
 import React from 'react';
@@ -29,9 +28,7 @@ export default function NewsCard(): JSX.Element {
 								Recent News
 							</h3>
 							<p className='mt-2 text-xl text-gray-500'>{recentNews.title}</p>
-							<ReactMarkdown className='mt-2 text-sm text-gray-500'>
-								{shortBody}
-							</ReactMarkdown>
+							<ReactMarkdown className='mt-2 text-sm text-gray-500'>{shortBody}</ReactMarkdown>
 						</div>
 					</div>
 				</a>
