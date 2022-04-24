@@ -31,7 +31,7 @@ export default function YearEndTable(): JSX.Element {
 				</Modal>
 			) : null}
 
-			<div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
+			<div className='-my-2 overflow-x-auto'>
 				<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
 					<button
 						onClick={() => setUserEmailOpen(!userEmailOpen)}

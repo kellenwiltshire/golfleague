@@ -35,12 +35,7 @@ export default function UserTable(): JSX.Element {
 		<div className='flex flex-col'>
 			{editUserOpen ? (
 				<Modal open={editUserOpen} setOpen={setEditUserOpen}>
-					<EditUserForm
-						user={userSelected}
-						setSuccess={setSuccess}
-						setFailure={setFailure}
-						setOpen={setEditUserOpen}
-					/>
+					<EditUserForm user={userSelected} setSuccess={setSuccess} setFailure={setFailure} setOpen={setEditUserOpen} />
 				</Modal>
 			) : null}
 			{addUserOpen ? (
@@ -81,7 +76,7 @@ export default function UserTable(): JSX.Element {
 
 			<SaveFail show={failure} setShow={setFailure} />
 
-			<div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
+			<div className='-my-2 overflow-x-auto'>
 				<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
 					<button
 						onClick={() => setAddUserOpen(!addUserOpen)}
@@ -96,9 +91,7 @@ export default function UserTable(): JSX.Element {
 					>
 						Email List
 					</button>
-					<div className='inline-flex items-center px-6 py-2'>
-						Number of Golfers: {users.length - 1}
-					</div>
+					<div className='inline-flex items-center px-6 py-2'>Number of Golfers: {users.length - 1}</div>
 					<div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
 						<table className='min-w-full divide-y divide-gray-200'>
 							<thead className='bg-gray-50'>
@@ -170,28 +163,15 @@ export default function UserTable(): JSX.Element {
 									}
 
 									return (
-										<tr
-											key={user.email}
-											className={userIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
-										>
+										<tr key={user.email} className={userIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 											<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
 												{user.first_name} {user.last_name}
 											</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-												{user.email}
-											</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-												{user.phone}
-											</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-												{user.carpool}
-											</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-												{numBirds}
-											</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-												{numChips}
-											</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{user.email}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{user.phone}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{user.carpool}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{numBirds}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{numChips}</td>
 
 											<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
 												<button
