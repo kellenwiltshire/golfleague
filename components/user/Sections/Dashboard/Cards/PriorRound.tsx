@@ -27,14 +27,10 @@ const PriorRound: FC = observer(() => {
 	}
 
 	const [winner, setWinner] = useState<User>();
-	console.log('Winner: ', winner);
 
 	const priorRoundDate = findLastScheduledRound(schedule);
 
-	const priorRoundScores = findPriorRoundResults(
-		allScores,
-		priorRoundDate.date,
-	);
+	const priorRoundScores = findPriorRoundResults(allScores, priorRoundDate.date);
 
 	useEffect(() => {
 		setWinner(findPriorRoundWinner(priorRoundScores, priorRoundDate));
@@ -77,9 +73,8 @@ const PriorRound: FC = observer(() => {
 						Prior Round
 					</h3>
 					<p className='mt-2 text-sm text-gray-500'>
-						Your last round was at {priorRound?.course?.name} with a score of{' '}
-						{priorRound?.score}. You had {numBirdies} Birdies and {numChipIns}{' '}
-						Chip Ins.
+						Your last round was at {priorRound?.course?.name} with a score of {priorRound?.score}. You had {numBirdies}{' '}
+						Birdies and {numChipIns} Chip Ins.
 					</p>
 				</div>
 				{winner ? (
@@ -89,8 +84,7 @@ const PriorRound: FC = observer(() => {
 							Results
 						</h3>
 						<p className='mt-2 text-sm text-gray-500'>
-							The winning Golfer was {winner.user.first_name}{' '}
-							{winner.user.last_name} with a score of {winner.score}
+							The winning Golfer was {winner.user.first_name} {winner.user.last_name} with a score of {winner.score}
 						</p>
 						<p className='mt-2 text-sm text-gray-500'>
 							Players with Birdies:{' '}
@@ -154,8 +148,7 @@ const PriorRound: FC = observer(() => {
 							Results
 						</h3>
 						<p className='mt-2 text-sm text-gray-500'>
-							The winning Golfer was {winner.user.first_name}{' '}
-							{winner.user.last_name} with a score of {winner.score}
+							The winning Golfer was {winner.user.first_name} {winner.user.last_name} with a score of {winner.score}
 						</p>
 						<p className='mt-2 text-sm text-gray-500'>
 							Players with Birdies:{' '}
