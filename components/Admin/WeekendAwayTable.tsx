@@ -9,7 +9,7 @@ export default function WeekendAwayTable(): JSX.Element {
 
 	useEffect(() => {
 		const sortedUsers = users.sort((a, b) => {
-			return a.last_name.toLowerCase() > b.last_name.toLowerCase();
+			return a.last_name.localeCompare(b.last_name);
 		});
 
 		setUsers(sortedUsers);
@@ -39,9 +39,7 @@ export default function WeekendAwayTable(): JSX.Element {
 					>
 						Email List
 					</button>
-					<div className='inline-flex items-center px-6 py-2'>
-						Number of Golfers: {attendingUsers.length}
-					</div>
+					<div className='inline-flex items-center px-6 py-2'>Number of Golfers: {attendingUsers.length}</div>
 					<div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
 						<table className='min-w-full divide-y divide-gray-200'>
 							<thead className='bg-gray-50'>
@@ -75,22 +73,13 @@ export default function WeekendAwayTable(): JSX.Element {
 							<tbody>
 								{attendingUsers.map((user, userIdx) => {
 									return (
-										<tr
-											key={user.email}
-											className={userIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
-										>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-												{user.id}
-											</td>
+										<tr key={user.email} className={userIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{user.id}</td>
 											<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
 												{user.first_name} {user.last_name}
 											</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-												{user.email}
-											</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-												{user.phone}
-											</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{user.email}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{user.phone}</td>
 										</tr>
 									);
 								})}
