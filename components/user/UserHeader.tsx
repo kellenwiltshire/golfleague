@@ -13,9 +13,7 @@ export default function UserHeader(): JSX.Element {
 				<div className='flex items-start space-x-5'>
 					<div className='pt-1.5'>
 						<h1 className='text-2xl font-bold text-gray-900'>{`${user.first_name} ${user.last_name}`}</h1>
-						<p className='hidden text-sm font-medium text-gray-500 md:block'>
-							{user.email}
-						</p>
+						<p className='hidden text-sm font-medium text-gray-500 md:block'>{user.email}</p>
 					</div>
 				</div>
 			</div>
