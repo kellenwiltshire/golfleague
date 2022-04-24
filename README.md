@@ -11,6 +11,7 @@ See how to try it out on [my portfolio](https://kellenwiltshire.com/projects/gol
 This is the largest project I have worked on. It combines many different aspects from database and authentication to user input and file generation.
 
 Throughout this project I have learned to work with Strapi and their method of authentication and use of email and media integration. I have also expanded my knowledge with NextJS and TailwindCSS.
+
 ## Features
 
 ### User and Admin Dashboard
@@ -57,6 +58,6 @@ Throughout this project I have learned to work with Strapi and their method of a
 
 ## Tech Stack
 
-Client: NextJS, TailwindCSS, Vercel
+Client: NextJS, TailwindCSS, Vercel, MobX
 
 Backend: Heroku, Strapi
