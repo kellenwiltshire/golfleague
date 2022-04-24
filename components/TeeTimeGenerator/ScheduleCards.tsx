@@ -3,7 +3,6 @@ import React from 'react';
 
 export default function ScheduleCards({ schedule, waitingList }): JSX.Element {
 	const newWaitingList = waitingList.reverse();
-	console.log(schedule);
 	return (
 		<div className='flex w-full flex-row flex-wrap justify-center'>
 			{schedule.map((teeTime: TeeTime) => {

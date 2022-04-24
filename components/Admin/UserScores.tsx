@@ -131,20 +131,9 @@ export default function UserScores(): JSX.Element {
 			<div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
 				<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
 					<div className='flex w-full flex-col md:flex-row'>
-						<SearchInput
-							inputName='Search Players'
-							inputChange={userSearchChange}
-						/>
-						<CourseFilterInput
-							inputName='Filter Courses'
-							courses={courses}
-							inputChange={courseFilterChange}
-						/>
-						<DateFilterInput
-							inputName='Filter Dates'
-							schedules={schedules}
-							inputChange={dateFilterChange}
-						/>
+						<SearchInput inputName='Search Players' inputChange={userSearchChange} />
+						<CourseFilterInput inputName='Filter Courses' courses={courses} inputChange={courseFilterChange} />
+						<DateFilterInput inputName='Filter Dates' schedules={schedules} inputChange={dateFilterChange} />
 						<div className='mx-2 mt-2 md:mx-0'>
 							<button
 								type='reset'
@@ -210,26 +199,15 @@ export default function UserScores(): JSX.Element {
 							</thead>
 							<tbody>
 								{scores.map((score, scoreIdx) => (
-									<tr
-										key={score.id}
-										className={scoreIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
-									>
-										<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
-											{score.user.id}
-										</td>
+									<tr key={score.id} className={scoreIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+										<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>{score.user.id}</td>
 										<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
 											{score.user.first_name} {score.user.last_name}
 										</td>
-										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-											{score.course.name}
-										</td>
-										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-											{score.date}
-										</td>
+										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.course.name}</td>
+										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.date}</td>
 										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
 											{score.holes.map((hole) => {
-												console.log(hole);
-
 												let birdies: Array<number> = [];
 												if (hole.birdie) {
 													birdies.push(hole.hole);
@@ -252,9 +230,7 @@ export default function UserScores(): JSX.Element {
 												});
 											})}
 										</td>
-										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-											{score.score}
-										</td>
+										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.score}</td>
 										<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
 											<button
 												onClick={() => {

@@ -52,29 +52,6 @@ const setNewPass = async (req: NextApiRequest, res: NextApiResponse) => {
 			console.log('Error Changing Password: ', error);
 			res.status(500).json(error);
 		});
-
-	// try {
-	// 	const login = await fetch(`${url}/auth/reset-password`, {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			Accept: 'application/json',
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 		body: JSON.stringify(body),
-	// 	});
-
-	// 	if (login.status < 300) {
-	// 		const loginResponse = await login.json();
-	// 		res.status(200).json(loginResponse);
-	// 	} else {
-	// 		const response = await login.json();
-
-	// 		res.status(login.status).json(response);
-	// 	}
-	// } catch (error) {
-	// 	console.log(error);
-	// 	res.status(500).json({ error: 'Error Changing Password', response: error });
-	// }
 };
 
 export default setNewPass;
