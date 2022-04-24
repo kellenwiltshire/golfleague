@@ -4,17 +4,20 @@ import SearchInput from '@/components/Inputs/SearchInput';
 import { useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import { findLastScheduledRound } from '@/utils/sortingFunctions';
-import { useAllScoresContext, useCoursesContext, useScheduleContext } from '@/context/Store';
 import SaveSuccess from '../Notifications/SaveSuccess';
 import SaveFail from '../Notifications/SaveFail';
 import Modal from '../Modals/Modal';
 import EditScoreForm from '../Forms/EditScoreForm';
 import DeleteScore from '../Modals/DeleteScore';
+import { useScheduleStore } from '@/stores/ScheduleStore';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
+import { toJS } from 'mobx';
+import { useCoursesStore } from '@/stores/CoursesStore';
 
 export default function UserScores(): JSX.Element {
-	const allScores = useAllScoresContext();
-	const schedules = useScheduleContext();
-	const courses = useCoursesContext();
+	const allScores = toJS(useAllScoresStore().allScores);
+	const schedules = toJS(useScheduleStore().schedule);
+	const courses = toJS(useCoursesStore().courses);
 	const [scores, setScores] = useState(allScores);
 	const [editUserScore, setEditUserScore] = useState(false);
 	const [deleteUserScore, setDeleteUserScore] = useState(false);
@@ -125,16 +128,16 @@ export default function UserScores(): JSX.Element {
 
 			<SaveFail show={fail} setShow={setFail} />
 
-			<div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-				<div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
-					<div className='w-full flex flex-col md:flex-row'>
+			<div className='-my-2 overflow-x-auto'>
+				<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
+					<div className='flex w-full flex-col md:flex-row'>
 						<SearchInput inputName='Search Players' inputChange={userSearchChange} />
 						<CourseFilterInput inputName='Filter Courses' courses={courses} inputChange={courseFilterChange} />
 						<DateFilterInput inputName='Filter Dates' schedules={schedules} inputChange={dateFilterChange} />
-						<div className='mt-2 mx-2 md:mx-0'>
+						<div className='mx-2 mt-2 md:mx-0'>
 							<button
 								type='reset'
-								className='inline-flex items-center px-6 py-2 border border-transparent text-sm rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 md:mt-6'
+								className='inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:mt-6'
 								onClick={resetForm}
 							>
 								Reset
@@ -142,50 +145,50 @@ export default function UserScores(): JSX.Element {
 						</div>
 					</div>
 
-					<div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+					<div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
 						<table className='min-w-full divide-y divide-gray-200'>
 							<thead className='bg-gray-50'>
 								<tr>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										User ID
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Name
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Course
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Date
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Holes Birdies (Hole No.)
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Holes Chipped (Hole No.)
 									</th>
 									<th
 										onClick={sortScores}
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer'
+										className='cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Total Score
 									</th>
@@ -197,22 +200,15 @@ export default function UserScores(): JSX.Element {
 							<tbody>
 								{scores.map((score, scoreIdx) => (
 									<tr key={score.id} className={scoreIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-										<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>{score.user.id}</td>
-										<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+										<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>{score.user.id}</td>
+										<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
 											{score.user.first_name} {score.user.last_name}
 										</td>
-										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{score.course.name}</td>
-										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{score.date}</td>
-										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.course.name}</td>
+										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.date}</td>
+										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
 											{score.holes.map((hole) => {
-												interface Hole {
-													birdie: boolean;
-													chip: boolean;
-												}
-												interface Birdies {
-													hole: Hole[];
-												}
-												let birdies: Birdies[] = [];
+												let birdies: Array<number> = [];
 												if (hole.birdie) {
 													birdies.push(hole.hole);
 												}
@@ -222,16 +218,9 @@ export default function UserScores(): JSX.Element {
 												});
 											})}
 										</td>
-										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
 											{score.holes.map((hole) => {
-												interface Hole {
-													birdie: boolean;
-													chip: boolean;
-												}
-												interface ChipIn {
-													hole: Hole[];
-												}
-												let chips: ChipIn[] = [];
+												let chips: Array<number> = [];
 												if (hole.chip) {
 													chips.push(hole.hole);
 												}
@@ -241,32 +230,32 @@ export default function UserScores(): JSX.Element {
 												});
 											})}
 										</td>
-										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{score.score}</td>
-										<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.score}</td>
+										<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
 											<button
 												onClick={() => {
 													setEditUserScore(!editUserScore);
 													setSelectedScore(score);
 												}}
-												className='group flex items-center px-3 py-2 text-sm font-medium w-full'
+												className='group flex w-full items-center px-3 py-2 text-sm font-medium'
 											>
 												<PencilIcon
-													className='text-gray-400 group-hover:text-gray-500
-									 flex-shrink-0 h-6 w-6'
+													className='h-6 w-6
+									 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
 												/>
 											</button>
 										</td>
-										<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+										<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
 											<button
 												onClick={() => {
 													setDeleteUserScore(!deleteUserScore);
 													setSelectedScore(score);
 												}}
-												className='group flex items-center px-3 py-2 text-sm font-medium w-full'
+												className='group flex w-full items-center px-3 py-2 text-sm font-medium'
 											>
 												<TrashIcon
-													className='text-gray-400 group-hover:text-gray-500
-									flex-shrink-0 h-6 w-6'
+													className='h-6 w-6
+									flex-shrink-0 text-gray-400 group-hover:text-gray-500'
 												/>
 											</button>
 										</td>

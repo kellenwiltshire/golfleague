@@ -1,8 +1,10 @@
-import { useUserContext } from '@/context/Store';
+import { useUserStore } from '@/stores/UserStore';
 import React from 'react';
 
 export default function UserHeader(): JSX.Element {
-	const user = useUserContext();
+	const userStore = useUserStore();
+
+	const user = userStore.user;
 
 	return (
 		<header className='mx-2 w-full max-w-7xl flex-grow lg:flex xl:mx-0 xl:px-8'>

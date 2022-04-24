@@ -1,12 +1,12 @@
-import { useSpecialContext } from '@/context/Store';
 import { findNextSpecialEvent } from '@/utils/sortingFunctions';
 import { NewspaperIcon } from '@heroicons/react/outline';
 import React from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import { useSpecialFunctionsStore } from '@/stores/SpecialFunctionsStore';
 
 export default function SpecialCard(): JSX.Element {
-	const specialFunctions = useSpecialContext();
+	const specialFunctions = useSpecialFunctionsStore().specialFunctions;
 
 	const recentSpecialFunction = findNextSpecialEvent(specialFunctions);
 
@@ -17,9 +17,9 @@ export default function SpecialCard(): JSX.Element {
 		return (
 			<Link href='/specialfunctions'>
 				<a>
-					<div className='sm:rounded-br-lg relative group bg-white p-6 h-full'>
+					<div className='group relative h-full bg-white p-6 sm:rounded-br-lg'>
 						<div>
-							<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
+							<span className='inline-flex rounded-lg p-3 ring-4 ring-white'>
 								<NewspaperIcon className='h-6 w-6' aria-hidden='true' />
 							</span>
 						</div>
@@ -28,7 +28,7 @@ export default function SpecialCard(): JSX.Element {
 								<span className='inset-0' aria-hidden='true' />
 								Special Functions
 							</h3>
-							<p className='mt-2 text-gray-500 text-xl'>{recentSpecialFunction.name}</p>
+							<p className='mt-2 text-xl text-gray-500'>{recentSpecialFunction.name}</p>
 							<ReactMarkdown className='mt-2 text-sm text-gray-500'>{shortBody}</ReactMarkdown>
 						</div>
 					</div>
@@ -37,9 +37,9 @@ export default function SpecialCard(): JSX.Element {
 		);
 	} else {
 		return (
-			<div className='sm:rounded-br-lg relative group bg-white p-6 h-full'>
+			<div className='group relative h-full bg-white p-6 sm:rounded-br-lg'>
 				<div>
-					<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
+					<span className='inline-flex rounded-lg p-3 ring-4 ring-white'>
 						<NewspaperIcon className='h-6 w-6' aria-hidden='true' />
 					</span>
 				</div>
@@ -48,7 +48,7 @@ export default function SpecialCard(): JSX.Element {
 						<span className='inset-0' aria-hidden='true' />
 						Special Functions
 					</h3>
-					<p className='mt-2 text-gray-500 text-xl'>No Upcoming Special Functions</p>
+					<p className='mt-2 text-xl text-gray-500'>No Upcoming Special Functions</p>
 				</div>
 			</div>
 		);

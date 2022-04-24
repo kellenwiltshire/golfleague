@@ -26,7 +26,8 @@ export function findNextRound(schedules) {
 }
 
 export function findPriorRound(scores) {
-	const scoresSorted = scores.sort((a, b) => {
+	const data = [...scores];
+	const scoresSorted = data.sort((a, b) => {
 		const aDate = Date.parse(a.date);
 		const bDate = Date.parse(b.date);
 

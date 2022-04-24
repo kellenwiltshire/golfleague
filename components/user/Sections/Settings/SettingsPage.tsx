@@ -3,11 +3,13 @@ import FormSuccess from '@/components/Modals/FormSuccess';
 import Modal from '@/components/Modals/Modal';
 import SaveFail from '@/components/Notifications/SaveFail';
 import SaveSuccess from '@/components/Notifications/SaveSuccess';
-import { useUserContext } from '@/context/Store';
+import { useUserStore } from '@/stores/UserStore';
 import React, { useState } from 'react';
 
 export default function SettingsPage(): JSX.Element {
-	const user = useUserContext();
+	const userStore = useUserStore();
+	const user = userStore.user;
+
 	const [firstName, setFirstName] = useState(user.first_name);
 	const [lastName, setLastName] = useState(user.last_name);
 	const [email, setEmail] = useState(user.email);
@@ -74,7 +76,10 @@ export default function SettingsPage(): JSX.Element {
 	};
 
 	return (
-		<form onSubmit={submitChange} className='space-y-8 divide-y divide-gray-200'>
+		<form
+			onSubmit={submitChange}
+			className='space-y-8 divide-y divide-gray-200'
+		>
 			{success ? <SaveSuccess show={success} setShow={setSuccess} /> : null}
 			{failure ? <SaveFail show={failure} setShow={setFailure} /> : null}
 
@@ -86,151 +91,189 @@ export default function SettingsPage(): JSX.Element {
 			<div className='space-y-8 divide-y divide-gray-200 sm:space-y-5'>
 				<div>
 					<div>
-						<h3 className='text-lg leading-6 font-medium text-gray-900'>User Information</h3>
+						<h3 className='text-lg font-medium leading-6 text-gray-900'>
+							User Information
+						</h3>
 					</div>
 
-					<div className='mt-6 sm:mt-5 space-y-6 sm:space-y-5'>
-						<div className='sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label htmlFor='firstName' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
+					<div className='mt-6 space-y-6 sm:mt-5 sm:space-y-5'>
+						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
+							<label
+								htmlFor='firstName'
+								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+							>
 								First Name
 							</label>
-							<div className='mt-1 sm:mt-0 sm:col-span-2'>
-								<div className='max-w-lg flex rounded-md shadow-sm'>
+							<div className='mt-1 sm:col-span-2 sm:mt-0'>
+								<div className='flex max-w-lg rounded-md shadow-sm'>
 									<input
 										type='name'
 										name='firstName'
 										id='firstName'
 										onChange={(e) => setFirstName(e.target.value)}
 										value={firstName}
-										className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3'
+										className='block w-full rounded-md border-gray-300 p-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 										placeholder={firstName}
 									/>
 								</div>
 							</div>
 						</div>
-						<div className='sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label htmlFor='lastName' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
+						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
+							<label
+								htmlFor='lastName'
+								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+							>
 								Last Name
 							</label>
-							<div className='mt-1 sm:mt-0 sm:col-span-2'>
-								<div className='max-w-lg flex rounded-md shadow-sm'>
+							<div className='mt-1 sm:col-span-2 sm:mt-0'>
+								<div className='flex max-w-lg rounded-md shadow-sm'>
 									<input
 										type='name'
 										name='lastName'
 										id='lastName'
 										onChange={(e) => setLastName(e.target.value)}
 										value={lastName}
-										className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3'
+										className='block w-full rounded-md border-gray-300 p-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 										placeholder={lastName}
 									/>
 								</div>
 							</div>
 						</div>
 
-						<div className='sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label htmlFor='email' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
+						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
+							<label
+								htmlFor='email'
+								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+							>
 								Email
 							</label>
-							<div className='mt-1 sm:mt-0 sm:col-span-2'>
-								<div className='max-w-lg flex rounded-md shadow-sm'>
+							<div className='mt-1 sm:col-span-2 sm:mt-0'>
+								<div className='flex max-w-lg rounded-md shadow-sm'>
 									<input
 										type='email'
 										name='email'
 										id='email'
 										onChange={(e) => setEmail(e.target.value)}
 										value={email}
-										className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3'
+										className='block w-full rounded-md border-gray-300 p-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 										placeholder={email}
 									/>
 								</div>
 							</div>
 						</div>
-						<div className='sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label htmlFor='phone' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
+						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
+							<label
+								htmlFor='phone'
+								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+							>
 								Phone Number
 							</label>
-							<div className='mt-1 sm:mt-0 sm:col-span-2'>
-								<div className='max-w-lg flex rounded-md shadow-sm'>
+							<div className='mt-1 sm:col-span-2 sm:mt-0'>
+								<div className='flex max-w-lg rounded-md shadow-sm'>
 									<input
 										type='phone'
 										name='phone'
 										id='phone'
 										onChange={(e) => setPhone(e.target.value)}
 										value={phone}
-										className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3'
+										className='block w-full rounded-md border-gray-300 p-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
 										placeholder={phone}
 									/>
 								</div>
 							</div>
 						</div>
 
-						<div className='sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label htmlFor='carpool' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
+						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
+							<label
+								htmlFor='carpool'
+								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+							>
 								Car Pool
 							</label>
-							<div className='mt-1 sm:mt-0 sm:col-span-2'>
-								<div className='max-w-lg flex rounded-md shadow-sm'>
+							<div className='mt-1 sm:col-span-2 sm:mt-0'>
+								<div className='flex max-w-lg rounded-md shadow-sm'>
 									<input
 										type='text'
 										name='carpool'
 										id='carpool'
 										onChange={(e) => setCarpool(e.target.value)}
 										value={carpool}
-										className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3'
-										placeholder={carpool || 'Indicate the first and last name of the person you car pool with.'}
+										className='block w-full rounded-md border-gray-300 p-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+										placeholder={
+											carpool ||
+											'Indicate the first and last name of the person you car pool with.'
+										}
 									/>
 								</div>
 							</div>
 						</div>
 
-						<div className='sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label htmlFor='teeTime' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
+						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
+							<label
+								htmlFor='teeTime'
+								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+							>
 								Only Tee Times After 4:30?
 							</label>
-							<div className='mt-1 sm:mt-0 sm:col-span-2 flex flex-row space-x-2'>
+							<div className='mt-1 flex flex-row space-x-2 sm:col-span-2 sm:mt-0'>
 								<span> No </span>
-								<div className='max-w-lg flex rounded-md shadow-sm'>
-									<ToggleSwitch enabled={teeTimeCondition} setEnabled={setTeeTimeCondition} />
+								<div className='flex max-w-lg rounded-md shadow-sm'>
+									<ToggleSwitch
+										enabled={teeTimeCondition}
+										setEnabled={setTeeTimeCondition}
+									/>
 								</div>
 								<span> Yes </span>
 							</div>
 						</div>
 
-						<div className='sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label htmlFor='weekendAway' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
+						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
+							<label
+								htmlFor='weekendAway'
+								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+							>
 								Weekend Away Attendance
 							</label>
-							<div className='mt-1 sm:mt-0 sm:col-span-2 flex flex-row space-x-2'>
+							<div className='mt-1 flex flex-row space-x-2 sm:col-span-2 sm:mt-0'>
 								<span> No </span>
-								<div className='max-w-lg flex rounded-md shadow-sm'>
-									<ToggleSwitch enabled={weekendAway} setEnabled={setWeekendAway} />
+								<div className='flex max-w-lg rounded-md shadow-sm'>
+									<ToggleSwitch
+										enabled={weekendAway}
+										setEnabled={setWeekendAway}
+									/>
 								</div>
 								<span> Yes </span>
 							</div>
 						</div>
 
-						<div className='sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label htmlFor='yearend' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
+						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
+							<label
+								htmlFor='yearend'
+								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+							>
 								Year End Banquet Attendance
 							</label>
-							<div className='mt-1 sm:mt-0 sm:col-span-2 flex flex-row space-x-2'>
+							<div className='mt-1 flex flex-row space-x-2 sm:col-span-2 sm:mt-0'>
 								<span> No </span>
-								<div className='max-w-lg flex rounded-md shadow-sm'>
+								<div className='flex max-w-lg rounded-md shadow-sm'>
 									<ToggleSwitch enabled={yearEnd} setEnabled={setYearEnd} />
 								</div>
 								<span> Yes </span>
 							</div>
 						</div>
 
-						<div className='sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label htmlFor='password' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
+						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
+							<label
+								htmlFor='password'
+								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
+							>
 								Password
 							</label>
-							<div className='mt-1 sm:mt-0 sm:col-span-2'>
+							<div className='mt-1 sm:col-span-2 sm:mt-0'>
 								<button
 									onClick={resetPassword}
 									type='button'
-									className='bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+									className='rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
 								>
 									Change/Reset Password
 								</button>
@@ -243,7 +286,7 @@ export default function SettingsPage(): JSX.Element {
 				<div className='flex justify-end'>
 					<button
 						type='submit'
-						className='ml-3 inline-flex justify-center py-2 px-8 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+						className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-8 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
 					>
 						Save
 					</button>

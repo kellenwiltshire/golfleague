@@ -1,12 +1,12 @@
-import { useNewsContext } from '@/context/Store';
 import { findMostRecentNews } from '@/utils/sortingFunctions';
 import { NewspaperIcon } from '@heroicons/react/outline';
 import React from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import { useNewsStore } from '@/stores/NewsStore';
 
 export default function NewsCard(): JSX.Element {
-	const news = useNewsContext();
+	const news = useNewsStore().news;
 
 	const recentNews = findMostRecentNews(news);
 
@@ -16,9 +16,9 @@ export default function NewsCard(): JSX.Element {
 		return (
 			<Link href='/articles'>
 				<a>
-					<div className='sm:rounded-bl-lg relative group bg-white p-6 h-full'>
+					<div className='group relative h-full bg-white p-6 sm:rounded-bl-lg'>
 						<div>
-							<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
+							<span className='inline-flex rounded-lg p-3 ring-4 ring-white'>
 								<NewspaperIcon className='h-6 w-6' aria-hidden='true' />
 							</span>
 						</div>
@@ -27,7 +27,7 @@ export default function NewsCard(): JSX.Element {
 								<span className='inset-0' aria-hidden='true' />
 								Recent News
 							</h3>
-							<p className='mt-2 text-gray-500 text-xl'>{recentNews.title}</p>
+							<p className='mt-2 text-xl text-gray-500'>{recentNews.title}</p>
 							<ReactMarkdown className='mt-2 text-sm text-gray-500'>{shortBody}</ReactMarkdown>
 						</div>
 					</div>
@@ -36,9 +36,9 @@ export default function NewsCard(): JSX.Element {
 		);
 	} else {
 		return (
-			<div className='sm:rounded-bl-lg relative group bg-white p-6 h-full'>
+			<div className='group relative h-full bg-white p-6 sm:rounded-bl-lg'>
 				<div>
-					<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
+					<span className='inline-flex rounded-lg p-3 ring-4 ring-white'>
 						<NewspaperIcon className='h-6 w-6' aria-hidden='true' />
 					</span>
 				</div>
@@ -47,7 +47,7 @@ export default function NewsCard(): JSX.Element {
 						<span className='inset-0' aria-hidden='true' />
 						Recent News
 					</h3>
-					<p className='mt-2 text-gray-500 text-xl'>No Recent News</p>
+					<p className='mt-2 text-xl text-gray-500'>No Recent News</p>
 				</div>
 			</div>
 		);

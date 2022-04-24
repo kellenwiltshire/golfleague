@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { toJS } from 'mobx';
 import { FlagIcon } from '@heroicons/react/outline';
-import { useAllScoresContext, useScheduleContext, useScoreContext } from '@/context/Store';
 import {
 	findLastScheduledRound,
 	findPriorRoundResults,
 	findPriorRound,
 	findPriorRoundWinner,
 } from '@/utils/sortingFunctions';
+import { useScheduleStore } from '@/stores/ScheduleStore';
+import { useScoreStore } from '@/stores/ScoresStore';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
+import { observer } from 'mobx-react-lite';
 
-export default function PriorRound(): JSX.Element {
-	const scores = useScoreContext();
-	const allScores = useAllScoresContext();
+const PriorRound: FC = observer(() => {
+	const scores = toJS(useScoreStore().scores);
+	const allScores = toJS(useAllScoresStore().allScores);
 	const priorRound = findPriorRound(scores);
-	const schedule = useScheduleContext();
+	const schedule = toJS(useScheduleStore().schedule);
 
 	interface User {
 		user: {
@@ -57,9 +61,9 @@ export default function PriorRound(): JSX.Element {
 		const numChipIns = getChipIns();
 
 		return (
-			<div className='sm:rounded-tr-lg relative group bg-white p-6'>
+			<div className='group relative bg-white p-6 sm:rounded-tr-lg'>
 				<div>
-					<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
+					<span className='inline-flex rounded-lg p-3 ring-4 ring-white'>
 						<FlagIcon className='h-6 w-6' aria-hidden='true' />
 					</span>
 				</div>
@@ -124,9 +128,9 @@ export default function PriorRound(): JSX.Element {
 		);
 	} else {
 		return (
-			<div className='sm:rounded-tr-lg relative group bg-white p-6'>
+			<div className='group relative bg-white p-6 sm:rounded-tr-lg'>
 				<div>
-					<span className='rounded-lg inline-flex p-3 ring-4 ring-white'>
+					<span className='inline-flex rounded-lg p-3 ring-4 ring-white'>
 						<FlagIcon className='h-6 w-6' aria-hidden='true' />
 					</span>
 				</div>
@@ -185,4 +189,6 @@ export default function PriorRound(): JSX.Element {
 			</div>
 		);
 	}
-}
+});
+
+export default PriorRound;

@@ -2,23 +2,26 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import EditUserForm from '../Forms/EditUserForm';
 import Modal from '../Modals/Modal';
 import { useEffect, useState } from 'react';
-import { useAllScoresContext, useAllUsersContext } from '@/context/Store';
 import RegisterUserForm from '../Forms/RegisterUser';
 import DeleteUser from '../Modals/DeleteUser';
 import SaveFail from '../Notifications/SaveFail';
 import SaveSuccess from '../Notifications/SaveSuccess';
 import { getUserScores } from '@/utils/sortingFunctions';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
+import { toJS } from 'mobx';
+import { useAllUsersStore } from '@/stores/AllUsersStore';
+import { User } from '@/utils/interfaces';
 
 export default function UserTable(): JSX.Element {
 	const [editUserOpen, setEditUserOpen] = useState(false);
 	const [addUserOpen, setAddUserOpen] = useState(false);
 	const [deleteUserOpen, setDeleteUserOpen] = useState(false);
-	const [userSelected, setUserSelected] = useState();
+	const [userSelected, setUserSelected] = useState<User>();
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
-	const [users, setUsers] = useState(useAllUsersContext());
+	const [users, setUsers] = useState<User[]>(toJS(useAllUsersStore().allUsers));
 	const [userEmailOpen, setUserEmailOpen] = useState(false);
-	const allScores = useAllScoresContext();
+	const allScores = toJS(useAllScoresStore().allScores);
 
 	useEffect(() => {
 		const sortedUsers = users.sort((a, b) => {
@@ -58,7 +61,7 @@ export default function UserTable(): JSX.Element {
 
 			{userEmailOpen ? (
 				<Modal open={userEmailOpen} setOpen={setUserEmailOpen}>
-					<p className='flex flex-wrap flex-row'>
+					<p className='flex flex-row flex-wrap'>
 						{users.map((user) => {
 							if (user.username === 'webdevelopment@kellenwiltshire.com') {
 								return null;
@@ -73,59 +76,59 @@ export default function UserTable(): JSX.Element {
 
 			<SaveFail show={failure} setShow={setFailure} />
 
-			<div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-				<div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
+			<div className='-my-2 overflow-x-auto'>
+				<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
 					<button
 						onClick={() => setAddUserOpen(!addUserOpen)}
-						className='inline-flex items-center px-6 py-2 border border-transparent text-sm rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4 mx-1'
+						className='mx-1 mb-4 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
 					>
 						Add New Golfer
 					</button>
 
 					<button
 						onClick={() => setUserEmailOpen(!userEmailOpen)}
-						className='inline-flex items-center px-6 py-2 border border-transparent text-sm rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4 mx-1'
+						className='mx-1 mb-4 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
 					>
 						Email List
 					</button>
 					<div className='inline-flex items-center px-6 py-2'>Number of Golfers: {users.length - 1}</div>
-					<div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+					<div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
 						<table className='min-w-full divide-y divide-gray-200'>
 							<thead className='bg-gray-50'>
 								<tr>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Name
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Email
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Phone
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Car Pool
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Birdies
 									</th>
 									<th
 										scope='col'
-										className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
 									>
 										Chip Ins
 									</th>
@@ -161,40 +164,40 @@ export default function UserTable(): JSX.Element {
 
 									return (
 										<tr key={user.email} className={userIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-											<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+											<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
 												{user.first_name} {user.last_name}
 											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{user.email}</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{user.phone}</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{user.carpool}</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{numBirds}</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{numChips}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{user.email}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{user.phone}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{user.carpool}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{numBirds}</td>
+											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{numChips}</td>
 
-											<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+											<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
 												<button
 													onClick={() => {
 														setUserSelected(user);
 														setEditUserOpen(!editUserOpen);
 													}}
-													className='group flex items-center px-3 py-2 text-sm font-medium w-full'
+													className='group flex w-full items-center px-3 py-2 text-sm font-medium'
 												>
 													<PencilIcon
-														className='text-gray-400 group-hover:text-gray-500
-									 flex-shrink-0 h-6 w-6'
+														className='h-6 w-6
+									 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
 													/>
 												</button>
 											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+											<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
 												<button
 													onClick={() => {
 														setUserSelected(user);
 														setDeleteUserOpen(!deleteUserOpen);
 													}}
-													className='group flex items-center px-3 py-2 text-sm font-medium w-full'
+													className='group flex w-full items-center px-3 py-2 text-sm font-medium'
 												>
 													<TrashIcon
-														className='text-gray-400 group-hover:text-gray-500
-									flex-shrink-0 h-6 w-6'
+														className='h-6 w-6
+									flex-shrink-0 text-gray-400 group-hover:text-gray-500'
 													/>
 												</button>
 											</td>

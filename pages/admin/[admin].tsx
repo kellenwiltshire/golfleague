@@ -9,17 +9,18 @@ import { getAdminData } from '@/utils/userFetch';
 
 import Admin from '@/components/user/Sections/Admin';
 import { parseCookies } from 'nookies';
-import {
-	useUpdateAllScoresContext,
-	useUpdateAllUsersContext,
-	useUpdateCoursesContext,
-	useUpdateNewsContext,
-	useUpdateScheduleContext,
-	useUpdateScoreContext,
-	useUpdateSpecialContext,
-	useUpdateUserContext,
-} from '@/context/Store';
+
+import { useUserStore } from '@/stores/UserStore';
+import { useScheduleStore } from '@/stores/ScheduleStore';
+import { useScoreStore } from '@/stores/ScoresStore';
+import { useNewsStore } from '@/stores/NewsStore';
+import { useSpecialFunctionsStore } from '@/stores/SpecialFunctionsStore';
+import { useAllScoresStore } from '@/stores/AllScoresStore';
+import { useAllUsersStore } from '@/stores/AllUsersStore';
+import { useCoursesStore } from '@/stores/CoursesStore';
+
 import { GetServerSideProps } from 'next';
+import { toJS } from 'mobx';
 
 const adminNav = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -38,26 +39,27 @@ export default function AdminPage({
 	news,
 	specFunctions,
 }): JSX.Element {
-	const updateUser = useUpdateUserContext();
-	const updateSchedule = useUpdateScheduleContext();
-	const updateScore = useUpdateScoreContext();
-	const updateAllUsers = useUpdateAllUsersContext();
-	const updateAllScores = useUpdateAllScoresContext();
-	const updateCourses = useUpdateCoursesContext();
-	const updateNews = useUpdateNewsContext();
-	const updateSpecialFunctions = useUpdateSpecialContext();
+	const userStore = useUserStore();
+	const scheduleStore = useScheduleStore();
+	const scoreStore = useScoreStore();
+	const newsStore = useNewsStore();
+	const specialFunctionsStore = useSpecialFunctionsStore();
+	const allScoresStore = useAllScoresStore();
+	const allUsersStore = useAllUsersStore();
+	const coursesStore = useCoursesStore();
 
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		updateAllUsers(allUsers);
-		updateScore(scores);
-		updateUser(user);
-		updateSchedule(schedules);
-		updateAllScores(allScores);
-		updateCourses(courses);
-		updateNews(news);
-		updateSpecialFunctions(specFunctions);
+		userStore.updateUser(user);
+		scheduleStore.updateSchedule(schedules);
+		scoreStore.updateScore(scores);
+		newsStore.updateNews(news);
+		specialFunctionsStore.updateSpecialFunctions(specFunctions);
+		allScoresStore.updateScore(allScores);
+		allUsersStore.updateUsers(allUsers);
+		coursesStore.updateCourses(courses);
+
 		setLoading(false);
 	}, []);
 
@@ -68,29 +70,31 @@ export default function AdminPage({
 	} else {
 		return (
 			<div className='flex w-full flex-row flex-wrap justify-center py-10'>
-				<UserHeader />
-				<div className='w-full max-w-7xl flex-grow lg:flex xl:px-8'>
-					<div className='sm:pl-6 lg:pl-8 xl:pl-0'>
-						<div className='flex items-center justify-between'>
-							<div className='flex-1 space-y-8'>
-								<div className='space-y-8 sm:flex sm:items-center sm:justify-between sm:space-y-0 xl:block xl:space-y-8'>
-									<Siderbar openTab={openTab} setOpenTab={setOpenTab} navigation={adminNav} />
+				<div className='container'>
+					<UserHeader />
+					<div className='w-full max-w-7xl flex-grow lg:flex xl:px-8'>
+						<div className='sm:pl-6 lg:pl-8 xl:pl-0'>
+							<div className='flex items-center justify-between'>
+								<div className='flex-1 space-y-8'>
+									<div className='space-y-8 sm:flex sm:items-center sm:justify-between sm:space-y-0 xl:block xl:space-y-8'>
+										<Siderbar openTab={openTab} setOpenTab={setOpenTab} navigation={adminNav} />
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div className='bg-white lg:min-w-0 lg:flex-1'>
-						<div className={openTab === 1 ? 'block' : 'hidden'}>
-							<Dashboard />
-						</div>
-						<div className={openTab === 2 ? 'block' : 'hidden'}>
-							<Scores />
-						</div>
-						<div className={openTab === 3 ? 'block' : 'hidden'}>
-							<Settings />
-						</div>
-						<div className={openTab === 4 ? 'block' : 'hidden'}>
-							<Admin />
+						<div className='bg-white lg:min-w-0 lg:flex-1'>
+							<div className={openTab === 1 ? 'block' : 'hidden'}>
+								<Dashboard />
+							</div>
+							<div className={openTab === 2 ? 'block' : 'hidden'}>
+								<Scores />
+							</div>
+							<div className={openTab === 3 ? 'block' : 'hidden'}>
+								<Settings />
+							</div>
+							<div className={openTab === 4 ? 'block' : 'hidden'}>
+								<Admin />
+							</div>
 						</div>
 					</div>
 				</div>

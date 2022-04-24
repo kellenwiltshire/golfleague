@@ -1,5 +1,7 @@
+import { Schedule } from '@/utils/interfaces';
+
 export default function DateFilterInput({ inputName, schedules, inputChange }): JSX.Element {
-	const orderDates = schedules.sort((a, b) => {
+	const orderDates = schedules.sort((a: Schedule, b: Schedule) => {
 		const aDate = Date.parse(a.date);
 		const bDate = Date.parse(b.date);
 
@@ -13,11 +15,11 @@ export default function DateFilterInput({ inputName, schedules, inputChange }): 
 			<select
 				id='dropdown'
 				name='dropdown'
-				className='mt-1 block w-2/3 md:w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'
+				className='mt-1 block w-2/3 rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm md:w-full'
 				onChange={inputChange}
 			>
 				<option>Date</option>
-				{orderDates.map((schedule) => {
+				{orderDates.map((schedule: Schedule) => {
 					return <option key={schedule.id}>{schedule.date}</option>;
 				})}
 			</select>
