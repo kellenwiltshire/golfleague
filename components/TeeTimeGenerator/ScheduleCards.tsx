@@ -4,7 +4,7 @@ import DownButton from '../Buttons/DownButton';
 import UpButton from '../Buttons/UpButton';
 
 export default function ScheduleCards({ schedule, waitingList, setScheduledRound }): JSX.Element {
-	const newWaitingList = waitingList.reverse();
+	console.log(schedule);
 
 	const handleMoveDown = (golfer) => {
 		const changeSchedule = schedule;
@@ -121,7 +121,7 @@ export default function ScheduleCards({ schedule, waitingList, setScheduledRound
 					<p>Waiting List</p>
 				</div>
 				<ul className='flex flex-1 flex-col justify-center truncate rounded-r-md border border-gray-200 bg-white'>
-					{newWaitingList.map((golfer) => {
+					{waitingList.map((golfer) => {
 						return (
 							<li key={golfer.first_name} className='mx-1'>
 								{golfer.first_name} {golfer.last_name}
