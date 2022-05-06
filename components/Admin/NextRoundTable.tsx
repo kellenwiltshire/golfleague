@@ -22,6 +22,7 @@ export default function NextRoundTable(): JSX.Element {
 	}
 
 	interface Golfer {
+		id: number;
 		first_name: string;
 		last_name: string;
 		teeTime: boolean;

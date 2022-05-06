@@ -9,10 +9,7 @@ const randomizeGolfers = (golfers) => {
 		currentIndex--;
 
 		//and swap it with the current element
-		[golfers[currentIndex], golfers[randomIndex]] = [
-			golfers[randomIndex],
-			golfers[currentIndex],
-		];
+		[golfers[currentIndex], golfers[randomIndex]] = [golfers[randomIndex], golfers[currentIndex]];
 	}
 
 	return golfers;
@@ -52,13 +49,7 @@ const addTimeInterval = (currTime, interval) => {
 		minutes -= 60 * h;
 	}
 
-	return (
-		('0' + hours).slice(-2) +
-		':' +
-		('0' + minutes).slice(-2) +
-		':' +
-		('0' + seconds).slice(-2)
-	);
+	return ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
 };
 
 const testTime = (time) => {
@@ -95,6 +86,7 @@ const filterArray = (arr1, arr2) => {
 };
 
 interface Golfer {
+	id: number;
 	first_name: string;
 	last_name: string;
 	teeTime: boolean;
@@ -110,11 +102,7 @@ interface Course {
 	interval: number;
 }
 
-export default function generateSchedule(
-	golfers: Golfer[],
-	schedule: Schedule,
-	course: Course,
-) {
+export default function generateSchedule(golfers: Golfer[], schedule: Schedule, course: Course) {
 	//Deterime Max Golfers
 	const maxGolfers = course.timeslots * 4 || 12 * 4;
 
@@ -154,9 +142,7 @@ export default function generateSchedule(
 	let teeTimeRestrictions: Golfer[] = [];
 	let unrestrictedGolfers: Golfer[] = [];
 	usableGolfers.forEach((golfer: Golfer) => {
-		golfer.teeTime
-			? teeTimeRestrictions.push(golfer)
-			: unrestrictedGolfers.push(golfer);
+		golfer.teeTime ? teeTimeRestrictions.push(golfer) : unrestrictedGolfers.push(golfer);
 	});
 
 	//Start filling a new Golfer Array with unrestricted golfers until it passes the time restriction
