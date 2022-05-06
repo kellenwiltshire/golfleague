@@ -1,4 +1,4 @@
-import { TeeTime, User } from '@/utils/interfaces';
+// import { TeeTime, User } from '@/utils/interfaces';
 import React from 'react';
 import DownButton from '../Buttons/DownButton';
 import UpButton from '../Buttons/UpButton';
@@ -96,7 +96,7 @@ export default function ScheduleCards({ schedule, waitingList, setScheduledRound
 
 	return (
 		<div className='flex w-full flex-row flex-wrap justify-center'>
-			{schedule.map((teeTime: TeeTime) => {
+			{schedule.map((teeTime) => {
 				return (
 					<div key={teeTime.teeTime} className='m-2 flex w-1/4 rounded-md shadow-sm'>
 						<div className='flex w-16 flex-shrink-0 flex-col items-center justify-center rounded-l-md border text-sm font-medium text-black'>
@@ -120,15 +120,15 @@ export default function ScheduleCards({ schedule, waitingList, setScheduledRound
 				<div className='flex w-16 flex-shrink-0 flex-col items-center justify-center rounded-l-md border text-sm font-medium text-black'>
 					<p>Waiting List</p>
 				</div>
-				<div className='flex flex-1 flex-col justify-center truncate rounded-r-md border border-gray-200 bg-white'>
-					{newWaitingList.map((golfer: User) => {
+				<ul className='flex flex-1 flex-col justify-center truncate rounded-r-md border border-gray-200 bg-white'>
+					{newWaitingList.map((golfer) => {
 						return (
-							<p key={golfer.first_name} className='mx-1'>
+							<li key={golfer.first_name} className='mx-1'>
 								{golfer.first_name} {golfer.last_name}
-							</p>
+							</li>
 						);
 					})}
-				</div>
+				</ul>
 			</div>
 		</div>
 	);
