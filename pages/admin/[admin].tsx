@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Siderbar from '@/components/user/Sidebar';
 import UserHeader from '@/components/user/UserHeader';
-import {
-	CogIcon,
-	HomeIcon,
-	PencilIcon,
-	UserIcon,
-} from '@heroicons/react/outline';
+import { CogIcon, HomeIcon, PencilIcon, UserIcon } from '@heroicons/react/outline';
 import Dashboard from '@/components/user/Sections/Dashboard';
 import Scores from '@/components/user/Sections/Scores';
 import Settings from '@/components/user/Sections/Settings';
@@ -25,6 +20,7 @@ import { useAllUsersStore } from '@/stores/AllUsersStore';
 import { useCoursesStore } from '@/stores/CoursesStore';
 
 import { GetServerSideProps } from 'next';
+import { toJS } from 'mobx';
 
 const adminNav = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -74,33 +70,31 @@ export default function AdminPage({
 	} else {
 		return (
 			<div className='flex w-full flex-row flex-wrap justify-center py-10'>
-				<UserHeader />
-				<div className='w-full max-w-7xl flex-grow lg:flex xl:px-8'>
-					<div className='sm:pl-6 lg:pl-8 xl:pl-0'>
-						<div className='flex items-center justify-between'>
-							<div className='flex-1 space-y-8'>
-								<div className='space-y-8 sm:flex sm:items-center sm:justify-between sm:space-y-0 xl:block xl:space-y-8'>
-									<Siderbar
-										openTab={openTab}
-										setOpenTab={setOpenTab}
-										navigation={adminNav}
-									/>
+				<div className='container'>
+					<UserHeader />
+					<div className='w-full max-w-7xl flex-grow lg:flex xl:px-8'>
+						<div className='sm:pl-6 lg:pl-8 xl:pl-0'>
+							<div className='flex items-center justify-between'>
+								<div className='flex-1 space-y-8'>
+									<div className='space-y-8 sm:flex sm:items-center sm:justify-between sm:space-y-0 xl:block xl:space-y-8'>
+										<Siderbar openTab={openTab} setOpenTab={setOpenTab} navigation={adminNav} />
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div className='bg-white lg:min-w-0 lg:flex-1'>
-						<div className={openTab === 1 ? 'block' : 'hidden'}>
-							<Dashboard />
-						</div>
-						<div className={openTab === 2 ? 'block' : 'hidden'}>
-							<Scores />
-						</div>
-						<div className={openTab === 3 ? 'block' : 'hidden'}>
-							<Settings />
-						</div>
-						<div className={openTab === 4 ? 'block' : 'hidden'}>
-							<Admin />
+						<div className='bg-white lg:min-w-0 lg:flex-1'>
+							<div className={openTab === 1 ? 'block' : 'hidden'}>
+								<Dashboard />
+							</div>
+							<div className={openTab === 2 ? 'block' : 'hidden'}>
+								<Scores />
+							</div>
+							<div className={openTab === 3 ? 'block' : 'hidden'}>
+								<Settings />
+							</div>
+							<div className={openTab === 4 ? 'block' : 'hidden'}>
+								<Admin />
+							</div>
 						</div>
 					</div>
 				</div>

@@ -86,7 +86,7 @@ export default function ScheduleCards({ schedule, waitingList, setScheduledRound
 
 		setScheduledRound([...changeSchedule]);
 	};
-
+  
 	return (
 		<div className='flex w-full flex-row flex-wrap justify-center'>
 			{schedule.map((teeTime) => {

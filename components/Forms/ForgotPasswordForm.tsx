@@ -66,7 +66,7 @@ export default function ForgotPasswordForm(): JSX.Element {
 								</div>
 							</div>
 
-							<div>
+							{/* <div>
 								<button
 									type='submit'
 									disabled
@@ -80,7 +80,7 @@ export default function ForgotPasswordForm(): JSX.Element {
 									</span>
 									Send Email Link
 								</button>
-							</div>
+							</div> */}
 						</form>
 					</div>
 				</div>

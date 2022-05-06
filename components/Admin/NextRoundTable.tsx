@@ -8,93 +8,7 @@ import { useScheduleStore } from '@/stores/ScheduleStore';
 import { toJS } from 'mobx';
 import { useAllUsersStore } from '@/stores/AllUsersStore';
 import { User } from '@/utils/interfaces';
-
-//For testing purposes
-const golfers = [
-	{ id: 1, first_name: 'Player', last_name: 'One', carpool: '', teeTime: false },
-	{
-		id: 2,
-		first_name: 'Player',
-		last_name: 'Two',
-		carpool: 'Player Nine',
-		teeTime: false,
-	},
-	{ id: 3, first_name: 'Player', last_name: 'Three', carpool: '', teeTime: false },
-	{ id: 4, first_name: 'Player', last_name: 'Four', carpool: '', teeTime: true },
-	{ id: 5, first_name: 'Player', last_name: 'Five', carpool: 'Player Thirteen', teeTime: false },
-	{ id: 6, first_name: 'Player', last_name: 'Six', carpool: '', teeTime: false },
-	{ id: 7, first_name: 'Player', last_name: 'Seven', carpool: '', teeTime: false },
-	{ id: 8, first_name: 'Player', last_name: 'Eight', carpool: '', teeTime: false },
-	{
-		id: 9,
-		first_name: 'Player',
-		last_name: 'Nine',
-		carpool: 'Player Two',
-		teeTime: false,
-	},
-	{ id: 10, first_name: 'Player', last_name: 'Ten', carpool: '', teeTime: true },
-	{ id: 11, first_name: 'Player', last_name: 'Eleven', carpool: '', teeTime: false },
-	{ id: 12, first_name: 'Player', last_name: 'Twelve', carpool: '', teeTime: false },
-	{
-		id: 13,
-		first_name: 'Player',
-		last_name: 'Thirteen',
-		carpool: 'Player Five',
-		teeTime: false,
-	},
-	{ id: 14, first_name: 'Player', last_name: 'Fourteen', carpool: '', teeTime: false },
-	{ id: 15, first_name: 'Player', last_name: 'Fifteen', carpool: '', teeTime: false },
-	{ id: 16, first_name: 'Player', last_name: 'Sixteen', carpool: '', teeTime: false },
-	{ id: 17, first_name: 'Player', last_name: 'Seventeen', carpool: '', teeTime: false },
-	{ id: 18, first_name: 'Player', last_name: 'Eighteen', carpool: '', teeTime: true },
-	{ id: 19, first_name: 'Player', last_name: 'Nineteen', carpool: '', teeTime: false },
-	{ id: 20, first_name: 'Player', last_name: 'Twenty', carpool: '', teeTime: false },
-	{ id: 21, first_name: 'Player', last_name: 'Twentyone', carpool: '', teeTime: false },
-	{ id: 22, first_name: 'Player', last_name: 'Twentytwo', carpool: '', teeTime: false },
-	{ id: 23, first_name: 'Player', last_name: 'Twentythree', carpool: '', teeTime: false },
-	{ id: 24, first_name: 'Player', last_name: 'TwentyFour', carpool: '', teeTime: true },
-	{ id: 25, first_name: 'Player', last_name: 'TwentyFive', carpool: '', teeTime: false },
-	{ id: 26, first_name: 'Player', last_name: 'TwentySix', carpool: '', teeTime: false },
-	{ id: 27, first_name: 'Player', last_name: 'TwentySeven', carpool: '', teeTime: false },
-	{ id: 28, first_name: 'Player', last_name: 'TwentyEight', carpool: '', teeTime: false },
-	{ id: 29, first_name: 'Player', last_name: 'TwentyNine', carpool: '', teeTime: false },
-	{ id: 30, first_name: 'Player', last_name: 'Thirty', carpool: '', teeTime: false },
-	{ id: 31, first_name: 'Player', last_name: 'ThirtyOne', carpool: '', teeTime: false },
-	{ id: 32, first_name: 'Player', last_name: 'ThirtyTwo', carpool: '', teeTime: true },
-	{ id: 33, first_name: 'Player', last_name: 'ThirtyThree', carpool: '', teeTime: false },
-	{ id: 34, first_name: 'Player', last_name: 'ThirtyFour', carpool: '', teeTime: false },
-	{ id: 35, first_name: 'Player', last_name: 'ThirtyFive', carpool: '', teeTime: false },
-	{ id: 36, first_name: 'Player', last_name: 'ThirtySix', carpool: '', teeTime: false },
-	{ id: 37, first_name: 'Player', last_name: 'ThirtySeven', carpool: '', teeTime: false },
-	{ id: 38, first_name: 'Player', last_name: 'ThirtyEight', carpool: '', teeTime: true },
-	{ id: 39, first_name: 'Player', last_name: 'ThirtyNine', carpool: '', teeTime: false },
-	{ id: 40, first_name: 'Player', last_name: 'Forty', carpool: '', teeTime: false },
-	{ id: 41, first_name: 'Player', last_name: 'FortyOne', carpool: '', teeTime: false },
-	{ id: 42, first_name: 'Player', last_name: 'FortyTwo', carpool: '', teeTime: false },
-	{
-		id: 43,
-		first_name: 'Player',
-		last_name: 'FortyThree',
-		carpool: '',
-		teeTime: false,
-	},
-	{ id: 44, first_name: 'Player', last_name: 'FortyFour', carpool: '', teeTime: false },
-	{ id: 45, first_name: 'Player', last_name: 'FortyFive', carpool: '', teeTime: false },
-	{ id: 46, first_name: 'Player', last_name: 'FortySix', carpool: '', teeTime: true },
-	{
-		id: 47,
-		first_name: 'Player',
-		last_name: 'FortySeven',
-		carpool: '',
-		teeTime: false,
-	},
-	{ id: 48, first_name: 'Player', last_name: 'FortyEight', carpool: '', teeTime: false },
-	{ id: 49, first_name: 'Player', last_name: 'FORTYNINE', carpool: '', teeTime: false },
-	{ id: 50, first_name: 'Player', last_name: 'FIFTY', carpool: '', teeTime: false },
-	{ id: 51, first_name: 'Player', last_name: 'FIFTYONE', carpool: '', teeTime: false },
-	{ id: 52, first_name: 'Player', last_name: 'FIFTYTWO', carpool: '', teeTime: true },
-	{ id: 53, first_name: 'Player', last_name: 'FIFTYTHREE', carpool: '', teeTime: false },
-];
+import { golfers } from '@/utils/testGolfers';
 
 export default function NextRoundTable(): JSX.Element {
 	const allUsers = toJS(useAllUsersStore().allUsers);
@@ -178,7 +92,7 @@ export default function NextRoundTable(): JSX.Element {
 						<TeetimeSchedule teeTimes={teeTimeSchedule} nextRound={nextRound} setScheduleOpen={setScheduleOpen} />
 					</Modal>
 				) : null}
-				<div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
+				<div className='-my-2 overflow-x-auto'>
 					<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
 						<div className='mb-3'>
 							Next Round is: {nextRound.date} at {nextRound.course.name}

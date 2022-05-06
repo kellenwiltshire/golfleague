@@ -133,7 +133,7 @@ export default function ResetPasswordForm({ setSignedIn }): JSX.Element {
 								</div>
 							</div>
 
-							<div>
+							{/* <div>
 								<button
 									type='submit'
 									disabled
@@ -147,7 +147,7 @@ export default function ResetPasswordForm({ setSignedIn }): JSX.Element {
 									</span>
 									Change Password
 								</button>
-							</div>
+							</div> */}
 						</form>
 					</div>
 				</div>
