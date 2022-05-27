@@ -2,19 +2,19 @@ export function findNextRound(schedules) {
 	const currDate = new Date();
 
 	if (schedules.length) {
-		const futureRounds = schedules.filter((round) => {
-			const date = new Date(round.date);
-			if (date > currDate) {
-				return round;
-			}
-		});
+		const futureRoundsSorted = schedules
+			.filter((round) => {
+				const date = new Date(round.date);
+				if (date > currDate) {
+					return round;
+				}
+			})
+			.sort((a, b) => {
+				const aDate = Date.parse(a.date);
+				const bDate = Date.parse(b.date);
 
-		const futureRoundsSorted = futureRounds.sort((a, b) => {
-			const aDate = Date.parse(a.date);
-			const bDate = Date.parse(b.date);
-
-			return aDate - bDate;
-		});
+				return aDate - bDate;
+			});
 
 		const nextRound = futureRoundsSorted[0];
 
@@ -58,19 +58,14 @@ export function findPriorRoundWinner(scores, round) {
 			round.game.toLowerCase() === 'count_the_hazards' ||
 			round.game.toLowerCase() === 'best_poker_hand' ||
 			round.game.toLowerCase() === 'winner_of_the_green_nine_max' ||
-			round.game.toLowerCase() ===
-				'five_points_on_the_fairway_subtract_your_putts' ||
+			round.game.toLowerCase() === 'five_points_on_the_fairway_subtract_your_putts' ||
 			round.game.toLowerCase() === 'first_on_the_green_and_two_points'
 		) {
-			const winningGolfer = scores.sort((a, b) => {
-				return b.score - a.score;
-			});
+			const winningGolfer = scores.sort((a, b) => b.score - a.score);
 
 			return winningGolfer[0];
 		} else {
-			const winningGolfer = scores.sort((a, b) => {
-				return a.score - b.score;
-			});
+			const winningGolfer = scores.sort((a, b) => a.score - b.score);
 
 			return winningGolfer[0];
 		}
@@ -105,19 +100,19 @@ export function findLastScheduledRound(schedules) {
 	const currDate = new Date();
 
 	if (schedules.length) {
-		const lastRounds = schedules.filter((round) => {
-			const date = new Date(round.date);
-			if (date < currDate) {
-				return round;
-			}
-		});
+		const lastRoundsSorted = schedules
+			.filter((round) => {
+				const date = new Date(round.date);
+				if (date < currDate) {
+					return round;
+				}
+			})
+			.sort((a, b) => {
+				const aDate = Date.parse(a.date);
+				const bDate = Date.parse(b.date);
 
-		const lastRoundsSorted = lastRounds.sort((a, b) => {
-			const aDate = Date.parse(a.date);
-			const bDate = Date.parse(b.date);
-
-			return bDate - aDate;
-		});
+				return bDate - aDate;
+			});
 
 		const lastRound = lastRoundsSorted[0];
 
@@ -155,19 +150,19 @@ export function sortNews(news) {
 export function findNextSpecialEvent(events) {
 	const currDate = new Date();
 
-	const futureEvents = events.filter((event) => {
-		const date = new Date(event.date);
-		if (date > currDate) {
-			return event;
-		}
-	});
+	const eventsSorted = events
+		.filter((event) => {
+			const date = new Date(event.date);
+			if (date > currDate) {
+				return event;
+			}
+		})
+		.sort((a, b) => {
+			const aDate = Date.parse(a.created_at);
+			const bDate = Date.parse(b.created_at);
 
-	const eventsSorted = futureEvents.sort((a, b) => {
-		const aDate = Date.parse(a.created_at);
-		const bDate = Date.parse(b.created_at);
-
-		return bDate - aDate;
-	});
+			return bDate - aDate;
+		});
 
 	return eventsSorted[0];
 }
