@@ -102,8 +102,13 @@ interface Course {
 	interval: number;
 }
 
+interface Group {
+	teeTime: string;
+	golfers: Golfer[];
+}
+
 export default function generateSchedule(golfers: Golfer[], schedule: Schedule, course: Course) {
-	//Deterime Max Golfers
+	//Determine Max Golfers
 	const maxGolfers = course.timeslots * 4 || 12 * 4;
 
 	//Create initial Variables
@@ -111,7 +116,7 @@ export default function generateSchedule(golfers: Golfer[], schedule: Schedule, 
 	const initialStartTime = schedule.start_time;
 	const interval = '00:' + ('0' + course.interval).slice(-2) + ':00';
 
-	//Create the Waiting List and Usuable Golfers Array
+	//Create the Waiting List and Usable Golfers Array
 	let waitingList: Golfer[] = [];
 	let usableGolfers: Golfer[] = [];
 
@@ -120,10 +125,7 @@ export default function generateSchedule(golfers: Golfer[], schedule: Schedule, 
 
 	//More initial variables to be filled and changed
 	let currTime = initialStartTime;
-	interface Group {
-		teeTime: string;
-		golfers: Golfer[];
-	}
+
 	let group: Group = { teeTime: currTime, golfers: [] };
 	let groupNum = 0;
 
@@ -177,10 +179,12 @@ export default function generateSchedule(golfers: Golfer[], schedule: Schedule, 
 
 	//Before setting final tee times will need to iterate through array and look for car pooling people. Once one is found, will need to find the matching person and splice them out of their current position (unless within 1-12 golfers away from original person) and splice them back in at a random interval (1-12) from original golfer to make sure they are within 3 tee times of eachother
 
-	for (let i = 0; i < newGolferArray.length; i++) {
+	// let i = 0; i < newGolferArray.length; i++
+	for (let golfer of newGolferArray) {
 		let name = '';
-		if (newGolferArray[i].carpool) {
-			name = newGolferArray[i].carpool;
+		const currentIndex = newGolferArray.indexOf(golfer);
+		if (golfer.carpool) {
+			name = golfer.carpool;
 			const golferIndex = newGolferArray.findIndex((obj) => {
 				const golferName = `${obj.first_name} ${obj.last_name}`;
 				if (golferName === name) {
@@ -190,12 +194,12 @@ export default function generateSchedule(golfers: Golfer[], schedule: Schedule, 
 				return false;
 			});
 
-			if (golferIndex > i) {
-				if (golferIndex > i + 11) {
+			if (golferIndex > currentIndex) {
+				if (golferIndex > currentIndex + 11) {
 					const newPosition = Math.floor(Math.random() * 11);
 					const golferMoving = newGolferArray[golferIndex];
 					newGolferArray.splice(golferIndex, 1);
-					newGolferArray.splice(newPosition + i, 0, golferMoving);
+					newGolferArray.splice(newPosition + currentIndex, 0, golferMoving);
 				}
 			}
 		}
