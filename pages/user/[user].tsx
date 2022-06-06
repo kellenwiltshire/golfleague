@@ -11,7 +11,6 @@ import { parseCookies } from 'nookies';
 import { useUserStore } from '@/stores/UserStore';
 import { useScheduleStore } from '@/stores/ScheduleStore';
 import { useScoreStore } from '@/stores/ScoresStore';
-import { useSpecialFunctionsStore } from '@/stores/SpecialFunctionsStore';
 import { useAllScoresStore } from '@/stores/AllScoresStore';
 
 const navigation = [
@@ -20,11 +19,10 @@ const navigation = [
 	{ num: 3, name: 'Settings', icon: CogIcon },
 ];
 
-export default function User({ scores, user, schedules, specFunctions, allScores }) {
+export default function User({ scores, user, schedules, allScores }) {
 	const userStore = useUserStore();
 	const scheduleStore = useScheduleStore();
 	const scoreStore = useScoreStore();
-	const specialFunctionsStore = useSpecialFunctionsStore();
 	const allScoresStore = useAllScoresStore();
 
 	const [loading, setLoading] = useState(true);
@@ -35,7 +33,6 @@ export default function User({ scores, user, schedules, specFunctions, allScores
 		userStore.updateUser(user);
 		scheduleStore.updateSchedule(schedules);
 		scoreStore.updateScore(scores);
-		specialFunctionsStore.updateSpecialFunctions(specFunctions);
 		allScoresStore.updateScore(allScores);
 	}, []);
 
@@ -89,7 +86,6 @@ export const getServerSideProps: GetServerSideProps = async (props) => {
 			user: userData.user,
 			schedules: userData.schedules,
 			courses: userData.courses,
-			specFunctions: userData.specialFunctions,
 			allScores: userData.allScores,
 		},
 	};

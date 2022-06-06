@@ -20,14 +20,14 @@ function runMiddleware(req, res, fn) {
 	});
 }
 
-const getNews = async (req: NextApiRequest, res: NextApiResponse) => {
+const getSpecial = async (req: NextApiRequest, res: NextApiResponse) => {
 	await runMiddleware(req, res, cors);
 	const url = process.env.DATABASE_URL;
 
 	const cookies = parseCookies({ req });
 	const jwt = cookies.jwt;
 
-	const request = await fetch(`${url}/news-items`, {
+	const request = await fetch(`${url}/special-functions`, {
 		method: 'GET',
 		headers: {
 			Authorization: `Bearer ${jwt}`,
@@ -39,4 +39,4 @@ const getNews = async (req: NextApiRequest, res: NextApiResponse) => {
 	res.json(response);
 };
 
-export default getNews;
+export default getSpecial;
