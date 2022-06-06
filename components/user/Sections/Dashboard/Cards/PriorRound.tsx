@@ -1,40 +1,36 @@
-import React, { FC, useEffect, useState } from 'react';
-import { toJS } from 'mobx';
+import React from 'react';
 import { FlagIcon } from '@heroicons/react/outline';
 import {
 	findLastScheduledRound,
 	findPriorRoundResults,
 	findPriorRound,
 	findPriorRoundWinner,
+	getUserScores,
 } from '@/utils/sortingFunctions';
-import { useScheduleStore } from '@/stores/ScheduleStore';
-import { useScoreStore } from '@/stores/ScoresStore';
-import { useAllScoresStore } from '@/stores/AllScoresStore';
-import { observer } from 'mobx-react-lite';
+import { useUserStore } from '@/stores/UserStore';
+import useSWR from 'swr';
 
-const PriorRound: FC = observer(() => {
-	const scores = toJS(useScoreStore().scores);
-	const allScores = toJS(useAllScoresStore().allScores);
+const fetcher = (url) => fetch(url).then((r) => r.json());
+
+export default function PriorRound() {
+	const { data: allScores, error: scoresError } = useSWR('/api/getScores', fetcher);
+	const { data: schedule, error: scheduleError } = useSWR('/api/getSchedule', fetcher);
+
+	const userStore = useUserStore();
+	const user = userStore.user;
+
+	if (scoresError) return <div>Failed to load Scores</div>;
+	if (scheduleError) return <div>Failed to load Schedule Info</div>;
+
+	if (!allScores || !schedule) return <div>Loading...</div>;
+
+	const scores = getUserScores(user, allScores);
 	const priorRound = findPriorRound(scores);
-	const schedule = toJS(useScheduleStore().schedule);
-
-	interface User {
-		user: {
-			first_name: string;
-			last_name: string;
-		};
-		score: number;
-	}
-
-	const [winner, setWinner] = useState<User>();
 
 	const priorRoundDate = findLastScheduledRound(schedule);
 
 	const priorRoundScores = findPriorRoundResults(allScores, priorRoundDate.date);
-
-	useEffect(() => {
-		setWinner(findPriorRoundWinner(priorRoundScores, priorRoundDate));
-	}, []);
+	const winner = findPriorRoundWinner(priorRoundScores, priorRoundDate) || null;
 
 	if (priorRound) {
 		const getBirdies = () => {
@@ -189,6 +185,4 @@ const PriorRound: FC = observer(() => {
 			</div>
 		);
 	}
-});
-
-export default PriorRound;
+}
