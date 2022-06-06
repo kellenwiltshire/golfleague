@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Siderbar from '@/components/user/Sidebar';
 import UserHeader from '@/components/user/UserHeader';
 import { CogIcon, HomeIcon, PencilIcon } from '@heroicons/react/outline';
 import Dashboard from '@/components/user/Sections/Dashboard';
 import Scores from '@/components/user/Sections/Scores';
 import Settings from '@/components/user/Sections/Settings';
-import { fetchUser } from '@/utils/userFetch';
-import { GetServerSideProps } from 'next';
-import { parseCookies } from 'nookies';
 import { useUserStore } from '@/stores/UserStore';
 import useSWR from 'swr';
 
