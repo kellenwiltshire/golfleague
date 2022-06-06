@@ -9,9 +9,6 @@ import { getUserData } from '@/utils/userFetch';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import { useUserStore } from '@/stores/UserStore';
-import { useScheduleStore } from '@/stores/ScheduleStore';
-import { useScoreStore } from '@/stores/ScoresStore';
-import { useAllScoresStore } from '@/stores/AllScoresStore';
 
 const navigation = [
 	{ num: 1, name: 'Dashboard', icon: HomeIcon },
@@ -19,11 +16,8 @@ const navigation = [
 	{ num: 3, name: 'Settings', icon: CogIcon },
 ];
 
-export default function User({ scores, user, schedules, allScores }) {
+export default function User({ user }) {
 	const userStore = useUserStore();
-	const scheduleStore = useScheduleStore();
-	const scoreStore = useScoreStore();
-	const allScoresStore = useAllScoresStore();
 
 	const [loading, setLoading] = useState(true);
 
@@ -31,9 +25,6 @@ export default function User({ scores, user, schedules, allScores }) {
 		setLoading(false);
 
 		userStore.updateUser(user);
-		scheduleStore.updateSchedule(schedules);
-		scoreStore.updateScore(scores);
-		allScoresStore.updateScore(allScores);
 	}, []);
 
 	const [openTab, setOpenTab] = useState(1);
