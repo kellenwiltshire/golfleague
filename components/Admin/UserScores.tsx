@@ -1,7 +1,7 @@
 import CourseFilterInput from '@/components/Inputs/CourseFilterInput';
 import DateFilterInput from '@/components/Inputs/DateFilterInput';
 import SearchInput from '@/components/Inputs/SearchInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 import { findLastScheduledRound } from '@/utils/sortingFunctions';
 import SaveSuccess from '../Notifications/SaveSuccess';
@@ -9,25 +9,32 @@ import SaveFail from '../Notifications/SaveFail';
 import Modal from '../Modals/Modal';
 import EditScoreForm from '../Forms/EditScoreForm';
 import DeleteScore from '../Modals/DeleteScore';
-import { useScheduleStore } from '@/stores/ScheduleStore';
-import { useAllScoresStore } from '@/stores/AllScoresStore';
-import { toJS } from 'mobx';
-import { useCoursesStore } from '@/stores/CoursesStore';
+import useSWR from 'swr';
+
+//? Issues on this page due to trying to sort and revalidate scores if they are changed/added.
+//? Docs for SWR introduce something called "mutate" which may solve the issue?
+
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function UserScores(): JSX.Element {
-	const allScores = toJS(useAllScoresStore().allScores);
-	const schedules = toJS(useScheduleStore().schedule);
-	const courses = toJS(useCoursesStore().courses);
-	const [scores, setScores] = useState(allScores);
+	const { data: allScores, error: scoresError } = useSWR('/api/getScores', fetcher);
+	const { data: schedules, error: scheduleError } = useSWR('/api/getSchedule', fetcher);
+	const { data: courses, error: coursesError } = useSWR('/api/getCourses', fetcher);
+
 	const [editUserScore, setEditUserScore] = useState(false);
 	const [deleteUserScore, setDeleteUserScore] = useState(false);
 	const [scoresSorted, setScoresSorted] = useState(false);
+	const [scores, setScores] = useState(allScores);
 
 	const [success, setSuccess] = useState(false);
 	const [fail, setFail] = useState(false);
 
-	const lastScheduledRound = findLastScheduledRound(schedules);
 	const [selectedScore, setSelectedScore] = useState({});
+
+	if (scoresError || scheduleError || coursesError) return <div>Failed to load</div>;
+	if (!allScores || !schedules || !courses) return <div>Loading...</div>;
+
+	const lastScheduledRound = findLastScheduledRound(schedules);
 
 	const userSearchChange = (e) => {
 		e.preventDefault();
@@ -198,69 +205,73 @@ export default function UserScores(): JSX.Element {
 								</tr>
 							</thead>
 							<tbody>
-								{scores.map((score, scoreIdx) => (
-									<tr key={score.id} className={scoreIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-										<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>{score.user.id}</td>
-										<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
-											{score.user.first_name} {score.user.last_name}
-										</td>
-										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.course.name}</td>
-										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.date}</td>
-										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-											{score.holes.map((hole) => {
-												let birdies: Array<number> = [];
-												if (hole.birdie) {
-													birdies.push(hole.hole);
-												}
+								{scores
+									? scores.map((score, scoreIdx) => (
+											<tr key={score.id} className={scoreIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+												<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
+													{score.user.id}
+												</td>
+												<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
+													{score.user.first_name} {score.user.last_name}
+												</td>
+												<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.course.name}</td>
+												<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.date}</td>
+												<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
+													{score.holes.map((hole) => {
+														let birdies: Array<number> = [];
+														if (hole.birdie) {
+															birdies.push(hole.hole);
+														}
 
-												return birdies.map((bird) => {
-													return <span key={hole.id}>{bird} </span>;
-												});
-											})}
-										</td>
-										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
-											{score.holes.map((hole) => {
-												let chips: Array<number> = [];
-												if (hole.chip) {
-													chips.push(hole.hole);
-												}
+														return birdies.map((bird) => {
+															return <span key={hole.id}>{bird} </span>;
+														});
+													})}
+												</td>
+												<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>
+													{score.holes.map((hole) => {
+														let chips: Array<number> = [];
+														if (hole.chip) {
+															chips.push(hole.hole);
+														}
 
-												return chips.map((chip) => {
-													return <span key={hole.id}>{chip} </span>;
-												});
-											})}
-										</td>
-										<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.score}</td>
-										<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
-											<button
-												onClick={() => {
-													setEditUserScore(!editUserScore);
-													setSelectedScore(score);
-												}}
-												className='group flex w-full items-center px-3 py-2 text-sm font-medium'
-											>
-												<PencilIcon
-													className='h-6 w-6
+														return chips.map((chip) => {
+															return <span key={hole.id}>{chip} </span>;
+														});
+													})}
+												</td>
+												<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{score.score}</td>
+												<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
+													<button
+														onClick={() => {
+															setEditUserScore(!editUserScore);
+															setSelectedScore(score);
+														}}
+														className='group flex w-full items-center px-3 py-2 text-sm font-medium'
+													>
+														<PencilIcon
+															className='h-6 w-6
 									 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
-												/>
-											</button>
-										</td>
-										<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
-											<button
-												onClick={() => {
-													setDeleteUserScore(!deleteUserScore);
-													setSelectedScore(score);
-												}}
-												className='group flex w-full items-center px-3 py-2 text-sm font-medium'
-											>
-												<TrashIcon
-													className='h-6 w-6
+														/>
+													</button>
+												</td>
+												<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
+													<button
+														onClick={() => {
+															setDeleteUserScore(!deleteUserScore);
+															setSelectedScore(score);
+														}}
+														className='group flex w-full items-center px-3 py-2 text-sm font-medium'
+													>
+														<TrashIcon
+															className='h-6 w-6
 									flex-shrink-0 text-gray-400 group-hover:text-gray-500'
-												/>
-											</button>
-										</td>
-									</tr>
-								))}
+														/>
+													</button>
+												</td>
+											</tr>
+									  ))
+									: null}
 							</tbody>
 						</table>
 					</div>
