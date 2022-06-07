@@ -31,6 +31,12 @@ export default function UserScores(): JSX.Element {
 
 	const [selectedScore, setSelectedScore] = useState({});
 
+	useEffect(() => {
+		if (allScores) {
+			setScores(allScores);
+		}
+	}, [allScores]);
+
 	if (scoresError || scheduleError || coursesError) return <div>Failed to load</div>;
 	if (!allScores || !schedules || !courses) return <div>Loading...</div>;
 
