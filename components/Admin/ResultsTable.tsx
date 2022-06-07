@@ -1,12 +1,15 @@
-import { useAllScoresStore } from '@/stores/AllScoresStore';
-import { useScheduleStore } from '@/stores/ScheduleStore';
 import { completedSchedule, findPriorRoundResults, findPriorRoundWinner } from '@/utils/sortingFunctions';
-import { toJS } from 'mobx';
 import React from 'react';
+import useSWR from 'swr';
+
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function ResultsTable(): JSX.Element {
-	const allScores = toJS(useAllScoresStore().allScores);
-	const schedule = toJS(useScheduleStore().schedule);
+	const { data: allScores, error: scoresError } = useSWR('/api/getScores', fetcher);
+	const { data: schedule, error: scheduleError } = useSWR('/api/getSchedule', fetcher);
+
+	if (scoresError || scheduleError) return <div>Failed to load</div>;
+	if (!allScores || !schedule) return <div>Loading...</div>;
 
 	const completedRounds = completedSchedule(schedule);
 	return (
