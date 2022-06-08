@@ -8,14 +8,8 @@ import SaveFail from '../Notifications/SaveFail';
 import SaveSuccess from '../Notifications/SaveSuccess';
 import { getUserScores } from '@/utils/sortingFunctions';
 import { User } from '@/utils/interfaces';
-import useSWR from 'swr';
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
-
-export default function UserTable(): JSX.Element {
-	const { data: initialUsers, error: usersError } = useSWR('/api/getAllUsers', fetcher);
-	const { data: allScores, error: scoresError } = useSWR('/api/getScores', fetcher);
-
+export default function UserTable({ initialUsers, allScores }): JSX.Element {
 	const [editUserOpen, setEditUserOpen] = useState(false);
 	const [addUserOpen, setAddUserOpen] = useState(false);
 	const [deleteUserOpen, setDeleteUserOpen] = useState(false);
@@ -33,9 +27,6 @@ export default function UserTable(): JSX.Element {
 			setUsers(sortedUsers);
 		}
 	}, [users, initialUsers]);
-
-	if (usersError || scoresError) return <div>Failed to load</div>;
-	if (!initialUsers || !allScores) return <div>Loading...</div>;
 
 	return (
 		<div className='flex flex-col'>
@@ -97,9 +88,7 @@ export default function UserTable(): JSX.Element {
 					>
 						Email List
 					</button>
-					{users ? (
-						<div className='inline-flex items-center px-6 py-2'>Number of Golfers: {users.length - 1}</div>
-					) : null}
+					{users ? <div className='inline-flex items-center px-6 py-2'>Number of Golfers: {users.length}</div> : null}
 					<div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
 						<table className='min-w-full divide-y divide-gray-200'>
 							<thead className='bg-gray-50'>

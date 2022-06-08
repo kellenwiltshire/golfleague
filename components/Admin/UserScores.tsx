@@ -9,18 +9,11 @@ import SaveFail from '../Notifications/SaveFail';
 import Modal from '../Modals/Modal';
 import EditScoreForm from '../Forms/EditScoreForm';
 import DeleteScore from '../Modals/DeleteScore';
-import useSWR from 'swr';
 
 //? Issues on this page due to trying to sort and revalidate scores if they are changed/added.
 //? Docs for SWR introduce something called "mutate" which may solve the issue?
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
-
-export default function UserScores(): JSX.Element {
-	const { data: allScores, error: scoresError } = useSWR('/api/getScores', fetcher);
-	const { data: schedules, error: scheduleError } = useSWR('/api/getSchedule', fetcher);
-	const { data: courses, error: coursesError } = useSWR('/api/getCourses', fetcher);
-
+export default function UserScores({ allScores, courses, schedule }): JSX.Element {
 	const [editUserScore, setEditUserScore] = useState(false);
 	const [deleteUserScore, setDeleteUserScore] = useState(false);
 	const [scoresSorted, setScoresSorted] = useState(false);
@@ -37,10 +30,7 @@ export default function UserScores(): JSX.Element {
 		}
 	}, [allScores]);
 
-	if (scoresError || scheduleError || coursesError) return <div>Failed to load</div>;
-	if (!allScores || !schedules || !courses) return <div>Loading...</div>;
-
-	const lastScheduledRound = findLastScheduledRound(schedules);
+	const lastScheduledRound = findLastScheduledRound(schedule);
 
 	const userSearchChange = (e) => {
 		e.preventDefault();
@@ -146,7 +136,7 @@ export default function UserScores(): JSX.Element {
 					<div className='flex w-full flex-col md:flex-row'>
 						<SearchInput inputName='Search Players' inputChange={userSearchChange} />
 						<CourseFilterInput inputName='Filter Courses' courses={courses} inputChange={courseFilterChange} />
-						<DateFilterInput inputName='Filter Dates' schedules={schedules} inputChange={dateFilterChange} />
+						<DateFilterInput inputName='Filter Dates' schedules={schedule} inputChange={dateFilterChange} />
 						<div className='mx-2 mt-2 md:mx-0'>
 							<button
 								type='reset'

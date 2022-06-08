@@ -1,16 +1,7 @@
 import { completedSchedule, findPriorRoundResults, findPriorRoundWinner } from '@/utils/sortingFunctions';
 import React from 'react';
-import useSWR from 'swr';
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
-
-export default function ResultsTable(): JSX.Element {
-	const { data: allScores, error: scoresError } = useSWR('/api/getScores', fetcher);
-	const { data: schedule, error: scheduleError } = useSWR('/api/getSchedule', fetcher);
-
-	if (scoresError || scheduleError) return <div>Failed to load</div>;
-	if (!allScores || !schedule) return <div>Loading...</div>;
-
+export default function ResultsTable({ allScores, schedule }): JSX.Element {
 	const completedRounds = completedSchedule(schedule);
 	return (
 		<div className='flex flex-col'>

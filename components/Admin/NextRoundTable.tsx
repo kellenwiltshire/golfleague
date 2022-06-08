@@ -1,15 +1,11 @@
 import generateSchedule from '@/utils/schedule';
 import { findNextRound } from '@/utils/sortingFunctions';
 import { XIcon } from '@heroicons/react/outline';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import TeetimeSchedule from '../TeeTimeGenerator/TeetimeSchedule';
 import Modal from '../Modals/Modal';
-import { useScheduleStore } from '@/stores/ScheduleStore';
-import { toJS } from 'mobx';
-import { useAllUsersStore } from '@/stores/AllUsersStore';
 import { User } from '@/utils/interfaces';
 import { golfers } from '@/utils/testGolfers';
-import useSWR from 'swr';
 
 interface Group {
 	teeTime: string;
@@ -32,17 +28,12 @@ interface TeeTimes {
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
-export default function NextRoundTable(): JSX.Element {
-	const { data: allUsers, error: userError } = useSWR('/api/getAllUsers', fetcher);
-	const { data: schedule, error: scheduleError } = useSWR('/api/getSchedule', fetcher);
+export default function NextRoundTable({ allUsers, schedule }): JSX.Element {
 	const [users, setUsers] = useState<User[]>(allUsers);
 
 	const [scheduleOpen, setScheduleOpen] = useState(false);
 
 	const [teeTimeSchedule, setTeeTimeSchedule] = useState<TeeTimes>();
-
-	if (userError || scheduleError) return <div>Failed to load</div>;
-	if (!allUsers || !schedule) return <div>Loading...</div>;
 
 	const nextRound = findNextRound(schedule);
 

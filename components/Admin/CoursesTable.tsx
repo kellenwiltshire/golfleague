@@ -7,13 +7,8 @@ import Modal from '../Modals/Modal';
 import AddCourseForm from '../Forms/AddCourseForm';
 import EditCourseForm from '../Forms/EditCourseForm';
 import { Course } from '@/utils/interfaces';
-import useSWR from 'swr';
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
-
-export default function CoursesTable() {
-	const { data: initialCourses, error: coursesError } = useSWR('/api/getCourses', fetcher);
-
+export default function CoursesTable({ initialCourses }) {
 	const [editCourseOpen, setEditCourseOpen] = useState(false);
 	const [addCourseOpen, setAddCourseOpen] = useState(false);
 	const [deleteCourseOpen, setDeleteCourseOpen] = useState(false);
@@ -37,9 +32,6 @@ export default function CoursesTable() {
 			}
 		}
 	}, [courses, initialCourses]);
-
-	if (coursesError) return <div>Failed to load</div>;
-	if (!initialCourses) return <div>Loading...</div>;
 
 	return (
 		<div className='flex flex-col'>
