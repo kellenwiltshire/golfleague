@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { mutate } from 'swr';
 
-export default function AddCourseForm({ setOpen, setSuccess, setFailure, courses, setCourses }): JSX.Element {
+export default function AddCourseForm({ setOpen, setSuccess, setFailure }): JSX.Element {
 	const [name, setName] = useState('');
 	const [address, setAddress] = useState('');
 	const [contact, setContact] = useState('');
@@ -38,10 +39,14 @@ export default function AddCourseForm({ setOpen, setSuccess, setFailure, courses
 		});
 
 		if (req.status < 300) {
-			setSuccess(true);
-			setOpen(false);
-			const response = await req.json();
-			setCourses([...courses, response]);
+			mutate('/api/getCourses', () => {
+				setSuccess(true);
+				setOpen(false);
+			}).catch((err) => {
+				setFailure(true);
+				setOpen(false);
+				console.log(err);
+			});
 		} else {
 			setFailure(true);
 			setOpen(false);

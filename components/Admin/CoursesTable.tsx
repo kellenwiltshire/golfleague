@@ -42,19 +42,12 @@ export default function CoursesTable({ initialCourses }) {
 						setSuccess={setSuccess}
 						setFailure={setFailure}
 						setOpen={setEditCourseOpen}
-						setCourses={setCourses}
 					/>
 				</Modal>
 			) : null}
 			{addCourseOpen ? (
 				<Modal open={addCourseOpen} setOpen={setAddCourseOpen}>
-					<AddCourseForm
-						setOpen={setAddCourseOpen}
-						setSuccess={setSuccess}
-						setFailure={setFailure}
-						courses={courses}
-						setCourses={setCourses}
-					/>
+					<AddCourseForm setOpen={setAddCourseOpen} setSuccess={setSuccess} setFailure={setFailure} />
 				</Modal>
 			) : null}
 

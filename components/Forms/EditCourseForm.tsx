@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { mutate } from 'swr';
 
-export default function EditCourseForm({ course, setSuccess, setFailure, setOpen, setCourses }): JSX.Element {
+export default function EditCourseForm({ course, setSuccess, setFailure, setOpen }): JSX.Element {
 	const [name, setName] = useState(course.name);
 	const [address, setAddress] = useState(course.address);
 	const [contact, setContact] = useState(course.contact);
@@ -41,11 +42,14 @@ export default function EditCourseForm({ course, setSuccess, setFailure, setOpen
 		});
 
 		if (req.status < 300) {
-			const req = await fetch('/api/getCourses');
-			const response = await req.json();
-			setCourses(response);
-			setSuccess(true);
-			setOpen(false);
+			mutate('/api/getCourses', () => {
+				setSuccess(true);
+				setOpen(false);
+			}).catch((err) => {
+				setFailure(true);
+				setOpen(false);
+				console.log(err);
+			});
 		} else {
 			setFailure(true);
 			setOpen(false);

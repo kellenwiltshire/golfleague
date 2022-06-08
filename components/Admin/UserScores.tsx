@@ -112,7 +112,6 @@ export default function UserScores({ allScores, courses, schedule }): JSX.Elemen
 					setSuccess={setSuccess}
 					setFail={setFail}
 					setOpen={setEditUserScore}
-					setScores={setScores}
 				/>
 			</Modal>
 
