@@ -37,12 +37,7 @@ export default function UserTable({ initialUsers, allScores }): JSX.Element {
 			) : null}
 			{addUserOpen ? (
 				<Modal open={addUserOpen} setOpen={setAddUserOpen}>
-					<RegisterUserForm
-						setSuccess={setSuccess}
-						setFailure={setFailure}
-						setOpen={setAddUserOpen}
-						setUsers={setUsers}
-					/>
+					<RegisterUserForm setSuccess={setSuccess} setFailure={setFailure} setOpen={setAddUserOpen} />
 				</Modal>
 			) : null}
 			{deleteUserOpen ? (
@@ -52,7 +47,6 @@ export default function UserTable({ initialUsers, allScores }): JSX.Element {
 					user={userSelected}
 					setFailure={setFailure}
 					setSuccess={setSuccess}
-					setUsers={setUsers}
 				/>
 			) : null}
 
