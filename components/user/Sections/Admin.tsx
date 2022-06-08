@@ -44,10 +44,10 @@ export default function Admin(): JSX.Element {
 					<ResultsTable allScores={allScores} schedule={schedule} />
 				</div>
 				<div className={adminTab === 6 ? 'block' : 'hidden'}>
-					<WeekendAwayTable />
+					<WeekendAwayTable allUsers={allUsers} />
 				</div>
 				<div className={adminTab === 7 ? 'block' : 'hidden'}>
-					<YearEndTable />
+					<YearEndTable allUsers={allUsers} />
 				</div>
 			</div>
 		</>
