@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { mutate } from 'swr';
 import ToggleSwitch from '../Buttons/Toggle';
 
 export default function RegisterUserForm({ setSuccess, setFailure, setOpen, setUsers }): JSX.Element {
@@ -32,17 +33,14 @@ export default function RegisterUserForm({ setSuccess, setFailure, setOpen, setU
 		});
 
 		if (req.status < 300) {
-			const req = await fetch('/api/getAllUsers');
-			if (req.status < 300) {
-				const response = await req.json();
-				setUsers(response);
+			mutate('/api/getAllUsers', () => {
 				setSuccess(true);
 				setOpen(false);
-			} else {
+			}).catch((err) => {
 				setFailure(true);
 				setOpen(false);
-				console.log(req);
-			}
+				console.log(err);
+			});
 		} else {
 			setFailure(true);
 			setOpen(false);
