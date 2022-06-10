@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Siderbar from '@/components/user/Sidebar';
 import UserHeader from '@/components/user/UserHeader';
 import { CogIcon, HomeIcon, PencilIcon, UserIcon } from '@heroicons/react/outline';
 import Dashboard from '@/components/user/Sections/Dashboard';
 import Scores from '@/components/user/Sections/Scores';
 import Settings from '@/components/user/Sections/Settings';
-import { getAdminData } from '@/utils/userFetch';
 
 import Admin from '@/components/user/Sections/Admin';
-import { parseCookies } from 'nookies';
 import { useUserStore } from '@/stores/UserStore';
-
-import { useAllScoresStore } from '@/stores/AllScoresStore';
-import { useAllUsersStore } from '@/stores/AllUsersStore';
-import { useCoursesStore } from '@/stores/CoursesStore';
-
-import { GetServerSideProps } from 'next';
 
 import useSWR from 'swr';
 
@@ -28,25 +20,11 @@ const adminNav = [
 	{ num: 4, name: 'Admin', icon: UserIcon },
 ];
 
-export default function AdminPage({ allScores, allUsers, courses }): JSX.Element {
+export default function AdminPage(): JSX.Element {
 	const { data: user, error: userError } = useSWR('/api/getUser', fetcher);
 
 	const userStore = useUserStore();
 	userStore.updateUser(user);
-
-	const allScoresStore = useAllScoresStore();
-	const allUsersStore = useAllUsersStore();
-	const coursesStore = useCoursesStore();
-
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		allScoresStore.updateScore(allScores);
-		allUsersStore.updateUsers(allUsers);
-		coursesStore.updateCourses(courses);
-
-		setLoading(false);
-	}, []);
 
 	const [openTab, setOpenTab] = useState(1);
 
@@ -86,31 +64,3 @@ export default function AdminPage({ allScores, allUsers, courses }): JSX.Element
 		</div>
 	);
 }
-
-export const getServerSideProps: GetServerSideProps = async (props) => {
-	const cookies = parseCookies(props);
-	const jwt = cookies.jwt;
-	const userData = await getAdminData(jwt);
-
-	if (!userData) {
-		return {
-			redirect: {
-				destination: '/',
-				permanent: false,
-			},
-		};
-	}
-
-	return {
-		props: {
-			scores: userData.scores,
-			user: userData.user,
-			schedules: userData.schedules,
-			courses: userData.courses,
-			allScores: userData.allScores,
-			allUsers: userData.allUsers,
-			news: userData.news,
-			specFunctions: userData.specialFunctions,
-		},
-	};
-};
