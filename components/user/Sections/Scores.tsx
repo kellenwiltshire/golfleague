@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
 import EnterScore from './Scores/EnterScore';
 import ScoresList from './Scores/ScoresList';
-import { findLastScheduledRound } from '@/utils/sortingFunctions';
+import { findLastScheduledRound, getUserScores } from '@/utils/sortingFunctions';
 import SaveSuccess from '@/components/Notifications/SaveSuccess';
 import SaveFail from '@/components/Notifications/SaveFail';
-import { useScheduleStore } from '@/stores/ScheduleStore';
-import { useScoreStore } from '@/stores/ScoresStore';
 import { useUserStore } from '@/stores/UserStore';
-import { toJS } from 'mobx';
+import useSWR from 'swr';
+
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function Scores(): JSX.Element {
-	const schedule = toJS(useScheduleStore().schedule);
-	const scores = toJS(useScoreStore().scores);
-	// const updateScores = useUpdateScoreContext();
-	const user = toJS(useUserStore().user);
+	const { data: schedule, error: scheduleError } = useSWR('/api/getSchedule', fetcher);
+	const { data: scores, error: scoresError } = useSWR('/api/getScores', fetcher);
+
+	const userStore = useUserStore();
+	const user = userStore.user;
 
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
+
+	if (scoresError) return <div>Failed to load Scores</div>;
+	if (scheduleError) return <div>Failed to load Schedule Info</div>;
+
+	if (!scores || !schedule) return <div>Loading...</div>;
 
 	const lastScheduledRound = findLastScheduledRound(schedule);
 
@@ -31,6 +37,8 @@ export default function Scores(): JSX.Element {
 		return false;
 	};
 
+	const userScores = getUserScores(user, scores);
+
 	const [submitSuccess, setSubmitSuccess] = useState(getInitialSuccess());
 	return (
 		<div className='px-4 py-8 sm:px-0'>
@@ -40,14 +48,14 @@ export default function Scores(): JSX.Element {
 				<EnterScore
 					user={user}
 					lastScheduledRound={lastScheduledRound}
-					userScores={scores}
+					userScores={userScores}
 					setSuccess={setSuccess}
 					setFailure={setFailure}
 					setSubmitSuccess={setSubmitSuccess}
 				/>
 			)}
 
-			<ScoresList scores={scores} />
+			<ScoresList scores={userScores} />
 		</div>
 	);
 }
