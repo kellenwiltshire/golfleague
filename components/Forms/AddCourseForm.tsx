@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { mutate } from 'swr';
 
-export default function AddCourseForm({ setOpen, setSuccess, setFailure, courses, setCourses }): JSX.Element {
+export default function AddCourseForm({ setOpen, setSuccess, setFailure }): JSX.Element {
 	const [name, setName] = useState('');
 	const [address, setAddress] = useState('');
 	const [contact, setContact] = useState('');
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
 	const [interval, setInterval] = useState('');
-	const [additionalInfo, setadditionalInfo] = useState('');
+	const [additionalInfo, setAdditionalInfo] = useState('');
 	const [adminInfo, setAdminInfo] = useState('');
 	const [pricing, setPricing] = useState('');
 	const [timeslots, setTimeslots] = useState('');
@@ -38,10 +39,14 @@ export default function AddCourseForm({ setOpen, setSuccess, setFailure, courses
 		});
 
 		if (req.status < 300) {
-			setSuccess(true);
-			setOpen(false);
-			const response = await req.json();
-			setCourses([...courses, response]);
+			mutate('/api/getCourses', () => {
+				setSuccess(true);
+				setOpen(false);
+			}).catch((err) => {
+				setFailure(true);
+				setOpen(false);
+				console.log(err);
+			});
 		} else {
 			setFailure(true);
 			setOpen(false);
@@ -162,12 +167,12 @@ export default function AddCourseForm({ setOpen, setSuccess, setFailure, courses
 								</label>
 								<textarea
 									id='additional-info'
-									name='additonal-info'
+									name='additional-info'
 									rows={4}
 									required
 									className='relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500  focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
 									placeholder='Additional Info'
-									onChange={(e) => setadditionalInfo(e.target.value)}
+									onChange={(e) => setAdditionalInfo(e.target.value)}
 								/>
 							</div>
 							<div>

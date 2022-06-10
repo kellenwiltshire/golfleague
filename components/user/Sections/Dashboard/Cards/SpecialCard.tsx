@@ -3,12 +3,18 @@ import { NewspaperIcon } from '@heroicons/react/outline';
 import React from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
-import { useSpecialFunctionsStore } from '@/stores/SpecialFunctionsStore';
+import useSwr from 'swr';
+import DashboardCardLoading from '@/components/LoadingModals/DashboardCardLoading';
+
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function SpecialCard(): JSX.Element {
-	const specialFunctions = useSpecialFunctionsStore().specialFunctions;
+	const { data, error } = useSwr('/api/getSpecial', fetcher);
 
-	const recentSpecialFunction = findNextSpecialEvent(specialFunctions);
+	if (error) return <div>Failed to load</div>;
+	if (!data) return <DashboardCardLoading />;
+
+	const recentSpecialFunction = findNextSpecialEvent(data);
 
 	if (recentSpecialFunction) {
 		const length = 100;

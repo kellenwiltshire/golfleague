@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { LockClosedIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import { setCookie } from 'nookies';
 import FormFailure from '../Modals/FormFailure';

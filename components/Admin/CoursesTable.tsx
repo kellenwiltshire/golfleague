@@ -6,30 +6,32 @@ import DeleteCourse from '../Modals/DeleteCourse';
 import Modal from '../Modals/Modal';
 import AddCourseForm from '../Forms/AddCourseForm';
 import EditCourseForm from '../Forms/EditCourseForm';
-import { useCoursesStore } from '@/stores/CoursesStore';
-import { toJS } from 'mobx';
 import { Course } from '@/utils/interfaces';
-import { observer } from 'mobx-react-lite';
 
-const CoursesTable: FC = observer(() => {
-	const coursesStore = useCoursesStore();
-
+export default function CoursesTable({ initialCourses }) {
 	const [editCourseOpen, setEditCourseOpen] = useState(false);
 	const [addCourseOpen, setAddCourseOpen] = useState(false);
 	const [deleteCourseOpen, setDeleteCourseOpen] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
 	const [courseSelected, setCourseSelected] = useState<Course>();
-	const [courses, setCourses] = useState<Course[]>(coursesStore.courses.slice());
+	const [courses, setCourses] = useState(initialCourses);
 
 	useEffect(() => {
-		const sortedCourses = courses.sort((a, b) => {
-			return a.name.localeCompare(b.name);
-		});
-
-		setCourses(sortedCourses);
-		coursesStore.updateCourses(sortedCourses);
-	}, [courses]);
+		if (initialCourses) {
+			if (courses) {
+				const sortedCourses = courses.sort((a, b) => {
+					return a.name.localeCompare(b.name);
+				});
+				setCourses(sortedCourses);
+			} else {
+				const sortedCourses = initialCourses.sort((a, b) => {
+					return a.name.localeCompare(b.name);
+				});
+				setCourses(sortedCourses);
+			}
+		}
+	}, [courses, initialCourses]);
 
 	return (
 		<div className='flex flex-col'>
@@ -40,19 +42,12 @@ const CoursesTable: FC = observer(() => {
 						setSuccess={setSuccess}
 						setFailure={setFailure}
 						setOpen={setEditCourseOpen}
-						setCourses={setCourses}
 					/>
 				</Modal>
 			) : null}
 			{addCourseOpen ? (
 				<Modal open={addCourseOpen} setOpen={setAddCourseOpen}>
-					<AddCourseForm
-						setOpen={setAddCourseOpen}
-						setSuccess={setSuccess}
-						setFailure={setFailure}
-						courses={courses}
-						setCourses={setCourses}
-					/>
+					<AddCourseForm setOpen={setAddCourseOpen} setSuccess={setSuccess} setFailure={setFailure} />
 				</Modal>
 			) : null}
 
@@ -145,49 +140,53 @@ const CoursesTable: FC = observer(() => {
 								</tr>
 							</thead>
 							<tbody>
-								{courses.map((course, courseIdx) => {
-									return (
-										<tr key={course.id} className={courseIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.name}</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>{course.email}</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.phone}</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.address}</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.interval}</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.timeslots}</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.additionalInfo}</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.adminInfo}</td>
-											<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.pricing}</td>
-											<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
-												<button
-													onClick={() => {
-														setCourseSelected(course);
-														setEditCourseOpen(!editCourseOpen);
-													}}
-													className='group flex w-full items-center px-3 py-2 text-sm font-medium'
-												>
-													<PencilIcon
-														className='h-6 w-6
+								{courses
+									? courses.map((course, courseIdx) => {
+											return (
+												<tr key={course.id} className={courseIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+													<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.name}</td>
+													<td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900'>
+														{course.email}
+													</td>
+													<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.phone}</td>
+													<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.address}</td>
+													<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.interval}</td>
+													<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.timeslots}</td>
+													<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.additionalInfo}</td>
+													<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.adminInfo}</td>
+													<td className='whitespace-nowrap px-6 py-4 text-sm text-gray-500'>{course.pricing}</td>
+													<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
+														<button
+															onClick={() => {
+																setCourseSelected(course);
+																setEditCourseOpen(!editCourseOpen);
+															}}
+															className='group flex w-full items-center px-3 py-2 text-sm font-medium'
+														>
+															<PencilIcon
+																className='h-6 w-6
 									 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
-													/>
-												</button>
-											</td>
-											<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
-												<button
-													onClick={() => {
-														setCourseSelected(course);
-														setDeleteCourseOpen(!deleteCourseOpen);
-													}}
-													className='group flex w-full items-center px-3 py-2 text-sm font-medium'
-												>
-													<TrashIcon
-														className='h-6 w-6
+															/>
+														</button>
+													</td>
+													<td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
+														<button
+															onClick={() => {
+																setCourseSelected(course);
+																setDeleteCourseOpen(!deleteCourseOpen);
+															}}
+															className='group flex w-full items-center px-3 py-2 text-sm font-medium'
+														>
+															<TrashIcon
+																className='h-6 w-6
 									flex-shrink-0 text-gray-400 group-hover:text-gray-500'
-													/>
-												</button>
-											</td>
-										</tr>
-									);
-								})}
+															/>
+														</button>
+													</td>
+												</tr>
+											);
+									  })
+									: null}
 							</tbody>
 						</table>
 					</div>
@@ -195,6 +194,4 @@ const CoursesTable: FC = observer(() => {
 			</div>
 		</div>
 	);
-});
-
-export default CoursesTable;
+}

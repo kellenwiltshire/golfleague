@@ -1,10 +1,8 @@
-import { useAllUsersStore } from '@/stores/AllUsersStore';
-import { toJS } from 'mobx';
 import React, { useState, useEffect } from 'react';
 import Modal from '../Modals/Modal';
 
-export default function YearEndTable(): JSX.Element {
-	const [users, setUsers] = useState(toJS(useAllUsersStore().allUsers));
+export default function YearEndTable({ allUsers }): JSX.Element {
+	const [users, setUsers] = useState(allUsers);
 	const [userEmailOpen, setUserEmailOpen] = useState(false);
 
 	useEffect(() => {

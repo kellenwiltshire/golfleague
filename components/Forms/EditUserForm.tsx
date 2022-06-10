@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { mutate } from 'swr';
 import ToggleSwitch from '../Buttons/Toggle';
 
 export default function EditUserForm({ user, setSuccess, setFailure, setOpen }): JSX.Element {
@@ -34,8 +35,14 @@ export default function EditUserForm({ user, setSuccess, setFailure, setOpen }):
 		});
 
 		if (req.status < 300) {
-			setSuccess(true);
-			setOpen(false);
+			mutate('/api/getAllUsers', () => {
+				setSuccess(true);
+				setOpen(false);
+			}).catch((err) => {
+				setFailure(true);
+				setOpen(false);
+				console.log(err);
+			});
 		} else {
 			setFailure(true);
 			setOpen(false);

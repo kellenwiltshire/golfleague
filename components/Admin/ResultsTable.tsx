@@ -1,13 +1,7 @@
-import { useAllScoresStore } from '@/stores/AllScoresStore';
-import { useScheduleStore } from '@/stores/ScheduleStore';
 import { completedSchedule, findPriorRoundResults, findPriorRoundWinner } from '@/utils/sortingFunctions';
-import { toJS } from 'mobx';
 import React from 'react';
 
-export default function ResultsTable(): JSX.Element {
-	const allScores = toJS(useAllScoresStore().allScores);
-	const schedule = toJS(useScheduleStore().schedule);
-
+export default function ResultsTable({ allScores, schedule }): JSX.Element {
 	const completedRounds = completedSchedule(schedule);
 	return (
 		<div className='flex flex-col'>

@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ToggleSwitch from '@/components/Buttons/Toggle';
-import { findNextRound } from '@/utils/sortingFunctions';
-import { useScheduleStore } from '@/stores/ScheduleStore';
 
-export default function NextRoundForm({ user, setSuccess, setFailure }): JSX.Element {
-	const schedule = useScheduleStore().schedule;
-	const nextRound = findNextRound(schedule);
+export default function NextRoundForm({ user, setSuccess, setFailure, nextRound }): JSX.Element {
 	const currDate = new Date();
 	//This sets the state so that the input reflect the already entered Data (if available) unless the current Date is after the last entered avaialability. If this is the case then it resets so that the user can set their availability for the next round
 	const [attendance, setAttendance] = useState(false);
@@ -87,7 +83,7 @@ export default function NextRoundForm({ user, setSuccess, setFailure }): JSX.Ele
 					</div>
 					<button
 						type='submit'
-						className='focus:outline-none my-1 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+						className='my-1 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
 					>
 						Save
 					</button>

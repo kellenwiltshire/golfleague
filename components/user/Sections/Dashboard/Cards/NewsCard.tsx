@@ -3,12 +3,18 @@ import { NewspaperIcon } from '@heroicons/react/outline';
 import React from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
-import { useNewsStore } from '@/stores/NewsStore';
+import useSwr from 'swr';
+import DashboardCardLoading from '@/components/LoadingModals/DashboardCardLoading';
+
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function NewsCard(): JSX.Element {
-	const news = useNewsStore().news;
+	const { data, error } = useSwr('/api/getNews', fetcher);
 
-	const recentNews = findMostRecentNews(news);
+	if (error) return <div>Failed to load</div>;
+	if (!data) return <DashboardCardLoading />;
+
+	const recentNews = findMostRecentNews(data);
 
 	if (recentNews) {
 		const length = 100;
