@@ -10,9 +10,6 @@ import Modal from '../Modals/Modal';
 import EditScoreForm from '../Forms/EditScoreForm';
 import DeleteScore from '../Modals/DeleteScore';
 
-//? Issues on this page due to trying to sort and revalidate scores if they are changed/added.
-//? Docs for SWR introduce something called "mutate" which may solve the issue?
-
 export default function UserScores({ allScores, courses, schedule }): JSX.Element {
 	const [editUserScore, setEditUserScore] = useState(false);
 	const [deleteUserScore, setDeleteUserScore] = useState(false);
