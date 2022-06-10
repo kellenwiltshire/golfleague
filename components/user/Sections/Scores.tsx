@@ -19,13 +19,6 @@ export default function Scores(): JSX.Element {
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
 
-	if (scoresError) return <div>Failed to load Scores</div>;
-	if (scheduleError) return <div>Failed to load Schedule Info</div>;
-
-	if (!scores || !schedule) return <div>Loading...</div>;
-
-	const lastScheduledRound = findLastScheduledRound(schedule);
-
 	const getInitialSuccess = () => {
 		if (scores && lastScheduledRound) {
 			for (let i = 0; i < scores.length; i++) {
@@ -36,10 +29,17 @@ export default function Scores(): JSX.Element {
 		}
 		return false;
 	};
+	const [submitSuccess, setSubmitSuccess] = useState(getInitialSuccess());
+
+	if (scoresError) return <div>Failed to load Scores</div>;
+	if (scheduleError) return <div>Failed to load Schedule Info</div>;
+
+	if (!scores || !schedule) return <div>Loading...</div>;
+
+	const lastScheduledRound = findLastScheduledRound(schedule);
 
 	const userScores = getUserScores(user, scores);
 
-	const [submitSuccess, setSubmitSuccess] = useState(getInitialSuccess());
 	return (
 		<div className='px-4 py-8 sm:px-0'>
 			{success ? <SaveSuccess show={success} setShow={setSuccess} /> : null}
