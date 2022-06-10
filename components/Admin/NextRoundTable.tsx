@@ -6,6 +6,7 @@ import TeetimeSchedule from '../TeeTimeGenerator/TeetimeSchedule';
 import Modal from '../Modals/Modal';
 import { User } from '@/utils/interfaces';
 import { golfers } from '@/utils/testGolfers';
+import { mutate } from 'swr';
 
 interface Group {
 	teeTime: string;
@@ -28,9 +29,7 @@ interface TeeTimes {
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
-export default function NextRoundTable({ allUsers, schedule }): JSX.Element {
-	const [users, setUsers] = useState<User[]>(allUsers);
-
+export default function NextRoundTable({ users, schedule }): JSX.Element {
 	const [scheduleOpen, setScheduleOpen] = useState(false);
 
 	const [teeTimeSchedule, setTeeTimeSchedule] = useState<TeeTimes>();
@@ -39,7 +38,7 @@ export default function NextRoundTable({ allUsers, schedule }): JSX.Element {
 
 	if (!nextRound || !nextRound.course) return <div>Error Finding Next Round</div>;
 
-	const findUsers = allUsers.filter((user: User) => {
+	const findUsers = users.filter((user: User) => {
 		for (let avail of user.availability) {
 			if (avail.date === nextRound.date && avail.available) {
 				return user;
@@ -67,14 +66,9 @@ export default function NextRoundTable({ allUsers, schedule }): JSX.Element {
 			body: JSON.stringify(body),
 		});
 
-		//Filters out the removed person from the list of available golfers
-		const newUsers = users.filter((person) => {
-			if (person !== user) {
-				return person;
-			}
-		});
-
-		setUsers(newUsers);
+		if (req.status < 300) {
+			mutate('/api/getAllUsers').catch((err) => console.log(err));
+		}
 	};
 
 	const generateScheduleClicked = () => {
@@ -154,47 +148,4 @@ export default function NextRoundTable({ allUsers, schedule }): JSX.Element {
 			</div>
 		</div>
 	);
-	// } else {
-	// 	return (
-	// 		<div className='flex flex-col'>
-	// 			<div className='-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-	// 				<div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
-	// 					<div className='mb-3'>Next Round is: Not Yet Scheduled</div>
-	// 					<button
-	// 						disabled
-	// 						className='mb-4 ml-auto inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-2 text-sm text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-	// 					>
-	// 						Generate Tee-Times
-	// 					</button>
-	// 					<div className='overflow-hidden border-b border-gray-200 shadow sm:rounded-lg'>
-	// 						<table className='min-w-full divide-y divide-gray-200'>
-	// 							<thead className='bg-gray-50'>
-	// 								<tr>
-	// 									<th
-	// 										scope='col'
-	// 										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
-	// 									>
-	// 										Name
-	// 									</th>
-	// 									<th
-	// 										scope='col'
-	// 										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
-	// 									>
-	// 										Email
-	// 									</th>
-	// 									<th
-	// 										scope='col'
-	// 										className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500'
-	// 									>
-	// 										Remove
-	// 									</th>
-	// 								</tr>
-	// 							</thead>
-	// 						</table>
-	// 					</div>
-	// 				</div>
-	// 			</div>
-	// 		</div>
-	// 	);
-	// }
 }

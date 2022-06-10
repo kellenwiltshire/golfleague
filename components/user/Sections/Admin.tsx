@@ -33,7 +33,7 @@ export default function Admin(): JSX.Element {
 					<UserTable initialUsers={allUsers} allScores={allScores} />
 				</div>
 				<div className={adminTab === 2 ? 'block' : 'hidden'}>
-					<NextRoundTable allUsers={allUsers} schedule={schedule} />
+					<NextRoundTable users={allUsers} schedule={schedule} />
 				</div>
 				<div className={adminTab === 3 ? 'block' : 'hidden'}>
 					<UserScores allScores={allScores} schedule={schedule} courses={courses} />
