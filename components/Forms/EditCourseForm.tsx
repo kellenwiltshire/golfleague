@@ -8,7 +8,7 @@ export default function EditCourseForm({ course, setSuccess, setFailure, setOpen
 	const [phone, setPhone] = useState(course.phone);
 	const [email, setEmail] = useState(course.email);
 	const [interval, setInterval] = useState(course.interval);
-	const [additionalInfo, setadditionalInfo] = useState(course.additionalInfo);
+	const [additionalInfo, setAdditionalInfo] = useState(course.additionalInfo);
 	const [adminInfo, setAdminInfo] = useState(course.adminInfo);
 	const [pricing, setPricing] = useState(course.pricing);
 	const [timeslots, setTimeslots] = useState(course.timeslots);
@@ -171,12 +171,12 @@ export default function EditCourseForm({ course, setSuccess, setFailure, setOpen
 								</label>
 								<textarea
 									id='additional-info'
-									name='additonal-info'
+									name='additional-info'
 									rows={4}
 									className='relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
 									value={additionalInfo}
 									placeholder={additionalInfo || 'Additional Info'}
-									onChange={(e) => setadditionalInfo(e.target.value)}
+									onChange={(e) => setAdditionalInfo(e.target.value)}
 								/>
 							</div>
 							<div>

@@ -8,7 +8,7 @@ export default function AddCourseForm({ setOpen, setSuccess, setFailure }): JSX.
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
 	const [interval, setInterval] = useState('');
-	const [additionalInfo, setadditionalInfo] = useState('');
+	const [additionalInfo, setAdditionalInfo] = useState('');
 	const [adminInfo, setAdminInfo] = useState('');
 	const [pricing, setPricing] = useState('');
 	const [timeslots, setTimeslots] = useState('');
@@ -167,12 +167,12 @@ export default function AddCourseForm({ setOpen, setSuccess, setFailure }): JSX.
 								</label>
 								<textarea
 									id='additional-info'
-									name='additonal-info'
+									name='additional-info'
 									rows={4}
 									required
 									className='relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500  focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
 									placeholder='Additional Info'
-									onChange={(e) => setadditionalInfo(e.target.value)}
+									onChange={(e) => setAdditionalInfo(e.target.value)}
 								/>
 							</div>
 							<div>
