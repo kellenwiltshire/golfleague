@@ -7,6 +7,7 @@ import SaveSuccess from '@/components/Notifications/SaveSuccess';
 import SaveFail from '@/components/Notifications/SaveFail';
 import { useUserStore } from '@/stores/UserStore';
 import useSWR from 'swr';
+import DashboardCardLoading from '@/components/LoadingModals/DashboardCardLoading';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -19,7 +20,7 @@ export default function NextRound(): JSX.Element {
 	const [failure, setFailure] = useState(false);
 
 	if (scheduleError) return <div>Failed to load</div>;
-	if (!schedule) return <div>Loading...</div>;
+	if (!schedule) return <DashboardCardLoading />;
 
 	const nextRound = findNextRound(schedule);
 

@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import useSwr from 'swr';
+import DashboardCardLoading from '@/components/LoadingModals/DashboardCardLoading';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -11,7 +12,7 @@ export default function SpecialCard(): JSX.Element {
 	const { data, error } = useSwr('/api/getSpecial', fetcher);
 
 	if (error) return <div>Failed to load</div>;
-	if (!data) return <div>Loading...</div>;
+	if (!data) return <DashboardCardLoading />;
 
 	const recentSpecialFunction = findNextSpecialEvent(data);
 

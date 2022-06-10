@@ -9,6 +9,7 @@ import {
 } from '@/utils/sortingFunctions';
 import { useUserStore } from '@/stores/UserStore';
 import useSWR from 'swr';
+import DashboardCardLoading from '@/components/LoadingModals/DashboardCardLoading';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -22,7 +23,7 @@ export default function PriorRound() {
 	if (scoresError) return <div>Failed to load Scores</div>;
 	if (scheduleError) return <div>Failed to load Schedule Info</div>;
 
-	if (!allScores || !schedule) return <div>Loading...</div>;
+	if (!allScores || !schedule) return <DashboardCardLoading />;
 
 	const scores = getUserScores(user, allScores);
 	const priorRound = findPriorRound(scores);
