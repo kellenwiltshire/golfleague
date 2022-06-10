@@ -5,6 +5,7 @@ import SaveFail from '@/components/Notifications/SaveFail';
 import SaveSuccess from '@/components/Notifications/SaveSuccess';
 import { useUserStore } from '@/stores/UserStore';
 import React, { useState } from 'react';
+import { mutate } from 'swr';
 
 export default function SettingsPage(): JSX.Element {
 	const userStore = useUserStore();
@@ -51,6 +52,7 @@ export default function SettingsPage(): JSX.Element {
 		});
 
 		if (res.status < 300) {
+			mutate('/api/getUser').catch((err) => console.log(err));
 			setSuccess(true);
 		} else {
 			console.log(res);
@@ -76,10 +78,7 @@ export default function SettingsPage(): JSX.Element {
 	};
 
 	return (
-		<form
-			onSubmit={submitChange}
-			className='space-y-8 divide-y divide-gray-200'
-		>
+		<form onSubmit={submitChange} className='space-y-8 divide-y divide-gray-200'>
 			{success ? <SaveSuccess show={success} setShow={setSuccess} /> : null}
 			{failure ? <SaveFail show={failure} setShow={setFailure} /> : null}
 
@@ -91,17 +90,12 @@ export default function SettingsPage(): JSX.Element {
 			<div className='space-y-8 divide-y divide-gray-200 sm:space-y-5'>
 				<div>
 					<div>
-						<h3 className='text-lg font-medium leading-6 text-gray-900'>
-							User Information
-						</h3>
+						<h3 className='text-lg font-medium leading-6 text-gray-900'>User Information</h3>
 					</div>
 
 					<div className='mt-6 space-y-6 sm:mt-5 sm:space-y-5'>
 						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label
-								htmlFor='firstName'
-								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-							>
+							<label htmlFor='firstName' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 								First Name
 							</label>
 							<div className='mt-1 sm:col-span-2 sm:mt-0'>
@@ -119,10 +113,7 @@ export default function SettingsPage(): JSX.Element {
 							</div>
 						</div>
 						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label
-								htmlFor='lastName'
-								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-							>
+							<label htmlFor='lastName' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 								Last Name
 							</label>
 							<div className='mt-1 sm:col-span-2 sm:mt-0'>
@@ -141,10 +132,7 @@ export default function SettingsPage(): JSX.Element {
 						</div>
 
 						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label
-								htmlFor='email'
-								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-							>
+							<label htmlFor='email' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 								Email
 							</label>
 							<div className='mt-1 sm:col-span-2 sm:mt-0'>
@@ -162,10 +150,7 @@ export default function SettingsPage(): JSX.Element {
 							</div>
 						</div>
 						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label
-								htmlFor='phone'
-								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-							>
+							<label htmlFor='phone' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 								Phone Number
 							</label>
 							<div className='mt-1 sm:col-span-2 sm:mt-0'>
@@ -184,10 +169,7 @@ export default function SettingsPage(): JSX.Element {
 						</div>
 
 						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label
-								htmlFor='carpool'
-								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-							>
+							<label htmlFor='carpool' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 								Car Pool
 							</label>
 							<div className='mt-1 sm:col-span-2 sm:mt-0'>
@@ -199,58 +181,40 @@ export default function SettingsPage(): JSX.Element {
 										onChange={(e) => setCarpool(e.target.value)}
 										value={carpool}
 										className='block w-full rounded-md border-gray-300 p-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-										placeholder={
-											carpool ||
-											'Indicate the first and last name of the person you car pool with.'
-										}
+										placeholder={carpool || 'Indicate the first and last name of the person you car pool with.'}
 									/>
 								</div>
 							</div>
 						</div>
 
 						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label
-								htmlFor='teeTime'
-								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-							>
+							<label htmlFor='teeTime' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 								Only Tee Times After 4:30?
 							</label>
 							<div className='mt-1 flex flex-row space-x-2 sm:col-span-2 sm:mt-0'>
 								<span> No </span>
 								<div className='flex max-w-lg rounded-md shadow-sm'>
-									<ToggleSwitch
-										enabled={teeTimeCondition}
-										setEnabled={setTeeTimeCondition}
-									/>
+									<ToggleSwitch enabled={teeTimeCondition} setEnabled={setTeeTimeCondition} />
 								</div>
 								<span> Yes </span>
 							</div>
 						</div>
 
 						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label
-								htmlFor='weekendAway'
-								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-							>
+							<label htmlFor='weekendAway' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 								Weekend Away Attendance
 							</label>
 							<div className='mt-1 flex flex-row space-x-2 sm:col-span-2 sm:mt-0'>
 								<span> No </span>
 								<div className='flex max-w-lg rounded-md shadow-sm'>
-									<ToggleSwitch
-										enabled={weekendAway}
-										setEnabled={setWeekendAway}
-									/>
+									<ToggleSwitch enabled={weekendAway} setEnabled={setWeekendAway} />
 								</div>
 								<span> Yes </span>
 							</div>
 						</div>
 
 						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label
-								htmlFor='yearend'
-								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-							>
+							<label htmlFor='yearend' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 								Year End Banquet Attendance
 							</label>
 							<div className='mt-1 flex flex-row space-x-2 sm:col-span-2 sm:mt-0'>
@@ -263,10 +227,7 @@ export default function SettingsPage(): JSX.Element {
 						</div>
 
 						<div className='sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5'>
-							<label
-								htmlFor='password'
-								className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'
-							>
+							<label htmlFor='password' className='block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'>
 								Password
 							</label>
 							<div className='mt-1 sm:col-span-2 sm:mt-0'>
