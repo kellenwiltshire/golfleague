@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EnterScore from './Scores/EnterScore';
 import ScoresList from './Scores/ScoresList';
 import { findLastScheduledRound, getUserScores } from '@/utils/sortingFunctions';
@@ -6,6 +6,7 @@ import SaveSuccess from '@/components/Notifications/SaveSuccess';
 import SaveFail from '@/components/Notifications/SaveFail';
 import { useUserStore } from '@/stores/UserStore';
 import useSWR from 'swr';
+import TableLoading from '@/components/LoadingModals/TableLoading';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -19,22 +20,10 @@ export default function Scores(): JSX.Element {
 	const [success, setSuccess] = useState(false);
 	const [failure, setFailure] = useState(false);
 
-	const getInitialSuccess = () => {
-		if (scores && lastScheduledRound) {
-			for (let i = 0; i < scores.length; i++) {
-				if (scores[i].date === lastScheduledRound.date) {
-					return true;
-				}
-			}
-		}
-		return false;
-	};
-	const [submitSuccess, setSubmitSuccess] = useState(getInitialSuccess());
-
 	if (scoresError) return <div>Failed to load Scores</div>;
 	if (scheduleError) return <div>Failed to load Schedule Info</div>;
 
-	if (!scores || !schedule) return <div>Loading...</div>;
+	if (!scores || !schedule) return <TableLoading />;
 
 	const lastScheduledRound = findLastScheduledRound(schedule);
 
@@ -44,14 +33,13 @@ export default function Scores(): JSX.Element {
 		<div className='px-4 py-8 sm:px-0'>
 			{success ? <SaveSuccess show={success} setShow={setSuccess} /> : null}
 			{failure ? <SaveFail show={failure} setShow={setFailure} /> : null}
-			{submitSuccess || !lastScheduledRound ? null : (
+			{scores[scores.length - 1].date === lastScheduledRound.date || !lastScheduledRound ? null : (
 				<EnterScore
 					user={user}
 					lastScheduledRound={lastScheduledRound}
 					userScores={userScores}
 					setSuccess={setSuccess}
 					setFailure={setFailure}
-					setSubmitSuccess={setSubmitSuccess}
 				/>
 			)}
 

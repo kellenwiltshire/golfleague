@@ -8,6 +8,7 @@ import ResultsTable from '@/components/Admin/ResultsTable';
 import WeekendAwayTable from '@/components/Admin/WeekendAwayTable';
 import YearEndTable from '@/components/Admin/YearEndTable';
 import useSWR from 'swr';
+import TableLoading from '@/components/LoadingModals/TableLoading';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -20,7 +21,7 @@ export default function Admin(): JSX.Element {
 	const [adminTab, setAdminTab] = useState(1);
 
 	if (allUsersError || scheduleError || scoresError || coursesError) return <div>Failed to load</div>;
-	if (!allUsers || !schedule || !allScores || !courses) return <div>Loading...</div>;
+	if (!allUsers || !schedule || !allScores || !courses) return <TableLoading />;
 
 	return (
 		<>

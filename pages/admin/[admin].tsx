@@ -10,6 +10,7 @@ import Admin from '@/components/user/Sections/Admin';
 import { useUserStore } from '@/stores/UserStore';
 
 import useSWR from 'swr';
+import UserLoading from '@/components/LoadingModals/UserLoading';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
@@ -29,7 +30,7 @@ export default function AdminPage(): JSX.Element {
 	const [openTab, setOpenTab] = useState(1);
 
 	if (userError) return <div>Failed to load</div>;
-	if (!user) return <div>Loading...</div>;
+	if (!user) return <UserLoading />;
 
 	return (
 		<div className='flex w-full flex-row flex-wrap justify-center py-10'>
