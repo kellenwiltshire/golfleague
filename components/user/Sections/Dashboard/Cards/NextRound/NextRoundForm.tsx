@@ -26,8 +26,9 @@ export default function NextRoundForm({ user, setSuccess, setFailure, nextRound 
 					} else {
 						setCutOffPast(true);
 					}
+				} else {
+					setCutOffPast(true);
 				}
-				setCutOffPast(true);
 			}
 		}, []);
 
